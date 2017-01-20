@@ -1,9 +1,21 @@
 #ifndef OI_H
 #define OI_H
 
-class OI {
-public:
-	OI();
+#include "RobotMap.h"
+#include "WPILib.h"
+
+
+class OI
+{
+    private:
+        Joystick* driveStick;
+        Joystick* operatorStick;
+    public:
+        OI();
+        ~OI();
+
+        Joystick* getDriveStick();
+        Joystick* getOperatorStick();
 };
 
-#endif  // OI_H
+#endif

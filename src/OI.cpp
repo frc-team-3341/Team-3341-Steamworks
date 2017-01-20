@@ -1,7 +1,23 @@
 #include "OI.h"
 
-#include <WPILib.h>
+OI::OI():
+	driveStick(new Joystick(0)), operatorStick(new Joystick(1))
+{
 
-OI::OI() {
-	// Process operator interface input here.
+}
+
+Joystick* OI::getDriveStick()
+{
+    return driveStick;
+}
+
+Joystick* OI::getOperatorStick()
+{
+    return operatorStick;
+}
+
+OI::~OI()
+{
+    delete driveStick;
+    delete operatorStick;
 }
