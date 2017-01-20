@@ -48,6 +48,7 @@ void NavigateCV::Execute()
 
 		distPID->SetSetPoint(distGoal);
 		anglePID->SetSetPoint(angleGoal);
+
 	}
 
 
