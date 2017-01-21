@@ -8,6 +8,7 @@
 #include <LiveWindow/LiveWindow.h>
 #include <SmartDashboard/SendableChooser.h>
 #include <SmartDashboard/SmartDashboard.h>
+#include "Utilities/NetworkTablesInterface.h"
 
 class Robot: public frc::IterativeRobot {
 public:
@@ -76,6 +77,10 @@ public:
 	}
 
 	void TestPeriodic() override {
+		frc::SmartDashboard::PutBoolean("CVGearFound", NetworkTablesInterface::gearFound());
+		frc::SmartDashboard::PutNumber("CVGearDistance",NetworkTablesInterface::getGearDistance());
+		frc::SmartDashboard::PutNumber("CVGearAltitude", NetworkTablesInterface::getGearAltitude());
+		frc::SmartDashboard::PutNumber("CVGearAzimuth", NetworkTablesInterface::getGearAzimuth());
 		frc::LiveWindow::GetInstance()->Run();
 	}
 
