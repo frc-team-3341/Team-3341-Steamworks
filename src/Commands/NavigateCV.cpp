@@ -33,14 +33,18 @@ void NavigateCV::Initialize()
 
 void NavigateCV::Execute(){
 
-//	@dhruti TODO: Finish Network Tables Interface. Pseudocode is given below.
-//	if(distGoal != networkTablesDistance || angleGoal != networkTablesAngle){
-//		cvChanged = true;
-//		distGoal = networkTablesDistance;
-//		angleGoal = networkTablesAngle;
-//	}else{
-//		cvChanged = false;
-//	}
+
+	if(distGoal != NetworkTablesInterface::getGearDistance() || angleGoal != NetworkTablesInterface::getGearAzimuth())
+	{
+		cvChanged = true;
+		distGoal = NetworkTablesInterface::getGearDistance();
+		angleGoal = NetworkTablesInterface::getGearAzimuth();
+		std::cout << "hi\n";
+	}
+	else
+	{
+		cvChanged = false;
+	}
 
 	if(cvChanged)
 	{
