@@ -30,8 +30,7 @@ void NavigateCV::Initialize()
 	anglePID = new WVPIDController(angleKp, angleKi, angleKd, angleGoal, false);
 }
 
-void NavigateCV::Execute()
-{
+void NavigateCV::Execute(){
 
 //	@dhruti TODO: Finish Network Tables Interface. Pseudocode is given below.
 //	if(distGoal != networkTablesDistance || angleGoal != networkTablesAngle){
@@ -42,13 +41,10 @@ void NavigateCV::Execute()
 //		cvChanged = false;
 //	}
 
-	if(cvChanged)
-	{
+	if(cvChanged){
 		//TODO: Reset drive encoders and gyro once subsystems are implemented.
-
 		distPID->SetSetPoint(distGoal);
 		anglePID->SetSetPoint(angleGoal);
-
 	}
 
 
