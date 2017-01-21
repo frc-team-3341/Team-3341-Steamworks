@@ -10,6 +10,7 @@
 #define SRC_NAVIGATECV_H_
 
 #include <Utilities/WVPIDController.h>
+#include "Utilities/NetworkTablesInterface.h"
 #include <WPILib.h>
 #include "../CommandBase.h"
 
