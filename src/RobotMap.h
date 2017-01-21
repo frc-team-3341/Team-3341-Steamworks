@@ -20,6 +20,9 @@
 //const int RANGE_FINDER_PORT = 1;
 //const int RANGE_FINDER_MODULE = 1;
 
+const int WINCH_ENCODER1 = 40;
+const int WINCH_ENCODER2 = 41;
+const int WINCH_MOTOR = 43;
 const double SHOOTER_ANGLE = 33;//set this to the constant angle
 const double TARGET_HEIGHT = 7;//whatever the height is
 const double ENCODER_RIGHT_1=0;
