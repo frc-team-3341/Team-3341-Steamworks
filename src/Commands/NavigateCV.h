@@ -44,8 +44,6 @@ private:
 	double power;
 	double angle;
 
-	DriveTrain* motorRun;
-
 public:
 	NavigateCV();
 	void Execute();

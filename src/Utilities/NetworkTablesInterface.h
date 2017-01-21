@@ -8,6 +8,8 @@
 #ifndef UTILITIES_NETWORKTABLESINTERFACE_H_
 #define UTILITIES_NETWORKTABLESINTERFACE_H_
 
+#include "NetworkTables/NetworkTable.h"
+
 class NetworkTablesInterface {
 public:
 	//NetworkTablesInterface(); NOT REQUIRED

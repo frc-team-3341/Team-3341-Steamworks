@@ -7,12 +7,8 @@
 
 #include "NavigateCV.h"
 
-NavigateCV::NavigateCV()
-{
-	Requires(DriveTrain);
+NavigateCV::NavigateCV(){
 	Requires(drive);
-	Requires(gyro);
-
 }
 void NavigateCV::Initialize()
 {
@@ -30,8 +26,8 @@ void NavigateCV::Initialize()
 	distPID = new WVPIDController(distKp, distKi, distKd, distGoal, false);
 	anglePID = new WVPIDController(angleKp, angleKi, angleKd, angleGoal, false);
 
-	motorRun->resetEncoders();
-	motorRun->resetGyro();
+	drive->resetEncoders();
+	drive->resetGyro();
 
 }
 
@@ -48,21 +44,21 @@ void NavigateCV::Execute(){
 
 	if(cvChanged)
 	{
-		motorRun->resetGyro();
-		motorRun->resetEncoders();
+		drive->resetGyro();
+		drive->resetEncoders();
 		distPID->SetSetPoint(distGoal);
 		anglePID->SetSetPoint(angleGoal);
 	}
 
-	leftDistance = motorRun->getLeftEncoderDistance();
-	rightDistance = motorRun->getRightEncoderDistance();
+	leftDistance = drive->getLeftEncoderDistance();
+	rightDistance = drive->getRightEncoderDistance();
 	encoderVal =  distPID->Tick((abs(leftDistance)+abs(rightDistance))/2.0);
-	gyroVal = motorRun->getGyroAngle();
+	gyroVal = drive->getGyroAngle();
 
 	power = distPID->Tick(encoderVal);
 	angle = anglePID->Tick(gyroVal);
 
-	motorRun->arcadeDrive(power, angle);
+	drive->arcadeDrive(power, angle);
 
 }
 
@@ -76,7 +72,7 @@ bool NavigateCV::IsFinished()
 void NavigateCV::End()
 {
 	// TODO: STOP THE MOTORS!!!!
-	motorRun->arcadeDrive(0,0);
+	drive->arcadeDrive(0,0);
 }
 
 void NavigateCV::Interrupted()
