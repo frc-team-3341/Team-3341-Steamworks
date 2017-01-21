@@ -9,9 +9,10 @@
 
 NavigateCV::NavigateCV()
 {
-//	TODO: Uncomment these lines when drive and gyro subsystems are implemented.
-//	Requires(drive);
-//	Requires(gyro);
+	Requires(DriveTrain);
+	Requires(drive);
+	Requires(gyro);
+
 }
 void NavigateCV::Initialize()
 {
@@ -28,6 +29,10 @@ void NavigateCV::Initialize()
 	// Initialize both PIDs
 	distPID = new WVPIDController(distKp, distKi, distKd, distGoal, false);
 	anglePID = new WVPIDController(angleKp, angleKi, angleKd, angleGoal, false);
+
+	motorRun->resetEncoders();
+	motorRun->resetGyro();
+
 }
 
 void NavigateCV::Execute(){
@@ -41,22 +46,23 @@ void NavigateCV::Execute(){
 //		cvChanged = false;
 //	}
 
-	if(cvChanged){
-		//TODO: Reset drive encoders and gyro once subsystems are implemented.
+	if(cvChanged)
+	{
+		motorRun->resetGyro();
+		motorRun->resetEncoders();
 		distPID->SetSetPoint(distGoal);
 		anglePID->SetSetPoint(angleGoal);
 	}
 
+	leftDistance = motorRun->getLeftEncoderDistance();
+	rightDistance = motorRun->getRightEncoderDistance();
+	encoderVal =  distPID->Tick((abs(leftDistance)+abs(rightDistance))/2.0);
+	gyroVal = motorRun->getGyroAngle();
 
-//	TODO: Uncomment and get real values once gyro and encoder sybsytems are implemented.
-//	encoderVal = (drive->leftEncoderVal + drive->rightEncoderVal)/2.0d;
-//	gyroVal = gyro->GetAngle();
+	power = distPID->Tick(encoderVal);
+	angle = anglePID->Tick(gyroVal);
 
-	double power = distPID->Tick(encoderVal);
-	double angle = anglePID->Tick(gyroVal);
-
-//	TODO: Uncomment when arcade drive is implement.
-//	arcadeDrive(power, angle);
+	motorRun->arcadeDrive(power, angle);
 
 }
 
@@ -69,12 +75,13 @@ bool NavigateCV::IsFinished()
 
 void NavigateCV::End()
 {
-
+	// TODO: STOP THE MOTORS!!!!
+	motorRun->arcadeDrive(0,0);
 }
 
 void NavigateCV::Interrupted()
 {
-
+	// TODO: Put stuff here
 }
 
 NavigateCV::~NavigateCV()
