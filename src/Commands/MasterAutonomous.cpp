@@ -1,6 +1,6 @@
 #include "MasterAutonomous.h"
-
-MasterAutonomous::MasterAutonomous() {
+#include "TurnAndDrive.h"
+MasterAutonomous::MasterAutonomous(){
 	// Add Commands here:
 	// e.g. AddSequential(new Command1());
 	//      AddSequential(new Command2());
@@ -17,4 +17,8 @@ MasterAutonomous::MasterAutonomous() {
 	// e.g. if Command1 requires chassis, and Command2 requires arm,
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
+	AddSequential(new TurnAndDrive(100,0));
 }
+
+
+
