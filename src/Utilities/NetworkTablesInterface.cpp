@@ -18,7 +18,7 @@ NetworkTablesInterface::~NetworkTablesInterface() {
 }*/
 
 bool NetworkTablesInterface::gearFound(){
-	return NetworkTable::GetTable("cv")->GetNumber("gearFound", false);
+	return NetworkTable::GetTable("cv")->GetBoolean("gearFound", false);
 	//returns true if the gear has been detected
 }
 

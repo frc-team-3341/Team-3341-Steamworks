@@ -9,18 +9,37 @@
 
 NavigateCV::NavigateCV(){
 	Requires(drive);
+
+	cvChanged = false;
+
+		// Temporary initial values for Kp, Ki, and Kd.
+		distKp = distKi = distKd = 1;
+		angleKp = angleKi = angleKd = 1;
+
+		// Set the goal distance and angle to 0. We are at this point right now so nothing will happen.
+		distGoal = angleGoal = 0;
+
+		leftDistance = 0;
+		rightDistance = 0;
+
+		angle = 0;
+		power = 0;
+		gyroVal = 0;
+		distPID = 0;
+		encoderVal = 0;
+		anglePID = NULL;
 }
 void NavigateCV::Initialize()
 {
 	//Initialize cvChanged to false, signifying that CV has not yet changed their set point.
-	cvChanged = false;
+	/**cvChanged = false;
 
 	// Temporary initial values for Kp, Ki, and Kd.
 	distKp = distKi = distKd = 1;
 	angleKp = angleKi = angleKd = 1;
 
 	// Set the goal distance and angle to 0. We are at this point right now so nothing will happen.
-	distGoal = angleGoal = 0;
+	distGoal = angleGoal = 0;**/
 
 	// Initialize both PIDs
 	distPID = new WVPIDController(distKp, distKi, distKd, distGoal, false);
