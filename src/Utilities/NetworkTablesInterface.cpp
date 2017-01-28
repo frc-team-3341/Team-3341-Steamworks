@@ -7,7 +7,6 @@
 
 #include "NetworkTablesInterface.h"
 
-using namespace frc;
 
 /*NetworkTablesInterface::NetworkTablesInterface() {
 	// TODO Auto-generated constructor stub
@@ -18,9 +17,8 @@ NetworkTablesInterface::~NetworkTablesInterface() {
 	// TODO Auto-generated destructor stub
 }*/
 
-bool NetworkTablesInterface::gearFound()
-{
-	return NetworkTable::GetTable("cv")->GetNumber("gearFound", false);
+bool NetworkTablesInterface::gearFound(){
+	return NetworkTable::GetTable("cv")->GetBoolean("gearFound", false);
 	//returns true if the gear has been detected
 }
 

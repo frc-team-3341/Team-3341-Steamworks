@@ -7,60 +7,81 @@
 
 #include "NavigateCV.h"
 
-NavigateCV::NavigateCV()
-{
-//	TODO: Uncomment these lines when drive and gyro subsystems are implemented.
-//	Requires(drive);
-//	Requires(gyro);
+NavigateCV::NavigateCV(){
+	Requires(drive);
+
+	cvChanged = false;
+
+		// Temporary initial values for Kp, Ki, and Kd.
+		distKp = distKi = distKd = 1;
+		angleKp = angleKi = angleKd = 1;
+
+		// Set the goal distance and angle to 0. We are at this point right now so nothing will happen.
+		distGoal = angleGoal = 0;
+
+		leftDistance = 0;
+		rightDistance = 0;
+
+		angle = 0;
+		power = 0;
+		gyroVal = 0;
+		distPID = 0;
+		encoderVal = 0;
+		anglePID = NULL;
 }
 void NavigateCV::Initialize()
 {
 	//Initialize cvChanged to false, signifying that CV has not yet changed their set point.
-	cvChanged = false;
+	/**cvChanged = false;
 
 	// Temporary initial values for Kp, Ki, and Kd.
 	distKp = distKi = distKd = 1;
 	angleKp = angleKi = angleKd = 1;
 
 	// Set the goal distance and angle to 0. We are at this point right now so nothing will happen.
-	distGoal = angleGoal = 0;
+	distGoal = angleGoal = 0;**/
 
 	// Initialize both PIDs
 	distPID = new WVPIDController(distKp, distKi, distKd, distGoal, false);
 	anglePID = new WVPIDController(angleKp, angleKi, angleKd, angleGoal, false);
+
+	drive->resetEncoders();
+	drive->resetGyro();
+
 }
 
-void NavigateCV::Execute()
-{
+void NavigateCV::Execute(){
 
-//	@dhruti TODO: Finish Network Tables Interface. Pseudocode is given below.
-//	if(distGoal != networkTablesDistance || angleGoal != networkTablesAngle){
-//		cvChanged = true;
-//		distGoal = networkTablesDistance;
-//		angleGoal = networkTablesAngle;
-//	}else{
-//		cvChanged = false;
-//	}
+
+	if(distGoal != NetworkTablesInterface::getGearDistance() || angleGoal != NetworkTablesInterface::getGearAzimuth())
+	{
+		cvChanged = true;
+		distGoal = NetworkTablesInterface::getGearDistance();
+		angleGoal = NetworkTablesInterface::getGearAzimuth();
+		std::cout << "hi\n";
+	}
+	else
+	{
+		cvChanged = false;
+	}
 
 	if(cvChanged)
 	{
-		//TODO: Reset drive encoders and gyro once subsystems are implemented.
-
+		drive->resetGyro();
+		drive->resetEncoders();
 		distPID->SetSetPoint(distGoal);
 		anglePID->SetSetPoint(angleGoal);
-
 	}
 
+	leftDistance = drive->getLeftEncoderDistance();
+	rightDistance = drive->getRightEncoderDistance();
+	encoderVal =  distPID->Tick((abs(leftDistance)+abs(rightDistance))/2.0);
+	gyroVal = drive->getGyroAngle();
 
-//	TODO: Uncomment and get real values once gyro and encoder sybsytems are implemented.
-//	encoderVal = (drive->leftEncoderVal + drive->rightEncoderVal)/2.0d;
-//	gyroVal = gyro->GetAngle();
+	power = distPID->Tick(encoderVal);
+	angle = anglePID->Tick(gyroVal);
 
-	double power = distPID->Tick(encoderVal);
-	double angle = anglePID->Tick(gyroVal);
-
-//	TODO: Uncomment when arcade drive is implement.
-//	arcadeDrive(power, angle);
+	drive->arcadeDrive(power, angle);
 
 }
 
@@ -73,12 +94,13 @@ bool NavigateCV::IsFinished()
 
 void NavigateCV::End()
 {
-
+	// TODO: STOP THE MOTORS!!!!
+	drive->arcadeDrive(0,0);
 }
 
 void NavigateCV::Interrupted()
 {
-
+	// TODO: Put stuff here
 }
 
 NavigateCV::~NavigateCV()

@@ -10,12 +10,14 @@
 #define SRC_NAVIGATECV_H_
 
 #include <Utilities/WVPIDController.h>
+#include "Utilities/NetworkTablesInterface.h"
 #include <WPILib.h>
+#include "../CommandBase.h"
+
 
 using namespace frc;
 
-class NavigateCV
-{
+class NavigateCV: public CommandBase{
 
 private:
 	// CV Changed
@@ -35,6 +37,13 @@ private:
 
 	// Variable for storing the last average encoder value, and last gyro angle value respectively.
 	double encoderVal, gyroVal;
+
+	// Variables for storing each separate encoder value
+	double leftDistance;
+	double rightDistance;
+
+	double power;
+	double angle;
 
 public:
 	NavigateCV();

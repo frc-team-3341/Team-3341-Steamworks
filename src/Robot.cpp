@@ -1,14 +1,14 @@
+
 #include <memory>
 
+#include "CommandBase.h"
 #include <Commands/Command.h>
 #include <Commands/Scheduler.h>
 #include <IterativeRobot.h>
 #include <LiveWindow/LiveWindow.h>
 #include <SmartDashboard/SendableChooser.h>
 #include <SmartDashboard/SmartDashboard.h>
-
-#include "Commands/ExampleCommand.h"
-#include "CommandBase.h"
+#include "Utilities/NetworkTablesInterface.h"
 
 class Robot: public frc::IterativeRobot {
 public:
@@ -77,6 +77,14 @@ public:
 	}
 
 	void TestPeriodic() override {
+		frc::SmartDashboard::PutBoolean("CVGearFound", NetworkTablesInterface::gearFound());
+		frc::SmartDashboard::PutNumber("CVGearDistance",NetworkTablesInterface::getGearDistance());
+		frc::SmartDashboard::PutNumber("CVGearAltitude", NetworkTablesInterface::getGearAltitude());
+		frc::SmartDashboard::PutNumber("CVGearAzimuth", NetworkTablesInterface::getGearAzimuth());
+	    frc::SmartDashboard::PutBoolean("CVBoilerFound", NetworkTablesInterface::boilerFound());
+		//frc::SmartDashboard::PutNumber("CVBoilerDistance",NetworkTablesInterface::getGearDistance());
+		//frc::SmartDashboard::PutNumber("CVBoilerAltitude", NetworkTablesInterface::getGearAltitude());
+		//frc::SmartDashboard::PutNumber("CVBoilerAzimuth", NetworkTablesInterface::getGearAzimuth());
 		frc::LiveWindow::GetInstance()->Run();
 	}
 
