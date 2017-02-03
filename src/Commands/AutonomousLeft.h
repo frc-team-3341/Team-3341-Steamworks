@@ -3,9 +3,9 @@
 
 #include <Commands/CommandGroup.h>
 
-class MasterAutonomous : public CommandGroup {
+class AutonomousLeft : public CommandGroup {
 public:
-	MasterAutonomous();
+	AutonomousLeft();
 };
 
 #endif  // MasterAutonomous_H

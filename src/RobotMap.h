@@ -33,5 +33,6 @@ const double LEFTSHOOTER= 4;
 const double RIGHTSHOOTER= 5;
 const double SHOOTERENCODERLEFT= 6;
 const double SHOOTERENCODERRIGHT= 7;
+const double PIDCON_INCHES = 0.13617;//inches
 
 #endif

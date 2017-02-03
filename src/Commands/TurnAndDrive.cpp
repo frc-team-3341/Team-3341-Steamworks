@@ -1,7 +1,7 @@
-#include "../DriveTrain/TurnAndDrive.h"
+#include "Commands/TurnAndDrive.h"
 
 TurnAndDrive::TurnAndDrive(double inDistance, double inAngle)
-    : distance(inDistance), angle(inAngle)
+    : distance(inDistance * PIDCON_INCHES * 1.185), angle(inAngle)
 {
     Requires(drive);
     distancePid = NULL;
@@ -59,4 +59,3 @@ void TurnAndDrive::End()
 
 void TurnAndDrive::Interrupted()
 {
-}
