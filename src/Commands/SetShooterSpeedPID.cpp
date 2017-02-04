@@ -5,44 +5,37 @@ SetShooterSpeed::SetShooterSpeed()
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
 	Requires(shooter);
-
+	encoderVal = 0;
+	// TODO: figure out goalSpeed
+	goalSpeed = 0;
+	calculatedVal = 0;
 }
 
 // Called just before this Command runs the first time
 void SetShooterSpeed::Initialize()
 {
-	speedVal = 0;
-	distance = 0;
+
 	// figure out kp, ki, and kd through testing
 	// setPoint is the speed we want the motors to run at so that the ball scores
-	// TODO: figure out setPoint
-	speedPID = new WVPIDController(0, 0, 0, SETPOINT, false);
-	shooter->resetEncoder;
+
+	speedPID = new WVPIDController(0, 0, 0, goalSpeed, false);
+	shooter->resetEncoder();
+	// lw = LiveWindow::GetInstance(); TODO: figure out when i need to use this
 }
 
 // Called repeatedly when this Command is scheduled to run
 void SetShooterSpeed::Execute()
 {
-	// Network table stuff for getting distance and altitude
-	/*
-	if(NetworkTablesInterface::targetFound()){
-	distance = NetworkTablesInterface::getDistance();
-			 */
-	currentSpeed = shooter->getRate();
-	speedVal = findSpeed(distance);
-	measuredSpeed = speedPID->Tick(speedVal);
-	shooter->setSpeed(measuredSpeed);
-
-
-	// TODO: Set motor to the speed PID
-
+	encoderVal = shooter->getRate();
+	calculatedVal = speedPID->Tick(encoderVal);
+	shooter->setSpeed(calculatedVal);
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool SetShooterSpeed::IsFinished()
 {
 	// TODO: figure out how to see when target speed has been reached
-	return 0.01 < SETPOINT;
+	return false;
 }
 
 // Called once after isFinished returns true

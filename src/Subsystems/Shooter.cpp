@@ -1,27 +1,26 @@
 #include "Shooter.h"
 #include "../RobotMap.h"
+using namespace frc;
 
 Shooter::Shooter() : Subsystem("Shooter")
 {
-	shooter = new TalonSRX(SHOOTER); //SHOOTER is the pin number for the motor
-	encoder = new Encoder(ENCODER); // ENCODER is the pin number for the encoder
+	shooter = new CANTalon(LEFTSHOOTER); //SHOOTER is the pin number for the motor
+	shooter->SetTalonControlMode(CANTalon::kSpeedMode);
+	shooter->SetFeedbackDevice(CANTalon::CtreMagEncoder_Relative)
+	//encoder = new Encoder(SHOOTERENCODERLEFT); // ENCODER is the pin number for the encoder
 }
 
 void Shooter::setSpeed(double speed)
 {
-	shooter->SetSpeed(speed);
+	shooter->Set(speed);
 }
 
-double Shooter::getRate()
+void Shooter::setPIDConstants()
 {
-	return encoder->GetRate();
+	shooter->SetP(0.5); // TODO: Find constants through testing
+	shooter->SetI(0);
+	shooter->SetP(0);
 }
-
-void Shooter::resetEncoder()
-{
-	encoder->Reset();
-}
-
 
 // TODO: FInd out if this is needed
 /* void Shooter::InitDefaultCommand()
@@ -33,9 +32,9 @@ void Shooter::resetEncoder()
 Shooter::~Shooter() //destructor
 {
 	delete shooter;
-	delete encoder;
+	//delete encoder;
 	shooter = NULL;
-	encoder = NULL;
+	// encoder = NULL;
 }
 
 // Put methods for controlling this subsystem

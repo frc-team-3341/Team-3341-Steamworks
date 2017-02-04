@@ -2,6 +2,10 @@
 #define SetShooterSpeed_H
 
 #include "../CommandBase.h"
+#include "../Subsystems/Shooter.h"
+#include "../Utilities/WVPIDController.h"
+
+using namespace frc;
 
 class SetShooterSpeed : public CommandBase
 {
@@ -15,11 +19,12 @@ public:
 	double findSpeed(double dist);
 
 private:
-	double measuredSpeed;
-	double currentSpeed;
-	double speedVal;
-	double distance;
+	double calculatedVal;
+	double encoderVal;
+	double goalSpeed;
 	WVPIDController* speedPID;
+	Shooter* shooter;
+	// LiveWindow* lw;
 };
 
 #endif  // SetShooterSpeed_H

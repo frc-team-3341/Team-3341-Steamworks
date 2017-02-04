@@ -25,13 +25,14 @@ const int WINCH_ENCODER2 = 41;
 const int WINCH_MOTOR = 43;
 const double SHOOTER_ANGLE = 33;//set this to the constant angle
 const double TARGET_HEIGHT = 7;//whatever the height is
-const double ENCODER_RIGHT_1=0;
-const double ENCODER_RIGHT_2=1;
-const double ENCODER_LEFT_1=2;
-const double ENCODER_LEFT_2=3;
-const double LEFTSHOOTER= 4;
-const double RIGHTSHOOTER= 5;
-const double SHOOTERENCODERLEFT= 6;
-const double SHOOTERENCODERRIGHT= 7;
+const int ENCODER_RIGHT_1=0;
+const int ENCODER_RIGHT_2=1;
+const int ENCODER_LEFT_1=2;
+const int ENCODER_LEFT_2=3;
+const int LEFTSHOOTER= 4;
+// const double RIGHTSHOOTER= 5;
+const int SHOOTERENCODERLEFT= 6;
+// const double SHOOTERENCODERRIGHT= 7;
+
 
 #endif
