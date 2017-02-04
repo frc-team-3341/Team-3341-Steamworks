@@ -2,6 +2,7 @@
 #define AutonomousRight_H
 
 #include <Commands/CommandGroup.h>
+#include "../CommandBase.h"
 
 class AutonomousRight : public CommandGroup {
 public:

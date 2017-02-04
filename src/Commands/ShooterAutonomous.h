@@ -2,6 +2,7 @@
 #define ShooterAutonomous_H
 
 #include "../CommandBase.h"
+#include "../Utilities/NetworkTablesInterface.h"
 
 class ShooterAutonomous : public CommandBase {
 public:

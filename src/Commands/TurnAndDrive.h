@@ -1,8 +1,8 @@
 #ifndef DriveXFeet_H
 #define DriveXFeet_H
 
-#include "../../CommandBase.h"
-#include "../../Utilities/WVPIDController.h"
+#include "../CommandBase.h"
+#include "../Utilities/WVPIDController.h"
 #include "WPILib.h"
 
 class TurnAndDrive: public CommandBase

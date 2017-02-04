@@ -59,3 +59,4 @@ void TurnAndDrive::End()
 
 void TurnAndDrive::Interrupted()
 {
+}
