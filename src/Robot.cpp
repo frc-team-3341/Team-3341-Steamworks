@@ -82,9 +82,9 @@ public:
 		frc::SmartDashboard::PutNumber("CVGearAltitude", NetworkTablesInterface::getGearAltitude());
 		frc::SmartDashboard::PutNumber("CVGearAzimuth", NetworkTablesInterface::getGearAzimuth());
 	    frc::SmartDashboard::PutBoolean("CVBoilerFound", NetworkTablesInterface::boilerFound());
-		//frc::SmartDashboard::PutNumber("CVBoilerDistance",NetworkTablesInterface::getGearDistance());
-		//frc::SmartDashboard::PutNumber("CVBoilerAltitude", NetworkTablesInterface::getGearAltitude());
-		//frc::SmartDashboard::PutNumber("CVBoilerAzimuth", NetworkTablesInterface::getGearAzimuth());
+		frc::SmartDashboard::PutNumber("CVBoilerDistance",NetworkTablesInterface::getBoilerDistance());
+		frc::SmartDashboard::PutNumber("CVBoilerAltitude", NetworkTablesInterface::getBoilerAltitude());
+		frc::SmartDashboard::PutNumber("CVBoilerAzimuth", NetworkTablesInterface::getBoilerAzimuth());
 		frc::LiveWindow::GetInstance()->Run();
 	}
 

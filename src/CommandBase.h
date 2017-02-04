@@ -23,6 +23,15 @@ public:
 	//static std::unique_ptr<ExampleSubsystem> exampleSubsystem;
 	static DriveTrain*  drive;
 	static std::unique_ptr<OI> oi;
+
+	/* Instantiate static data.
+	 * Not all classes in WPILib can be instantiated as global / static global data.
+	 * Some may need to be instantiated after HAL_Initialize(), which is called in
+	 * main().  global and static global data are initialized / instantiated prior to main().
+	 * This should be called from Robot::RobotInit();
+	 */
+	static void initialize();
+
 };
 
 #endif  // COMMAND_BASE_H

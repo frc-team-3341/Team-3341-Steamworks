@@ -1,5 +1,7 @@
 #include "OI.h"
 
+using namespace frc;
+
 OI::OI():
 	driveStick(new Joystick(0)), operatorStick(new Joystick(1))
 {
