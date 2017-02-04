@@ -19,7 +19,7 @@ class DriveTrain: public Subsystem
         Encoder* encoderRight;
         float mult;
         int ticksToDistance;
-        BuiltInAccelerometer* accel;
+        //BuiltInAccelerometer* accel;
         wvrobotics::GyroL3GD20H* gyro;
         //DigitalGyro* gyro;
         //UltrasonicSensors* ultrasonicSensors;

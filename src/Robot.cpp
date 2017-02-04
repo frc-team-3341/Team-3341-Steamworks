@@ -9,13 +9,19 @@
 #include <SmartDashboard/SendableChooser.h>
 #include <SmartDashboard/SmartDashboard.h>
 #include "Utilities/NetworkTablesInterface.h"
+#include "Commands/Forward.h"
+#include "Subsystems/DriveTrain.h"
 
 class Robot: public frc::IterativeRobot {
 public:
 	void RobotInit() override {
+		CommandBase::initialize();
 		//chooser.AddDefault("Default Auto", new ExampleCommand());
 		// chooser.AddObject("My Auto", new MyAutoCommand());
 		frc::SmartDashboard::PutData("Auto Modes", &chooser);
+		//foreward = new Forward();
+		//left = new Talon(0);
+		//right = new Talon(1);
 	}
 
 	/**
@@ -76,7 +82,15 @@ public:
 		frc::Scheduler::GetInstance()->Run();
 	}
 
+	void TestInit() override {
+
+		//foreward->Start();
+		CommandBase::drive->setSpeedLeft(0.5);
+		CommandBase::drive->setSpeedRight(-0.5);
+	}
+
 	void TestPeriodic() override {
+		frc::Scheduler::GetInstance()->Run();
 		frc::SmartDashboard::PutBoolean("CVGearFound", NetworkTablesInterface::gearFound());
 		frc::SmartDashboard::PutNumber("CVGearDistance",NetworkTablesInterface::getGearDistance());
 		frc::SmartDashboard::PutNumber("CVGearAltitude", NetworkTablesInterface::getGearAltitude());
@@ -91,6 +105,9 @@ public:
 private:
 	std::unique_ptr<frc::Command> autonomousCommand;
 	frc::SendableChooser<frc::Command*> chooser;
+	//Command* foreward;
+	//Talon* left;
+	//Talon* right;
 };
 
 START_ROBOT_CLASS(Robot)

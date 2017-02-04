@@ -13,7 +13,8 @@ DriveTrain::DriveTrain() :
     encoderLeft(new Encoder(ENCODER_LEFT_1, ENCODER_LEFT_2)),
     encoderRight(new Encoder(ENCODER_RIGHT_1, ENCODER_RIGHT_2)), mult(1.0),
 	ticksToDistance(114), // 112 < ticksToDistance < 117
-	accel(), gyro(new wvrobotics::GyroL3GD20H(I2C::kOnboard, 0x6b))//wvrobotic::GyroL3GD20H( wvrobotics::GyroL3GD20H::GyroL3GD20H))//,
+	//accel(),
+	gyro(new wvrobotics::GyroL3GD20H(I2C::kOnboard, 0x6b))//wvrobotic::GyroL3GD20H( wvrobotics::GyroL3GD20H::GyroL3GD20H))//,
 	//ultrasonicSensors()
 {
     encoderLeft->SetDistancePerPulse(1.0);
@@ -30,7 +31,7 @@ DriveTrain::~DriveTrain()
     delete right;
     delete encoderLeft;
     delete encoderRight;
-    delete accel;
+    //delete accel;
     delete gyro;
 }
 
@@ -129,9 +130,9 @@ double DriveTrain::getRate()
 
 void DriveTrain::getAccelerations(double* x, double* y, double* z)
 {
-	*x = accel->GetX();
-	*y = accel->GetY();
-	*z = accel->GetZ();
+	//*x = accel->GetX();
+	//*y = accel->GetY();
+	//*z = accel->GetZ();
 }
 
 void DriveTrain::InitDefaultCommand()
