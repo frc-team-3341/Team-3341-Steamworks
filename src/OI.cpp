@@ -1,16 +1,26 @@
 #include "OI.h"
+#include "Commands/SetDriveReverse.h"
+#include "Commands/SetDriveForward.h"
 
 using namespace frc;
 
 OI::OI():
-	driveStick(new Joystick(0)), operatorStick(new Joystick(1))
+	driveStickLeft(new Joystick(0)), driveStickRight(new Joystick(1)), operatorStick(new Joystick(2))
 {
-
+	// TODO: THis doesn't work :'(
+	Button* driveReverse = new JoystickButton(driveStickLeft, 4);
+	driveReverse->WhenPressed(new SetDriveReverse());
+	driveReverse->WhenReleased(new SetDriveForward());
 }
 
-Joystick* OI::getDriveStick()
+Joystick* OI::getDriveStickLeft()
 {
-    return driveStick;
+    return driveStickLeft;
+}
+
+Joystick* OI::getDriveStickRight()
+{
+    return driveStickRight;
 }
 
 Joystick* OI::getOperatorStick()
@@ -20,6 +30,7 @@ Joystick* OI::getOperatorStick()
 
 OI::~OI()
 {
-    delete driveStick;
+    delete driveStickLeft;
+    delete driveStickRight;
     delete operatorStick;
 }

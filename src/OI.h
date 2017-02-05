@@ -8,13 +8,15 @@
 class OI
 {
     private:
-        Joystick* driveStick;
+        Joystick* driveStickLeft;
+        Joystick* driveStickRight;
         Joystick* operatorStick;
     public:
         OI();
         ~OI();
 
-        Joystick* getDriveStick();
+        Joystick* getDriveStickLeft();
+        Joystick* getDriveStickRight();
         Joystick* getOperatorStick();
 };
 

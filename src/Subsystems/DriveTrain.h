@@ -19,7 +19,7 @@ class DriveTrain: public Subsystem
         Encoder* encoderRight;
         float mult;
         int ticksToDistance;
-        //BuiltInAccelerometer* accel;
+        BuiltInAccelerometer* accel;
         wvrobotics::GyroL3GD20H* gyro;
         //DigitalGyro* gyro;
         //UltrasonicSensors* ultrasonicSensors;
@@ -33,6 +33,7 @@ class DriveTrain: public Subsystem
         void setMult(float m);
         int getMult();
         void arcadeDrive(float move, float rotate);
+        void tankDrive(float moveValueLeft, float moveValueRight);
 
         double getDistance();
         double getRate();

@@ -2,7 +2,7 @@
 
 #include "../RobotMap.h"
 #include "../CommandBase.h"
-#include "../Commands/ArcadeDrive.h"
+#include "../Commands/TankDrive.h"
 
 #include "DriveTrain.h"
 
@@ -13,7 +13,7 @@ DriveTrain::DriveTrain() :
     encoderLeft(new Encoder(ENCODER_LEFT_1, ENCODER_LEFT_2)),
     encoderRight(new Encoder(ENCODER_RIGHT_1, ENCODER_RIGHT_2)), mult(1.0),
 	ticksToDistance(114), // 112 < ticksToDistance < 117
-	//accel(),
+	accel(),
 	gyro(new wvrobotics::GyroL3GD20H(I2C::kOnboard, 0x6b))//wvrobotic::GyroL3GD20H( wvrobotics::GyroL3GD20H::GyroL3GD20H))//,
 	//ultrasonicSensors()
 {
@@ -94,6 +94,27 @@ void DriveTrain::arcadeDrive(float moveValue, float rotateValue)
     right->Set(-limitedR);
 }
 
+void DriveTrain::tankDrive(float moveValueLeft, float moveValueRight)
+{
+    //float leftMotorOutput;
+    //float rightMotorOutput;
+
+    moveValueLeft = DriveTrain::Limit(moveValueLeft, 1.0);
+    moveValueRight = -DriveTrain::Limit(moveValueRight, 1.0);
+
+    //std::cout << "LeftRaw: " << limitedL<< "\n";
+	//std::cout << "RightRaw: " << limitedR << "\n";
+    // TODO: mult should never be 0, but robot wasn't driving for some reason
+    if (mult != 0) {
+		left->Set(-moveValueLeft);
+		right->Set(-moveValueRight);
+    }
+    else {
+    	left->Set(-moveValueLeft);
+		right->Set(-moveValueRight);
+    }
+}
+
 float DriveTrain::Limit(float num, float max)
 {
     if(num > max)
@@ -137,7 +158,7 @@ void DriveTrain::getAccelerations(double* x, double* y, double* z)
 
 void DriveTrain::InitDefaultCommand()
 {
-    SetDefaultCommand(new ArcadeDrive());
+    SetDefaultCommand(new TankDrive());
 }
 
 

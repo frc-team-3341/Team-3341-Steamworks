@@ -14,8 +14,8 @@ void ArcadeDrive::Initialize()
 
 void ArcadeDrive::Execute()
 {
-    double rotRaw = oi->getDriveStick()->GetZ();
-    double yRaw = oi->getDriveStick()->GetY();
+    double rotRaw = oi->getDriveStickLeft()->GetZ();
+    double yRaw = oi->getDriveStickLeft()->GetY();
     double yAdjusted = mapToCubic(0.4, 0, yRaw);
 
     // Joystick is turning, turn normally
