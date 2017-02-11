@@ -5,9 +5,7 @@ using namespace frc;
 Shooter::Shooter() : Subsystem("Shooter")
 {
 	shooter = new CANTalon(LEFTSHOOTER); //SHOOTER is the pin number for the motor
-	shooter->SetTalonControlMode(CANTalon::kSpeedMode);
-	shooter->SetFeedbackDevice(CANTalon::CtreMagEncoder_Relative)
-	//encoder = new Encoder(SHOOTERENCODERLEFT); // ENCODER is the pin number for the encoder
+	// encoder = new Encoder(SHOOTERENCODERLEFT); // ENCODER is the pin number for the encoder
 }
 
 void Shooter::setSpeed(double speed)
@@ -19,7 +17,7 @@ void Shooter::setPIDConstants()
 {
 	shooter->SetP(0.5); // TODO: Find constants through testing
 	shooter->SetI(0);
-	shooter->SetP(0);
+	shooter->SetD(0);
 }
 
 // TODO: FInd out if this is needed

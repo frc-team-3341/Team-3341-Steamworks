@@ -5,28 +5,28 @@ SetShooterSpeed::SetShooterSpeed()
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
 	Requires(shooter);
-	encoderVal = 0;
 	// TODO: figure out goalSpeed
 	goalSpeed = 0;
 	calculatedVal = 0;
+	 _loops = 0;
+	 _lastButton1 = false;
+	 _talon->SetControlMode(CANSpeedController::kPercentVbus);
+	 _talon->ConfigLimitMode(CANSpeedController::kLimitMode_SrxDisableSwitchInputs);
+		 // Use Requires() here to declare subsystem dependencies
+		// eg. Requires(Robot::chassis.get());
+
 }
 
 // Called just before this Command runs the first time
 void SetShooterSpeed::Initialize()
 {
 
-	// figure out kp, ki, and kd through testing
-	// setPoint is the speed we want the motors to run at so that the ball scores
-
-	speedPID = new WVPIDController(0, 0, 0, goalSpeed, false);
-	shooter->resetEncoder();
-	// lw = LiveWindow::GetInstance(); TODO: figure out when i need to use this
 }
 
 // Called repeatedly when this Command is scheduled to run
 void SetShooterSpeed::Execute()
 {
-	encoderVal = shooter->getRate();
+	//encoderVal = shooter->getRate();
 	calculatedVal = speedPID->Tick(encoderVal);
 	shooter->setSpeed(calculatedVal);
 }
