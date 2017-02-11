@@ -33,6 +33,7 @@ class DriveTrain: public Subsystem
         void setMult(float m);
         int getMult();
         void arcadeDrive(float move, float rotate);
+        void tankDrive(float moveValueLeft, float moveValueRight);
 
         double getDistance();
         double getRate();
