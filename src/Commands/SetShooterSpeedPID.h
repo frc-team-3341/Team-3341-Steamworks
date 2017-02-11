@@ -20,12 +20,8 @@ public:
 	double findSpeed(double dist);
 
 private:
-	CANTalon* _talon;
-	std::string _sb;
 	int _loops;
-	bool _lastButton1;
 	/** save the target position to servo to */
-	double targetPositionRotations;
 	double currentSpeed;
 	double correctionValue;
 	double moveValue;
