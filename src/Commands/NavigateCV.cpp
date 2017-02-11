@@ -94,7 +94,6 @@ bool NavigateCV::IsFinished()
 
 void NavigateCV::End()
 {
-	// TODO: STOP THE MOTORS!!!!
 	drive->arcadeDrive(0,0);
 }
 

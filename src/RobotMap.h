@@ -20,6 +20,7 @@
 //const int RANGE_FINDER_PORT = 1;
 //const int RANGE_FINDER_MODULE = 1;
 
+const int MOTORPORT = 0;
 const int WINCH_ENCODER1 = 40;
 const int WINCH_ENCODER2 = 41;
 const int WINCH_MOTOR = 43;
@@ -34,5 +35,6 @@ const double RIGHTSHOOTER= 5;
 const double SHOOTERENCODERLEFT= 6;
 const double SHOOTERENCODERRIGHT= 7;
 const double PIDCON_INCHES = 0.13617;//inches
+
 
 #endif
