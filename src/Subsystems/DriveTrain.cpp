@@ -19,7 +19,8 @@ DriveTrain::DriveTrain() :
 {
     encoderLeft->SetDistancePerPulse(1.0);
     encoderRight->SetDistancePerPulse(1.0);
-
+    left->SetInverted(true);
+    right->SetInverted(true);
     //gyro->Calibrate();
     //gyro->Reset();
 }
@@ -91,7 +92,7 @@ void DriveTrain::arcadeDrive(float moveValue, float rotateValue)
     float limitedR = -DriveTrain::Limit(rightMotorOutput, 1.0);
 
     left->Set(-limitedL);
-    right->Set(-limitedR);
+    right->Set(-limitedR); //removed negatives
 }
 
 void DriveTrain::tankDrive(float moveValueLeft, float moveValueRight)
@@ -164,13 +165,15 @@ void DriveTrain::InitDefaultCommand()
 
 double DriveTrain::getLeftEncoderDistance()
 {
+	//TODO negate this and the right one below
 	//return this->left->GetPosition();
-	return this->encoderLeft->GetDistance();
+
+	return this->encoderLeft->GetDistance()*(-1);
 }
 
 double DriveTrain::getRightEncoderDistance()
 {
-	return -this->encoderRight->GetDistance();
+	return -this->encoderRight->GetDistance()*(-1);
 }
 
 double DriveTrain::getGyroAngle()

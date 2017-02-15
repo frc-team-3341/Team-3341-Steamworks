@@ -20,7 +20,7 @@
 //const int RANGE_FINDER_PORT = 1;
 //const int RANGE_FINDER_MODULE = 1;
 
-const int MOTORPORT = 0;
+//const int MOTORPORT = 0;
 const int WINCH_ENCODER1 = 40;
 const int WINCH_ENCODER2 = 41;
 const int WINCH_MOTOR = 43;

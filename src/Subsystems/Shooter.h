@@ -4,7 +4,7 @@
 #include "Encoder.h"
 #include "CANTalon.h"
 using namespace frc;
-
+//using namespace
 class Shooter : public Subsystem {
 private:
 	// It's desirable that everything possible under private except
@@ -14,7 +14,7 @@ private:
 public:
 
 	Shooter();
-	void InitDefaultCommand();
+	//void InitDefaultCommand();
 	~Shooter();
 	//void InitDefaultCommand(); // TODO: FInd out if this is needed
 	void setSpeed(double speed);
