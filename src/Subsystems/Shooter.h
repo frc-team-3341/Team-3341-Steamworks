@@ -13,13 +13,12 @@ private:
      CANTalon* shooter;
 	 double setPoint;
 public:
-	 Shooter();
-	 ~Shooter();
-	 //void InitDefaultCommand(); // TODO: FInd out if this is needed
+	Shooter();
+	~Shooter();
 	void setSpeed(double speed);
 	void setPID();
 	void loadBall();
-	void setPIDConstants();
+	void setPIDConstants(double F, double P, double I, double D);
 
 };
 

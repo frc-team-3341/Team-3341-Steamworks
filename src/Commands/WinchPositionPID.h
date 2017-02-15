@@ -1,10 +1,10 @@
-#ifndef WinchClimbPID_H
-#define WinchClimbPID_H
+#ifndef WinchPositionPID_H
+#define WinchPositionPID_H
 
 #include "../CommandBase.h"
 #include "CANTalon.h"
 
-class WinchClimbPID : public CommandBase {
+class WinchPositionPID : public CommandBase {
 
 private:
 	CANTalon* _talon;
@@ -21,7 +21,7 @@ private:
 
 
 public:
-	WinchClimbPID();
+	WinchPositionPID();
 	void Initialize();
 	void Execute();
 	bool IsFinished();

@@ -13,12 +13,16 @@
 #include "Subsystems/DriveTrain.h"
 
 class Robot: public frc::IterativeRobot {
+private:
+	Shooter* shooter;
 public:
 	void RobotInit() override {
 		CommandBase::initialize();
 		//chooser.AddDefault("Default Auto", new ExampleCommand());
 		// chooser.AddObject("My Auto", new MyAutoCommand());
 		frc::SmartDashboard::PutData("Auto Modes", &chooser);
+		shooter = new Shooter();
+
 		//foreward = new Forward();
 		//left = new Talon(0);
 		//right = new Talon(1);
@@ -80,6 +84,9 @@ public:
 
 	void TeleopPeriodic() override {
 		frc::Scheduler::GetInstance()->Run();
+		shooter->setPIDConstants(1, 1, 0, 0);
+		shooter->setSpeed(-2130); //10259
+		std::cout << "shooter found" << std::endl;
 	}
 
 	void TestInit() override {

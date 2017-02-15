@@ -1,5 +1,6 @@
 #include "OI.h"
 #include "Commands/SetDriveReverse.h"
+#include "Commands/SetShooterSpeedPID.h"
 #include "Commands/SetDriveForward.h"
 
 using namespace frc;
