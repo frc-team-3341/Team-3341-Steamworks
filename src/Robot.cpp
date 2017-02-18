@@ -22,7 +22,9 @@ public:
 		//chooser.AddDefault("Default Auto", new ExampleCommand());
 		// chooser.AddObject("My Auto", new MyAutoCommand());
 		frc::SmartDashboard::PutData("Auto Modes", &chooser);
+
 		shooter = new Shooter();
+
 
 		//foreward = new Forward();
 		//left = new Talon(0);
@@ -96,7 +98,9 @@ void AutonomousPeriodic() override {
 		}
 	}
 
+
 		void TestInit() override {
+
 
 		//foreward->Start();
 		//CommandBase::drive->setSpeedLeft(0.5);
@@ -117,7 +121,9 @@ void AutonomousPeriodic() override {
 	}
 
 private:
+
 	Command* autonomousCommand;
+
 	frc::SendableChooser<frc::Command*> chooser;
 	//Command* foreward;
 	//Talon* left;

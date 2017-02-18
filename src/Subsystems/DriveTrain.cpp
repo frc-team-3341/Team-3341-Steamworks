@@ -135,7 +135,7 @@ double DriveTrain::getDistance()
     (
         (double) ((encoderLeft->Get()) / ticksToDistance) -
         (double) ((encoderRight->Get()) / ticksToDistance)
-    ) / -2.0;
+    ) / 2.0;
 }
 
 double DriveTrain::getRate()
@@ -146,7 +146,7 @@ double DriveTrain::getRate()
     (
         (double) ((encoderLeft->GetRate()) / ticksToDistance) -
         (double) ((encoderRight->GetRate()) / ticksToDistance)
-    ) / -2.0;
+    ) / 2.0;
 
 }
 
@@ -168,7 +168,9 @@ double DriveTrain::getLeftEncoderDistance()
 	//TODO negate this and the right one below
 	//return this->left->GetPosition();
 
+
 	return this->encoderLeft->GetDistance()*(-1);
+
 }
 
 double DriveTrain::getRightEncoderDistance()

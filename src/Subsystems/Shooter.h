@@ -15,7 +15,6 @@ private:
 public:
 	Shooter();
 	//void InitDefaultCommand();
-
 	void setSpeed(double speed);
 	double getSpeed();
 	double getEncoderVel();
