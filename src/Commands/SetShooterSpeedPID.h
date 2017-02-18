@@ -2,13 +2,14 @@
 #define SetShooterSpeed_H
 
 #include "../CommandBase.h"
+#include "OI.h"
 #include "../Subsystems/Shooter.h"
 #include "../Utilities/WVPIDController.h"
 #include "CANTalon.h"
 
 using namespace frc;
 
-class SetShooterSpeed : public CommandBase
+class SetShooterSpeed: public CommandBase
 {
 public:
 	SetShooterSpeed();
@@ -20,12 +21,8 @@ public:
 	double findSpeed(double dist);
 
 private:
-	CANTalon* _talon;
-	std::string _sb;
 	int _loops;
-	bool _lastButton1;
 	/** save the target position to servo to */
-	double targetPositionRotations;
 	double currentSpeed;
 	double correctionValue;
 	double moveValue;
@@ -33,6 +30,7 @@ private:
 	double calculatedVal;
 	double encoderVal;
 	double goalSpeed;
+	Button* shooterButton;
 	WVPIDController* speedPID;
 	Shooter* shooter;
 	// LiveWindow* lw;

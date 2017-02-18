@@ -30,10 +30,7 @@ const double ENCODER_RIGHT_1=0;
 const double ENCODER_RIGHT_2=1;
 const double ENCODER_LEFT_1=2;
 const double ENCODER_LEFT_2=3;
-const double LEFTSHOOTER= 4;
-const double RIGHTSHOOTER= 5;
-const double SHOOTERENCODERLEFT= 6;
-const double SHOOTERENCODERRIGHT= 7;
+const double SHOOTER = 34; //change to 1 for RoboRIO #1
 const double PIDCON_INCHES = 0.13617;//inches
 
 

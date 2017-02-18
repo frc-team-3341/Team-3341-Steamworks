@@ -9,6 +9,7 @@
 //std::unique_ptr<ExampleSubsystem> CommandBase::exampleSubsystem =
 //		std::make_unique<ExampleSubsystem>();
 DriveTrain* CommandBase::drive = nullptr;
+Shooter* CommandBase::shooter = nullptr;
 std::unique_ptr<OI> CommandBase::oi;
 
 CommandBase::CommandBase(const std::string &name) :
@@ -23,5 +24,6 @@ CommandBase::CommandBase(const std::string &name) :
 void CommandBase::initialize()
 {
 	drive = new DriveTrain();
+	shooter = new Shooter();
 	oi = std::make_unique<OI>();
 }

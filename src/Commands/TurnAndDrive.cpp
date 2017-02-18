@@ -30,10 +30,11 @@ void TurnAndDrive::Execute()
     std::cout << "pwm: " << pwm_val << std::endl;
 
 
+
     //std::cout << "Gyro PV: " << current_angle << std::endl;
    // std::cout << "Gyro error: " << anglePid->GetError() << std::endl;
 
-    drive->arcadeDrive(DriveTrain::Limit(pwm_val, 0.3), -DriveTrain::Limit(rotateVal, 0.5));
+
 }
 
 bool TurnAndDrive::IsFinished()

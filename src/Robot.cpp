@@ -14,13 +14,18 @@
 #include "Commands/AutonomousLeft.h"
 
 class Robot: public frc::IterativeRobot {
+private:
+	Shooter* shooter;
 public:
 	void RobotInit() override {
 		CommandBase::initialize();
 		//chooser.AddDefault("Default Auto", new ExampleCommand());
 		// chooser.AddObject("My Auto", new MyAutoCommand());
 		frc::SmartDashboard::PutData("Auto Modes", &chooser);
-		autonomousCommand = new AutonomousLeft();
+
+		shooter = new Shooter();
+
+
 		//foreward = new Forward();
 		//left = new Talon(0);
 		//right = new Talon(1);
@@ -66,31 +71,36 @@ public:
 		}
 	}
 
-	void AutonomousPeriodic() override {
+	void TeleopPeriodic() override
+	{
+		frc::Scheduler::GetInstance()->Run();
+		frc::SmartDashboard::PutNumber("Encoder", shooter->getEncoderVel());
+		shooter->setPIDConstants(1, 1, 0, 0);
+		shooter->setSpeed(15000);
+		std::cout << "Speed: " << shooter->getSpeed() << std::endl;
+		std::cout << "shooter found" << std::endl;
+
+
+	}
+
+void AutonomousPeriodic() override {
 		frc::Scheduler::GetInstance()->Run();
 	}
 
 	void TeleopInit() override {
-		// This makes sure that the autonomous stops running when
+		/*This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+		 */
 		if (autonomousCommand != nullptr) {
 			autonomousCommand->Cancel();
 		}
 	}
 
-	void TeleopPeriodic() override {
-		frc::Scheduler::GetInstance()->Run();
-		frc::SmartDashboard::PutNumber("EncoderTest", CommandBase::drive->getLeftEncoderDistance());
-		frc::SmartDashboard::PutNumber("EncoderRight", CommandBase::drive->getRightEncoderDistance());
-		frc::SmartDashboard::PutBoolean("CVGearFound", NetworkTablesInterface::gearFound());
-				frc::SmartDashboard::PutNumber("CVGearDistance",NetworkTablesInterface::getGearDistance());
-				frc::SmartDashboard::PutNumber("CVGearAltitude", NetworkTablesInterface::getGearAltitude());
-				frc::SmartDashboard::PutNumber("CVGearAzimuth", NetworkTablesInterface::getGearAzimuth());
-	}
 
-	void TestInit() override {
+		void TestInit() override {
+
 
 		//foreward->Start();
 		//CommandBase::drive->setSpeedLeft(0.5);
@@ -111,7 +121,9 @@ public:
 	}
 
 private:
-	CommandGroup* autonomousCommand;
+
+	Command* autonomousCommand;
+
 	frc::SendableChooser<frc::Command*> chooser;
 	//Command* foreward;
 	//Talon* left;

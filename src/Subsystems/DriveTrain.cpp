@@ -168,12 +168,14 @@ double DriveTrain::getLeftEncoderDistance()
 	//TODO negate this and the right one below
 	//return this->left->GetPosition();
 
-	return this->encoderLeft->GetDistance();
+
+	return this->encoderLeft->GetDistance()*(-1);
+
 }
 
 double DriveTrain::getRightEncoderDistance()
 {
-	return -this->encoderRight->GetDistance();
+	return -this->encoderRight->GetDistance()*(-1);
 }
 
 double DriveTrain::getGyroAngle()

@@ -1,6 +1,7 @@
 #ifndef Shooter_H
 #define Shooter_H
-#include <Commands/Subsystem.h>
+#include <WPILib.h>
+#include "Commands/Subsystem.h"
 #include "Encoder.h"
 #include "CANTalon.h"
 using namespace frc;
@@ -9,18 +10,18 @@ class Shooter : public Subsystem {
 private:
 	// It's desirable that everything possible under private except
 	// for methods that implement subsystem capabilities
-	 CANTalon* shooter;
+     CANTalon* shooter;
 	 double setPoint;
 public:
-
 	Shooter();
 	//void InitDefaultCommand();
-	~Shooter();
-	//void InitDefaultCommand(); // TODO: FInd out if this is needed
 	void setSpeed(double speed);
+	double getSpeed();
+	double getEncoderVel();
 	void setPID();
+	bool disable(bool button);
 	void loadBall();
-	void setPIDConstants();
+	void setPIDConstants(double F, double P, double I, double D);
 
 };
 
