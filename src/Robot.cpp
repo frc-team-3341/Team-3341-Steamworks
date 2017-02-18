@@ -11,6 +11,7 @@
 #include "Utilities/NetworkTablesInterface.h"
 #include "Commands/Forward.h"
 #include "Subsystems/DriveTrain.h"
+#include "Commands/AutonomousLeft.h"
 
 class Robot: public frc::IterativeRobot {
 private:
@@ -61,39 +62,45 @@ public:
 			autonomousCommand.reset(new ExampleCommand());
 		} */
 
-		autonomousCommand.reset(chooser.GetSelected());
+		//autonomousCommand.reset(chooser.GetSelected());
 
-		if (autonomousCommand.get() != nullptr) {
+		if (autonomousCommand != nullptr) {
 			autonomousCommand->Start();
 		}
 	}
 
-	void AutonomousPeriodic() override {
+	void TeleopPeriodic() override
+	{
+		frc::Scheduler::GetInstance()->Run();
+		frc::SmartDashboard::PutNumber("Encoder", shooter->getEncoderVel());
+		shooter->setPIDConstants(1, 1, 0, 0);
+		shooter->setSpeed(15000);
+		std::cout << "Speed: " << shooter->getSpeed() << std::endl;
+		std::cout << "shooter found" << std::endl;
+
+
+	}
+
+void AutonomousPeriodic() override {
 		frc::Scheduler::GetInstance()->Run();
 	}
 
 	void TeleopInit() override {
-		// This makes sure that the autonomous stops running when
+		/*This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+		 */
 		if (autonomousCommand != nullptr) {
 			autonomousCommand->Cancel();
 		}
 	}
 
-	void TeleopPeriodic() override {
-		frc::Scheduler::GetInstance()->Run();
-		shooter->setPIDConstants(1, 1, 0, 0);
-		shooter->setSpeed(-2130); //10259
-		std::cout << "shooter found" << std::endl;
-	}
-
-	void TestInit() override {
+		void TestInit() override {
 
 		//foreward->Start();
-		CommandBase::drive->setSpeedLeft(0.5);
-		CommandBase::drive->setSpeedRight(-0.5);
+		//CommandBase::drive->setSpeedLeft(0.5);
+		//CommandBase::drive->setSpeedRight(-0.5);
 	}
 
 	void TestPeriodic() override {
@@ -110,7 +117,7 @@ public:
 	}
 
 private:
-	std::unique_ptr<frc::Command> autonomousCommand;
+	Command* autonomousCommand;
 	frc::SendableChooser<frc::Command*> chooser;
 	//Command* foreward;
 	//Talon* left;

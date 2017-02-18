@@ -2,8 +2,9 @@
 #define OI_H
 
 #include "RobotMap.h"
-#include "WPILib.h"
+#include <WPILib.h>
 
+using namespace frc;
 
 class OI
 {
@@ -11,6 +12,8 @@ class OI
         Joystick* driveStickLeft;
         Joystick* driveStickRight;
         Joystick* operatorStick;
+        Button* stopWinchPIDButton;
+        Button* shooterButton;
     public:
         OI();
         ~OI();
@@ -18,6 +21,8 @@ class OI
         Joystick* getDriveStickLeft();
         Joystick* getDriveStickRight();
         Joystick* getOperatorStick();
+        Button* getWinchPositionPIDButton();
+        Button* shooterButtonValue();
 };
 
 #endif

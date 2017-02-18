@@ -2,9 +2,10 @@
 
 WinchPositionPID::WinchPositionPID()
 {
-	 _loops = 0;
+	 //_loops = 0;
 	 _lastButton1 = false;
 	 _talon->SetControlMode(CANSpeedController::kPercentVbus);
+	 _talon->SetFeedbackDevice(CANTalon::CtreMagEncoder_Relative);
 	 _talon->ConfigLimitMode(CANSpeedController::kLimitMode_SrxDisableSwitchInputs);
 	 // Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
@@ -19,15 +20,15 @@ void WinchPositionPID::Initialize()
 			/* use the low level API to set the quad encoder signal */
 
 			/* set the peak and nominal outputs, 12V means full */
-			_talon->ConfigNominalOutputVoltage(+0., -0.);
-			_talon->ConfigPeakOutputVoltage(+12., -12.);
+			//_talon->ConfigNominalOutputVoltage(+0., -0.); //TODO: See if needed
+			//_talon->ConfigPeakOutputVoltage(+12., -12.); //TODO: See if needed
 			/* set the allowable closed-loop error,
 			 * Closed-Loop output will be neutral within this range.
 			 * See Table in Section 17.2.1 for native units per rotation.
 			 */
-			_talon->SetAllowableClosedLoopErr(0); /* always servo */
+			//_talon->SetAllowableClosedLoopErr(0); /* always servo */
 			/* set closed loop gains in slot0 */
-			_talon->SelectProfileSlot(0);
+			//_talon->SelectProfileSlot(0);
 			_talon->SetF(1); // TODO: Set F constant through testing
 			_talon->SetP(1); // TODO: Set P constant through testing
 			_talon->SetI(0.0); // TODO: Set I constant through testing

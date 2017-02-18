@@ -1,4 +1,4 @@
-#include <Commands/SetShooterSpeedPID.h>
+#include "Commands/SetShooterSpeedPID.h"
 
 SetShooterSpeed::SetShooterSpeed()
 {
@@ -17,6 +17,7 @@ void SetShooterSpeed::Initialize()
 	// TODO: figure out goalSpeed
 	goalSpeed = -10259; //2130
 	shooter->setPIDConstants(1,1,0,0);
+
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -28,14 +29,17 @@ void SetShooterSpeed::Execute()
 // Make this return true when this Command no longer needs to run execute()
 bool SetShooterSpeed::IsFinished()
 {
-	// TODO: figure out how to see when target speed has been reached
+	if(shooterButton)
+	{
+		return true;
+	}
 	return false;
 }
 
 // Called once after isFinished returns true
 void SetShooterSpeed::End()
 {
-	shooter->~Shooter();
+
 }
 
 // Called when another command which requires one or more of the same

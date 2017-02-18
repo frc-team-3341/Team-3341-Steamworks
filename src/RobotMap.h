@@ -20,7 +20,7 @@
 //const int RANGE_FINDER_PORT = 1;
 //const int RANGE_FINDER_MODULE = 1;
 
-const int MOTORPORT = 0;
+//const int MOTORPORT = 0;
 const int WINCH_ENCODER1 = 40;
 const int WINCH_ENCODER2 = 41;
 const int WINCH_MOTOR = 43;
@@ -30,7 +30,7 @@ const double ENCODER_RIGHT_1=0;
 const double ENCODER_RIGHT_2=1;
 const double ENCODER_LEFT_1=2;
 const double ENCODER_LEFT_2=3;
-const double SHOOTER = 0; //change to 1 for RoboRIO #1
+const double SHOOTER = 34; //change to 1 for RoboRIO #1
 const double PIDCON_INCHES = 0.13617;//inches
 
 

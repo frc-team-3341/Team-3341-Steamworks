@@ -79,9 +79,11 @@ void NavigateCV::Execute(){
 	gyroVal = drive->getGyroAngle();
 
 	power = distPID->Tick(encoderVal);
+
+
 	angle = anglePID->Tick(gyroVal);
 
-	drive->arcadeDrive(power, angle);
+	drive->arcadeDrive(power/100.0, 0);
 
 }
 
