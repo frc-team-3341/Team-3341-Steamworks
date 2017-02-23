@@ -1,25 +1,28 @@
 # Team-3341-Steamworks
-2017 FRC Team 3341 Competition Code for Steamworks
+2017 FRC Team 3341 Option 16's Competition Code for 2017 FRC Steamworks
 
-# 1) How To Pull from the Master
-`git pull upstream master`
+## Autonomous Mode
+* Robot can place a gear onto the pegs during autonomous mode using data from the gyro, encoders, and computer vision.
+## TeleOperated Mode
+* Robot can drive, place gears, acquire and shoot balls, and climb up the rope during this time of the game. 
 
-This pulls the code from the "upstream" repo to your own repo, named master (not to be confused with the master repo which is named "upstream).
+## Contributers
 
-# 2) How to Push to Your Fork
+### Student Leaders 
+* Nir Levin
+* Vasundhara Sengupta
+* Breanna Tang 
 
-**_Important_**
-
-Make sure to _pull_ changes from the master (if the master repo is ahead of yours) before making any changes to your code.
-
-1) `git add -A`
-
-This stages your changes to commit.
-
-2) `git commit -m "your message here"`
-
-This commits your changes to your local.
-
-3) `git push origin master`
-
-This pushes your code to your fork on github. Please notify Nir or Vas once you've done this.
+### Students 
+* Ankit Bhatia 
+* Ryan Chazen 
+* Steven Chen
+* Sauhaarda Chowdhuri 
+* Isha Date 
+* Dhruti Pandya 
+* Deepali Jain
+* Arvind Krishnan 
+* Yash Melkani 
+* Daniel Ryu
+* Lisa Sun
+* Steven Yacoub
