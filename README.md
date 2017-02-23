@@ -3,6 +3,7 @@
 
 ## Autonomous Mode
 * Robot can place a gear onto the pegs during autonomous mode using data from the gyro, encoders, and computer vision.
+
 ## TeleOperated Mode
 * Robot can drive, place gears, acquire and shoot balls, and climb up the rope during this time of the game. 
 
