@@ -1,20 +1,22 @@
 /*
- * GyroL3GD20H.cpp
+ * NewGyro.cpp
  *
  *  Created on: Oct 29, 2016
  *      Author: nidhi
  */
 
-#include "GyroL3GD20H.h"
+#include "NewGyro.h"
 #include <iostream>
 //#include "HAL/HAL.h"
 //#include "LiveWindow/LiveWindow.h"
-
-
+using namespace frc;
+using namespace std::chrono_literals;
 //constexpr double kGsPerLSB;
 
 /**
  * Constructs the ADXL345 Accelerometer over I2C.
+ *
+ *By Deepali Jain
  *
  * @param port          The I2C port the accelerometer is attached to
  * @param range         The range (+ or -) that the accelerometer will measure
@@ -23,26 +25,31 @@
 
 namespace wvrobotics {
 
-GyroL3GD20H::GyroL3GD20H(I2C::Port port, int deviceAddress)
+NewGyro::NewGyro(I2C::Port port, int deviceAddress)
     : m_i2c(port, deviceAddress) {
 
 	m_i2c.Write(GYRO_REGISTER_CTRL_REG1, 0x0F);
 
-	xCalibration = 0;
-	yCalibration = 0;
-	zCalibration = 0;
+	//float zAxisArray[10] = {};
+	//float avg = 0;
 	count = 0;
-	calibrationCount = 0;
+	calibrationcount = 0;
 	sum.setAxis(0,0,0);
 	mState = UNCONNECTED;
-	const unsigned char ADDRESS = 0xF;
-	unsigned char whoAmI = 0b11010111;
 	overrunGyroCount = 0;
-	bool isVerified = m_i2c.VerifySensor(ADDRESS, 1, &whoAmI);
-	std::cout << "locate sensor: "<< (int)isVerified << std::endl;
+	isVerified = m_i2c.VerifySensor(ADDRESS, 1, &whoAmI);
 	if(isVerified)
-		mState = CALIBRATING;
+		mState = INITIALIZATION;
+	std::cout << "locate sensor: "<< (int)isVerified << std::endl;
+	clock_initial = std::clock();
+	t_start = std::chrono::high_resolution_clock::now();
+	clock_gyro = std::clock();
+	 m_i2c.Write(GYRO_REGISTER_CTRL_REG1, 0x00);
 
+	//if(isVerified)
+		//mState = CALIBRATING;
+
+	std::cout << "gyro state " << mState << std::endl;
 /*
   HAL_Report(HALUsageReporting::kResourceType_ADXL345,
              HALUsageReporting::kADXL345_I2C, 0);
@@ -50,13 +57,70 @@ GyroL3GD20H::GyroL3GD20H(I2C::Port port, int deviceAddress)
   */
 }
 
-GyroL3GD20H::~GyroL3GD20H() {
+NewGyro::~NewGyro() {
 	// TODO Auto-generated destructor stub
 }
 
-
-void GyroL3GD20H::initializeGyro()
+void NewGyro::periodicProcessing(int startupTime)
 {
+	isVerified = m_i2c.VerifySensor(ADDRESS, 1, &whoAmI);
+		if(isVerified == false)
+		{
+			mState=UNCONNECTED;
+			//std::cout << "gyro state " << mState << std::endl;
+		}
+		//subtract gyro clock from robot clock and if it is more than a set time set mstate=calibration
+
+		std::chrono::high_resolution_clock::time_point t_end = std::chrono::high_resolution_clock::now();
+		std::chrono::duration<double> time_span;
+		switch(mState)
+		{
+			case UNCONNECTED:
+				std::cout << "Your gyro is not connected."<< std::endl;
+				break;
+			case INITIALIZATION:
+				time_span = std::chrono::duration_cast<std::chrono::duration<double>>(t_end - t_start);
+				//std::cout << "It took me " << time_span.count() << " seconds" << std::endl;
+				//timeDiff = clock_initial - clock_gyro;
+				//std::cout << "time difference: " << timeDiff << std::endl;
+				if(time_span.count() > startupTime)
+				{
+					initializeGyro();
+					mState = CALIBRATING;
+					//std::cout << "gyro state " << mState << std::endl;
+				}
+				break;
+			case CALIBRATING:
+				readGyroData();
+				if(TOTAL_COUNT < count)
+				{
+					//avg = sum.getzAxis()/count;
+					sum.setAxis(0,0,0);
+					count = 0;
+					mState = READY;
+					//std::cout << "gyro state " << mState << std::endl;
+				}
+				break;
+			case READY:
+				int temp = count;
+				readGyroData();
+				int totalCount = count - temp;
+				if(totalCount > 0)
+				{
+					sum.overrunofAxis();
+					sum.setzAxis(sum.getzAxis() - (double)(avg*totalCount));
+					//std::cout << "Gyro z axis: " << (sum.getzAxis() - (double)(avg*totalCount)) << std::endl;
+				}
+		// determine the number of new samples read
+		// if there is new data, subtract out the calibration value multiplied by the number of new samples from the data
+				break;
+		}
+}
+
+
+void NewGyro::initializeGyro()
+{
+
 	  /* Set CTRL_REG1 (0x20)
 	   ====================================================================
 	   BIT  Symbol    Description                                   Default
@@ -70,8 +134,15 @@ void GyroL3GD20H::initializeGyro()
 
 	  /* Reset then switch to normal mode and enable all three channels */
 	double dataRate = 94.7;
-	  m_i2c.Write(GYRO_REGISTER_CTRL_REG1, 0x00);
+
+	  //std::this_thread::sleep_for(2s);
+	  //gyroFinal = std::chrono::high_resolution_clock::now();
+	  //std::chrono::duration<double> time_span;
+	  //time_span = std::chrono::duration_cast<std::chrono::duration<double>>(gyroFinal - t_start);
+	// m_i2c.Write(GYRO_REGISTER_CTRL_REG1, 0x00);
 	  m_i2c.Write(GYRO_REGISTER_CTRL_REG1, 0x0F);
+
+
 	  /* ------------------------------------------------------------------ */
 
 	  /* Set CTRL_REG2 (0x21)
@@ -154,25 +225,27 @@ void GyroL3GD20H::initializeGyro()
 
 }
 
+GyroAxis* NewGyro::getAxis()
+{
+	return &sum;
+}
 
-
-void GyroL3GD20H::readGyroData() //read gyro status, read FIFO source, read GYRO_REGISTER_OUT_X_L
+GyroAxis NewGyro::readGyroData() //read gyro status, read FIFO source, read GYRO_REGISTER_OUT_X_L
 {
 	short data[3];
 	uint8_t registerVal;
 	unsigned char status = 0;
 	uint8_t dataAvailable;
+	uint8_t discardedData[6];
+	uint8_t *byteData = (uint8_t*)data;
 	m_i2c.Read(GYRO_REGISTER_STATUS_REG, 1, &status);
-	std::cout << "Status of gyro: " << std::hex << (int)status << std::dec << std::endl;
+	//std::cout << "Status of gyro: " << std::hex << (int)status << std::dec << std::endl;
 
-	//xCalibration = xCalibrateTotal/calibrationCount;
-	//yCalibration = yCalibrateTotal/calibrationCount;
-	//zCalibration = zCalibrateTotal/calibrationCount;
 
 	if(status & ZYXDA) // check for data available
 	{
 		m_i2c.Read(GYRO_REGISTER_FIFO_SRC_REG, 1, &registerVal);
-		std::cout << "FIFO Source Register: " << std::hex << (int)registerVal << std::dec  << std::endl;
+		//std::cout << "FIFO Source Register: " << std::hex << (int)registerVal << std::dec  << std::endl;
 
 		if(FIFOSOURCE_OVERRUN & registerVal)
 		{
@@ -181,18 +254,27 @@ void GyroL3GD20H::readGyroData() //read gyro status, read FIFO source, read GYRO
 		}
 
 		dataAvailable = (registerVal & FIFOSOURCE_DATA_SAMPLES) + 1;
-
 		for(int i = 0; i < dataAvailable; i++ )
 		{
-			m_i2c.Read(GYRO_REGISTER_OUT_X_L | AUTO_INCREMENT, 6, (uint8_t*)data);
-			//std::cout << "Gyro sample data: " << (data[0]) << ", " << (data[1]) << ", " << (data[2]) << std::endl;
+			//m_i2c.Read(GYRO_REGISTER_OUT_X_L | AUTO_INCREMENT, 6, (uint8_t*)data);
+
+		    m_i2c.Read(GYRO_REGISTER_OUT_X_L, 1, byteData);
+		    m_i2c.Read(GYRO_REGISTER_OUT_X_H, 1, byteData + 1);
+		    m_i2c.Read(GYRO_REGISTER_OUT_Y_L, 1, byteData + 2);
+		    m_i2c.Read(GYRO_REGISTER_OUT_Y_H, 1, byteData + 3);
+		    m_i2c.Read(GYRO_REGISTER_OUT_Z_L, 1, byteData + 4);
+		    m_i2c.Read(GYRO_REGISTER_OUT_Z_H, 1, byteData + 5);
+
+
+		    m_i2c.Read(GYRO_REGISTER_OUT_X_L | AUTO_INCREMENT, 6, discardedData);
 			sum.addAxis(data[0]*conversionFactor, data[1]*conversionFactor, data[2]*conversionFactor);
-			std::cout << "Gyro sum : " << sum.getxAxis()  << ", " << sum.getyAxis() << ", " << sum.getzAxis() << std::endl;
 			count++;
+			//std::cout << "Gyro ACTUAL data: " << std::hex << data[2] <<  std::dec << std::endl;
+
 		}
 
 	}
-
+return sum;
 }
 
 

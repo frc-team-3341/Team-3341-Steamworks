@@ -12,6 +12,7 @@ private:
 	// for methods that implement subsystem capabilities
      CANTalon* shooter;
 	 double setPoint;
+	 Servo* servo;
 public:
 	Shooter();
 	//void InitDefaultCommand();
@@ -22,6 +23,7 @@ public:
 	bool disable(bool button);
 	void loadBall();
 	void setPIDConstants(double F, double P, double I, double D);
+	void setServo(int angle);
 
 };
 

@@ -5,11 +5,10 @@
 AutonomousLeft::AutonomousLeft(){
 
 	//Requires(drive);
-
+	//AddSequential(new CVDrive());
 	//AddSequential(new TurnAndDrive(30,0));
-	//AddSequential(new TurnAndDrive(0,0.5));
+	//AddSequential(new TurnAndDrive(0,100));
 	AddSequential(new NavigateCV());
-
 }
 
 

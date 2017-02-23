@@ -1,34 +1,33 @@
 /*
- * NavigateCV.h
+ * NewNavigateCV.h
  *
  *  Created on: Jan 14, 2017
- *      Author: sauhaarda
+ *      Author: danie
  */
 
-
-#ifndef SRC_NAVIGATECV_H_
-#define SRC_NAVIGATECV_H_
+/*
+#ifndef SRC_NewNavigateCV_H_
+#define SRC_NewNavigateCV_H_
 
 #include <Utilities/WVPIDController.h>
 #include "Utilities/NetworkTablesInterface.h"
-#include <time.h>
 #include <WPILib.h>
 #include "../CommandBase.h"
+#include <chrono>
+#include <ctime>
+#include <thread>
 
 
 using namespace frc;
 
-class NavigateCV: public CommandBase{
+class NewNavigateCV: public CommandBase{
 
 private:
+	int state;
 
-	const double IIR_CONST = 0.5;
-	const double DRIVE_TIME = 1;
-
-	enum State {CV, INNER_LOOP, END};
-	State state;
-
-	clock_t start, end; // clocks for timing
+	const int WAIT_CV = 0;
+	const int MOVING = 1;
+	const int FINISHED = 2;
 
 	// Constants for fine tuning PID
 	double angleKp, angleKi, angleKd;
@@ -42,8 +41,8 @@ private:
 	WVPIDController* distPID;
 	WVPIDController* anglePID;
 
-	double encoderVal;
-	double lastGyroVal, newGyroVal;
+	// Variable for storing the last average encoder value, and last gyro angle value respectively.
+	double encoderVal, gyroVal;
 
 	// Variables for storing each separate encoder value
 	double leftDistance;
@@ -51,16 +50,22 @@ private:
 
 	double power;
 	double angle;
+	std::clock_t clock_initial;
+    std::chrono::high_resolution_clock::time_point t_start;
+
+    std::clock_t clock_final;
+    std::chrono::high_resolution_clock::time_point t_end;
 
 public:
-	NavigateCV();
+	NewNavigateCV();
 	void Execute();
 	void Initialize();
 	bool IsFinished();
 	void End();
 	void Interrupted();
 
-	virtual ~NavigateCV();
+	virtual ~NewNavigateCV();
 };
 
-#endif /* SRC_NAVIGATECV_H_ */
+#endif /* SRC_NewNavigateCV_H_ */
+

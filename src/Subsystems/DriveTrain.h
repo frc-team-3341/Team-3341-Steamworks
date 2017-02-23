@@ -4,7 +4,7 @@
 #include <WPILib.h>
 #include "Commands/Subsystem.h"
 //#include "../Sensors/UltrasonicSensors.h"
-#include "Subsystems/GyroL3GD20H.h"
+#include "Subsystems/NewGyro.h"
 #include "Subsystems/GyroAxis.h"
 //using namespace frc;
 class DriveTrain: public Subsystem
@@ -20,11 +20,13 @@ class DriveTrain: public Subsystem
         float mult;
         int ticksToDistance;
         BuiltInAccelerometer* accel;
-        wvrobotics::GyroL3GD20H* gyro;
+        //wvrobotics::GyroL3GD20H* gyro;
         //DigitalGyro* gyro;
         //UltrasonicSensors* ultrasonicSensors;
 
     public:
+        wvrobotics::NewGyro* gyro;
+        wvrobotics::GyroAxis* axis;
         DriveTrain();
         ~DriveTrain();
 

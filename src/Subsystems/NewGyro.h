@@ -1,22 +1,30 @@
 /*
- * GyroL3GD20H.h
+ * NewGyro.h
  *
  *  Created on: Oct 29, 2016
  *      Author: nidhi
  */
 
-#ifndef GYROL3GD20H_H_
-#define GYROL3GD20H_H_
+#ifndef NewGyro_H_
+#define NewGyro_H_
 #include "I2C.h"
 #include "GyroAxis.h"
+using namespace frc;
+#include <iostream>
+#include <iomanip>
+#include <chrono>
+#include <ctime>
+#include <thread>
 
 namespace wvrobotics {
 
-class GyroL3GD20H {
+
+class NewGyro {
 	enum State {
 		UNCONNECTED = 0,
-		CALIBRATING = 1,
-		CONNECTED
+		INITIALIZATION = 1,
+		CALIBRATING = 2,
+		READY
 	};
 
     typedef enum
@@ -93,27 +101,36 @@ class GyroL3GD20H {
     static constexpr double GYRO_SENSITIVITY_250DPS  = 0.00875;  // Roughly 22/256 for fixed point match
     static constexpr double GYRO_SENSITIVITY_500DPS  = 0.0175;    // Roughly 45/256
     static constexpr double GYRO_SENSITIVITY_2000DPS = 0.070;      // Roughly 18/256
-
 private:
 	State mState;
 	I2C m_i2c;
 	int overrunGyroCount;
-	int xCalibration;
-	int yCalibration;
-	int zCalibration;
-	int calibrationCount;
-	int xCalibrateTotal;
-	int yCalibrateTotal;
-	int zCalibrateTotal;
 	int count;
-	GyroAxis sum;
+	GyroAxis sum,gAxis;
+	int calibrationcount;
 	double conversionFactor = 0;
+	float zAxisArray[];
+	float avg = 0;
+    std::clock_t clock_initial;
+    int timeDiff = 0;
+    std::clock_t clock_gyro;
+    std::chrono::high_resolution_clock::time_point t_start;
+    std::chrono::high_resolution_clock::time_point gyroFinal;
+    int TOTAL_COUNT = 200;
+    const unsigned char ADDRESS = 0xF;
+    unsigned char whoAmI = 0b11010111;
+    bool isVerified;
 
 public:
-	GyroL3GD20H(I2C::Port port, int deviceAddress);
-	virtual ~GyroL3GD20H();
+	NewGyro(I2C::Port port, int deviceAddress);
+	virtual ~NewGyro();
+	void periodicProcessing(int startupTime);
+	void instantiateGyro();
 	void initializeGyro();
-	void readGyroData();
+	void ready();
+	void checkForZAxis(int counterGyro);
+	GyroAxis readGyroData();
+	GyroAxis* getAxis();
 	void resetGyro()
 	{
 		sum.setAxis(0,0,0);
@@ -137,4 +154,4 @@ public:
 
 } /* namespace wvrobotics */
 
-#endif /* GYROL3GD20H_H_ */
+#endif /* NewGyro_H_ */

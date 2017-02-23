@@ -4,7 +4,7 @@ ArcadeDrive::ArcadeDrive()
     : isReset(true)
 {
     Requires(drive);
-    anglePid = new WVPIDController(.05, 0, 0, 0, false);
+    anglePid = new WVPIDController(.50, 0, 0, 0, false);
 }
 
 void ArcadeDrive::Initialize()

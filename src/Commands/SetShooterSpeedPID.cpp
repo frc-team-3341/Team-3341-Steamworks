@@ -15,26 +15,24 @@ SetShooterSpeed::SetShooterSpeed()
 void SetShooterSpeed::Initialize()
 {
 	// TODO: figure out goalSpeed
-	goalSpeed = -10259; //2130
+	goalSpeed = -15000; //2130
 	shooter->setPIDConstants(1,1,0,0);
 
 }
+
 
 // Called repeatedly when this Command is scheduled to run
 void SetShooterSpeed::Execute()
 {
 	shooter->setSpeed(goalSpeed);
+	//std::cout << "Shooter Error: " << shooter->getError() << std::endl;
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool SetShooterSpeed::IsFinished()
 {
-	if(shooterButton)
-	{
-		return true;
+	return false; //may be return true but not sure
 	}
-	return false;
-}
 
 // Called once after isFinished returns true
 void SetShooterSpeed::End()
@@ -48,6 +46,3 @@ void SetShooterSpeed::Interrupted()
 {
 
 }
-
-
-
