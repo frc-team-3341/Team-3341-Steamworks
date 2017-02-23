@@ -1,6 +1,5 @@
 #include "AutonomousRight.h"
 #include "TurnAndDrive.h"
-#include "NewNavigateCV.h"
 AutonomousRight::AutonomousRight() {
 
 
