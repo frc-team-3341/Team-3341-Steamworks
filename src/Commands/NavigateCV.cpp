@@ -52,7 +52,9 @@ void NavigateCV::Initialize()
 
 void NavigateCV::Execute(){
 	if(state == CV){
-		if(NetworkTablesInterface::gearFound()){ // Wait Until Gear is Found
+		if(NetworkTablesInterface::gearFound() &&
+				distGoal != NetworkTablesInterface::getGearDistance() &&
+				angleGoal != NetworkTablesInterface::getGearAzimuth()){ // Wait Until Gear is Found
 			// Get CV Data
 			distGoal = NetworkTablesInterface::getGearDistance();
 			angleGoal = NetworkTablesInterface::getGearAzimuth();
@@ -75,30 +77,31 @@ void NavigateCV::Execute(){
 				state = INNER_LOOP;
 
 				// Start timer
-				start = clock();
-#ifdef DEBUG
-				cout << "Clock Started at:\t" << (double)start << endl;
-#endif
+//				start = clock();
+//#ifdef DEBUG
+//				cout << "Clock Started at:\t" << (double)start << endl;
+//#endif
 
 #ifdef DEBUG
 				cout << "Moving from CV to INNER_LOOP" << endl;
 #endif
 			}else{ // We are done, close enough to the target to end loop.
 				state = END;
+				drive->arcadeDrive(0,0);
 #ifdef DEBUG
 				cout << "Moving from CV to END" << endl;
 #endif
 			}
+		}else{
+			state = INNER_LOOP;
+			#ifdef DEBUG
+				cout << "Another cycle spent waiting for CV." << endl;
+			#endif
 		}
-#ifdef DEBUG
-		else{
-			cout << "Another cycle spent waiting for CV." << endl;
-		}
-#endif
 	}else if(state == INNER_LOOP){
-		end = clock();
-
-		if((double(end - start)/CLOCKS_PER_SEC) < DRIVE_TIME){ // until drive time is elapsed
+//		end = clock();
+//
+//		if((double(end - start)/CLOCKS_PER_SEC) < DRIVE_TIME){ // until drive time is elapsed
 			// Get Encoder Data
 			leftDistance = drive->getLeftEncoderDistance();
 			rightDistance = drive->getRightEncoderDistance();
@@ -131,13 +134,13 @@ void NavigateCV::Execute(){
 #endif
 			// Initiate Drive
 			drive->arcadeDrive(power, angle);
-		}else{
-			drive->arcadeDrive(0,0); // Disable drive
+//		}else{
+//			drive->arcadeDrive(0,0); // Disable drive
 			state = CV;
 #ifdef DEBUG
 			cout << "Moving from INNER_LOOP to CV" << endl;
 #endif
-		}
+//		}
 	}
 }
 
