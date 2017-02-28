@@ -57,8 +57,8 @@ void DriveTrain::arcadeDrive(float moveValue, float rotateValue)
     float leftMotorOutput;
     float rightMotorOutput;
 
-    moveValue = DriveTrain::Limit(moveValue, 0.3) * mult;
-    rotateValue = DriveTrain::Limit(rotateValue, 0.3);
+    moveValue = DriveTrain::Limit(moveValue, 1) * mult;
+    rotateValue = DriveTrain::Limit(rotateValue, 1);
 
     // Standard ArcadeDriveTrain algorithm from Google
     if(moveValue > 0.0)
