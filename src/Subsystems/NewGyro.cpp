@@ -67,7 +67,7 @@ void NewGyro::periodicProcessing(int startupTime)
 		if(isVerified == false)
 		{
 			mState=UNCONNECTED;
-			//std::cout << "gyro state " << mState << std::endl;
+			std::cout << "gyro state " << mState << std::endl;
 		}
 		//subtract gyro clock from robot clock and if it is more than a set time set mstate=calibration
 
@@ -76,7 +76,7 @@ void NewGyro::periodicProcessing(int startupTime)
 		switch(mState)
 		{
 			case UNCONNECTED:
-				std::cout << "Your gyro is not connected."<< std::endl;
+//				std::cout << "Your gyro is not connected."<< std::endl;
 				break;
 			case INITIALIZATION:
 				time_span = std::chrono::duration_cast<std::chrono::duration<double>>(t_end - t_start);

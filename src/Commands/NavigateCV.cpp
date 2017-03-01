@@ -10,7 +10,7 @@
 
 using namespace std;
 
-#define DEBUG 1
+// #define DEBUG 1
 
 NavigateCV::NavigateCV(){
 	Requires(drive);
@@ -21,8 +21,15 @@ void NavigateCV::Initialize()
 	state = CV;
 
 	// Temporary initial values for Kp, Ki, and Kd.
-	distKp = distKi = distKd = 1;
-	angleKp = angleKi = angleKd = 1;
+
+
+	distKp = 0.030415;
+	distKi = 0.004972;
+	distKd = 0;
+
+	angleKp = 1.7762;
+	angleKi = 0.53207;
+	angleKd = 0;
 
 	// Set the goal distance and angle to 0. We are at this point right now so nothing will happen.
 	distGoal = angleGoal = 0;
@@ -48,6 +55,7 @@ void NavigateCV::Initialize()
 
 	drive->resetEncoders();
 	drive->resetGyro();
+	cout << "Executing NavigateCV" << endl;
 }
 
 void NavigateCV::Execute(){
@@ -64,7 +72,7 @@ void NavigateCV::Execute(){
 			cout << "CV Azimuth:\t" << angleGoal << endl;
 #endif
 
-			if(distGoal > 0.2){ // Need to continue
+			if(distGoal > 0.7){ // Need to continue
 				// Initialize PIDs with CV Data
 				distPID->SetSetPoint(distGoal);
 				anglePID->SetSetPoint(angleGoal);
@@ -133,7 +141,7 @@ void NavigateCV::Execute(){
 			cout << "Steering Intensity:\t" << angle << endl;
 #endif
 			// Initiate Drive
-			drive->arcadeDrive(power, angle);
+			drive->arcadeDrive(drive->Limit(power,0.3), drive->Limit(angle,0.3));
 //		}else{
 //			drive->arcadeDrive(0,0); // Disable drive
 			state = CV;

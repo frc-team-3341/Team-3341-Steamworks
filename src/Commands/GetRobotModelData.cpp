@@ -32,29 +32,34 @@ void GetRobotModelData::Initialize() {
 }
 
 void GetRobotModelData::Execute() {
-	end = clock();
-	if (state == MOVE) {
-		if (double(end - start) > RUN_TIME) {
-			state = TURN;
-			cout << "Gyro Data:" << endl;
-			start = clock();
-		} else {
-			// Get Encoder Data
-			leftDistance = drive->getLeftEncoderDistance();
-			rightDistance = drive->getRightEncoderDistance();
-			drive->arcadeDrive(POWER, 0);
-			cout << (leftDistance + rightDistance) / 2.0 << endl; // Print encoder value
-		}
-	} else if (state == TURN) {
-		if (double(end - start) > RUN_TIME) {
-			state = END;
-			drive->arcadeDrive(0, 0);
-		} else {
-			gyroVal = drive->getGyroAngle();
-			drive->arcadeDrive(0, POWER);
-			cout << gyroVal << endl;
-		}
-	}
+	gyroVal = drive->getGyroAngle();
+	drive->arcadeDrive(0, POWER);
+	cout << "Gyro Val:" << gyroVal << endl;
+//	leftDistance = drive->getLeftEncoderDistance();
+//	rightDistance = drive->getRightEncoderDistance();
+//	drive->arcadeDrive(POWER, 0);
+//	cout << "MY_STATEMENT:" << (leftDistance + rightDistance) / 2.0 << endl; // Print encoder value
+
+//	end = clock();
+//	if (state == MOVE) {
+//		if (double(end - start) > RUN_TIME) {
+//			state = TURN;
+//			cout << "Gyro Data:" << endl;
+//			start = clock();
+//		} else {
+//			// Get Encoder Data
+//			leftDistance = drive->getLeftEncoderDistance();
+//			rightDistance = drive->getRightEncoderDistance();
+//			drive->arcadeDrive(POWER, 0);
+//			cout << (leftDistance + rightDistance) / 2.0 << endl; // Print encoder value
+//		}
+//	} else if (state == TURN) {
+//		if (double(end - start) > RUN_TIME) {
+//			state = END;
+//			drive->arcadeDrive(0, 0);
+//		} else {
+//		}
+//	}
 }
 
 bool GetRobotModelData::IsFinished() {

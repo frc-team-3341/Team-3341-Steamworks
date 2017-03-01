@@ -20,7 +20,7 @@ class GetRobotModelData: public CommandBase {
 
 private:
 
-	const double RUN_TIME = 10; // in seconds
+	const double RUN_TIME = 5; // in seconds
 	const double POWER = 0.5;
 
 	enum State {
