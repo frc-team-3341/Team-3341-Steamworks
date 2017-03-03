@@ -207,6 +207,7 @@ public:
 		        std::cout << "Speed: " << shooter->getSpeed() << std::endl;
 		        std::cout << "shooter found" << std::endl;
 		        */
+		std::cout << "Winch Current " << CommandBase::winch->getCurrent() << std::endl;
 		frc::SmartDashboard::PutNumber("CANTalon 1 Current", CommandBase::winch->getCurrent());
 		frc::SmartDashboard::PutNumber("Gyro", CommandBase::drive->getGyroAngle());
 		frc::SmartDashboard::PutNumber("EncoderTest", CommandBase::drive->getLeftEncoderDistance());

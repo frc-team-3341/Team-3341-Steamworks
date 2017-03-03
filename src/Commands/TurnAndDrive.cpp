@@ -1,5 +1,4 @@
-/*
- * #include "Commands/TurnAndDrive.h"
+ #include "Commands/TurnAndDrive.h"
 
 TurnAndDrive::TurnAndDrive(double inDistance, double inAngle)
     : distance(inDistance * PIDCON_INCHES * 1.185), angle(inAngle)
@@ -28,7 +27,7 @@ void TurnAndDrive::Execute()
 
     std::cout << "ERROR!!!!: " << distancePid->GetError() << std::endl;
     std::cout << "curr_dist: " << current_angle << std::endl;
-   //std::cout << "pwm: " << pwm_val << std::endl;
+   std::cout << "pwm: " << pwm_val << std::endl;
 
 
     //std::cout << "Gyro PV: " << current_angle << std::endl;
@@ -64,4 +63,3 @@ void TurnAndDrive::End()
 void TurnAndDrive::Interrupted()
 {
 }
-*/
