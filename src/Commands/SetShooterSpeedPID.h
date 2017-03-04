@@ -1,5 +1,3 @@
-
-
 #ifndef SetShooterSpeed_H
 #define SetShooterSpeed_H
 
@@ -11,13 +9,12 @@
 
 using namespace frc;
 
-class SetShooterSpeed : public CommandBase
+class SetShooterSpeed: public CommandBase
 {
 public:
 	SetShooterSpeed();
 	void Initialize();
-	void Execute();
-	bool IsFinished();
+	void Execute();bool IsFinished();
 	void End();
 	void Interrupted();
 	double findSpeed(double dist);

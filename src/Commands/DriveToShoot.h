@@ -4,7 +4,8 @@
 #include "../CommandBase.h"
 #include "../Utilities/WVPIDController.h"
 
-class DriveToShoot : public CommandBase {
+class DriveToShoot: public CommandBase
+{
 
 private:
 private:
@@ -38,14 +39,11 @@ private:
 public:
 	DriveToShoot();
 	void Initialize();
-	void Execute();
-	bool IsFinished();
+	void Execute();bool IsFinished();
 	void End();
 	void Interrupted();
 
 };
 
 #endif  // DriveToShoot_H
-
-
 

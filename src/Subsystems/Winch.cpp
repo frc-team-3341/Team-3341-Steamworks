@@ -3,12 +3,10 @@
 #include "WPILib.h"
 #include "../Commands/WinchMove.h"
 
-
-Winch::Winch(int portNumber, uint32_t canID):
-	Subsystem("Winch"),talonMotor(new CANTalon(canID)),
+Winch::Winch(int portNumber, uint32_t canID) :
+		Subsystem("Winch"), talonMotor(new CANTalon(canID)),
 //distEncoder(new Encoder(WINCH_ENCODER1 ,WINCH_ENCODER2)),
-	winchPortNumber(portNumber),
-	canBUSID(canID)
+		winchPortNumber(portNumber), canBUSID(canID)
 {
 	//distEncoder->SetDistancePerPulse(1.0);
 }
@@ -20,14 +18,14 @@ void Winch::InitDefaultCommand()
 
 Winch::~Winch()
 {
-   //delete distEncoder;
-   delete talonMotor;
+	//delete distEncoder;
+	delete talonMotor;
 
 }
 
 void Winch::resetEncoder()
 {
-    //distEncoder->Reset();
+	//distEncoder->Reset();
 }
 
 double Winch::getCurrent()
@@ -39,9 +37,9 @@ double Winch::getCurrent()
 
 double Winch::getDistance()
 {
-    // Average of both encoders (must negate to get proper direction)
+	// Average of both encoders (must negate to get proper direction)
 	return 0;
-    //return distEncoder->GetDistance();
+	//return distEncoder->GetDistance();
 
 }
 
@@ -53,13 +51,13 @@ CANTalon *Winch::getTalon()
 double Winch::getRate()
 {
 
-    return 0;//distEncoder->GetRate();
+	return 0; //distEncoder->GetRate();
 
 }
 
 void Winch::setSpeed(double s)
 {
-    talonMotor->Set(s);
+	talonMotor->Set(s);
 
 }
 

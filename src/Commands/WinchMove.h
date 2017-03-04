@@ -6,20 +6,18 @@
 #include "OI.h"
 using namespace frc;
 
-class WinchMove : public CommandBase {
+class WinchMove: public CommandBase
+{
 
 private:
 	Joystick* winchMove;
-	CANTalon* _talon;
-	bool _lastButton1;
+	CANTalon* _talon;bool _lastButton1;
 	double setPoint;
-
 
 public:
 	WinchMove();
 	void Initialize();
-	void Execute();
-	bool IsFinished();
+	void Execute();bool IsFinished();
 	void End();
 	void Interrupted();
 };

@@ -9,54 +9,52 @@
 //using namespace frc;
 class DriveTrain: public Subsystem
 {
-    private:
+private:
 
+	Talon* left;
+	Talon* right;
+	Encoder* encoderLeft;
+	Encoder* encoderRight;
+	float mult;
+	int ticksToDistance;
+	BuiltInAccelerometer* accel;
+	//bool reverse;
+	//wvrobotics::GyroL3GD20H* gyro;
+	//DigitalGyro* gyro;
+	//UltrasonicSensors* ultrasonicSensors;
 
+public:
+	wvrobotics::NewGyro* gyro;
+	wvrobotics::GyroAxis* axis;
+	DriveTrain();
+	~DriveTrain();
 
-        Talon* left;
-        Talon* right;
-        Encoder* encoderLeft;
-        Encoder* encoderRight;
-        float mult;
-        int ticksToDistance;
-        BuiltInAccelerometer* accel;
-        //bool reverse;
-        //wvrobotics::GyroL3GD20H* gyro;
-        //DigitalGyro* gyro;
-        //UltrasonicSensors* ultrasonicSensors;
+	static float Limit(float num, float max);
 
-    public:
-        wvrobotics::NewGyro* gyro;
-        wvrobotics::GyroAxis* axis;
-        DriveTrain();
-        ~DriveTrain();
+	void setMult(float m);
+	int getMult();
+	void arcadeDrive(float move, float rotate);
+	void tankDrive(float moveValueLeft, float moveValueRight);
 
-        static float Limit(float num, float max);
+	double getDistance();
+	double getRate();
+	void resetEncoders();
+	void getAccelerations(double* x, double* y, double* z);
 
-        void setMult(float m);
-        int getMult();
-        void arcadeDrive(float move, float rotate);
-        void tankDrive(float moveValueLeft, float moveValueRight);
+	double getRightEncoderDistance();
+	double getLeftEncoderDistance();
 
-        double getDistance();
-        double getRate();
-        void resetEncoders();
-        void getAccelerations(double* x, double* y, double* z);
+	double getGyroAngle();
+	void resetGyro();
 
-        double getRightEncoderDistance();
-        double getLeftEncoderDistance();
+	double readUltra(uint16_t sensorIndex);
 
-        double getGyroAngle();
-        void resetGyro();
+	void setSpeedLeft(double speed);
+	void setSpeedRight(double speed);   //if needed
 
-        double readUltra(uint16_t sensorIndex);
+	void InitDefaultCommand();
 
-        void setSpeedLeft(double speed);
-        void setSpeedRight(double speed);   //if needed
-
-        void InitDefaultCommand();
-
-        //void SetReverse();
+	//void SetReverse();
 };
 
 #endif

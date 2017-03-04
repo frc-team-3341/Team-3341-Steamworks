@@ -12,7 +12,8 @@ using namespace std;
 
 // #define DEBUG 1
 
-NavigateCV::NavigateCV(){
+NavigateCV::NavigateCV()
+{
 	Requires(drive);
 	Initialize();
 }
@@ -21,7 +22,6 @@ void NavigateCV::Initialize()
 	state = CV;
 
 	// Temporary initial values for Kp, Ki, and Kd.
-
 
 	distKp = 0.030415;
 	distKi = 0.004972;
@@ -58,11 +58,14 @@ void NavigateCV::Initialize()
 	cout << "Executing NavigateCV" << endl;
 }
 
-void NavigateCV::Execute(){
-	if(state == CV){
-		if(NetworkTablesInterface::gearFound() &&
-				distGoal != NetworkTablesInterface::getGearDistance() &&
-				angleGoal != NetworkTablesInterface::getGearAzimuth()){ // Wait Until Gear is Found
+void NavigateCV::Execute()
+{
+	if (state == CV)
+	{
+		if (NetworkTablesInterface::gearFound()
+				&& distGoal != NetworkTablesInterface::getGearDistance()
+				&& angleGoal != NetworkTablesInterface::getGearAzimuth())
+		{ // Wait Until Gear is Found
 			// Get CV Data
 			distGoal = NetworkTablesInterface::getGearDistance();
 			angleGoal = NetworkTablesInterface::getGearAzimuth();
@@ -72,7 +75,8 @@ void NavigateCV::Execute(){
 			cout << "CV Azimuth:\t" << angleGoal << endl;
 #endif
 
-			if(distGoal > 0.7){ // Need to continue
+			if (distGoal > 0.7)
+			{ // Need to continue
 				// Initialize PIDs with CV Data
 				distPID->SetSetPoint(distGoal);
 				anglePID->SetSetPoint(angleGoal);
@@ -93,60 +97,68 @@ void NavigateCV::Execute(){
 #ifdef DEBUG
 				cout << "Moving from CV to INNER_LOOP" << endl;
 #endif
-			}else{ // We are done, close enough to the target to end loop.
+			}
+			else
+			{ // We are done, close enough to the target to end loop.
 				state = END;
-				drive->arcadeDrive(0,0);
+				drive->arcadeDrive(0, 0);
 #ifdef DEBUG
 				cout << "Moving from CV to END" << endl;
 #endif
 			}
-		}else{
-			state = INNER_LOOP;
-			#ifdef DEBUG
-				cout << "Another cycle spent waiting for CV." << endl;
-			#endif
 		}
-	}else if(state == INNER_LOOP){
+		else
+		{
+			state = INNER_LOOP;
+#ifdef DEBUG
+			cout << "Another cycle spent waiting for CV." << endl;
+#endif
+		}
+	}
+	else if (state == INNER_LOOP)
+	{
 //		end = clock();
 //
 //		if((double(end - start)/CLOCKS_PER_SEC) < DRIVE_TIME){ // until drive time is elapsed
-			// Get Encoder Data
-			leftDistance = drive->getLeftEncoderDistance();
-			rightDistance = drive->getRightEncoderDistance();
+		// Get Encoder Data
+		leftDistance = drive->getLeftEncoderDistance();
+		rightDistance = drive->getRightEncoderDistance();
 
 #ifdef DEBUG
-			cout << "Left Encoder Distance:\t" << leftDistance << endl;
-			cout << "Right Encoder Distance:\t" << rightDistance << endl;
+		cout << "Left Encoder Distance:\t" << leftDistance << endl;
+		cout << "Right Encoder Distance:\t" << rightDistance << endl;
 #endif
 
-			// Get Gyro Data and use IIR Filter to Reduce Error
-			newGyroVal = drive->getGyroAngle();
+		// Get Gyro Data and use IIR Filter to Reduce Error
+		newGyroVal = drive->getGyroAngle();
 #ifdef DEBUG
-			cout << "Raw Gyro Value:\t" << newGyroVal << endl;
+		cout << "Raw Gyro Value:\t" << newGyroVal << endl;
 #endif
-			newGyroVal = (IIR_CONST * lastGyroVal) + ((1.0 - IIR_CONST) * newGyroVal);
-			lastGyroVal = newGyroVal; // update last gyro for next cycle
+		newGyroVal = (IIR_CONST * lastGyroVal)
+				+ ((1.0 - IIR_CONST) * newGyroVal);
+		lastGyroVal = newGyroVal; // update last gyro for next cycle
 #ifdef DEBUG
-			cout << "Transformed Gyro Value:\t" << newGyroVal << endl;
+				cout << "Transformed Gyro Value:\t" << newGyroVal << endl;
 #endif
 
-			// Tick PIDs
-			power =  abs(distPID->Tick((abs(leftDistance)+abs(rightDistance))/2.0));
-			angle = anglePID->Tick(newGyroVal);
+		// Tick PIDs
+		power = abs(
+				distPID->Tick((abs(leftDistance) + abs(rightDistance)) / 2.0));
+		angle = anglePID->Tick(newGyroVal);
 
 #ifdef DEBUG
-			cout << "Dist PID Error:\t" << distPID->GetError() << endl;
-			cout << "Angle PID Error:\t" << anglePID->GetError() << endl;
-			cout << "Drive Power:\t" << power << endl;
-			cout << "Steering Intensity:\t" << angle << endl;
+		cout << "Dist PID Error:\t" << distPID->GetError() << endl;
+		cout << "Angle PID Error:\t" << anglePID->GetError() << endl;
+		cout << "Drive Power:\t" << power << endl;
+		cout << "Steering Intensity:\t" << angle << endl;
 #endif
-			// Initiate Drive
-			drive->arcadeDrive(drive->Limit(power,0.3), drive->Limit(angle,0.3));
+		// Initiate Drive
+		drive->arcadeDrive(drive->Limit(power, 0.3), drive->Limit(angle, 0.3));
 //		}else{
 //			drive->arcadeDrive(0,0); // Disable drive
-			state = CV;
+		state = CV;
 #ifdef DEBUG
-			cout << "Moving from INNER_LOOP to CV" << endl;
+		cout << "Moving from INNER_LOOP to CV" << endl;
 #endif
 //		}
 	}
@@ -159,11 +171,12 @@ bool NavigateCV::IsFinished()
 
 void NavigateCV::End()
 {
-	drive->arcadeDrive(0,0);
+	drive->arcadeDrive(0, 0);
 }
 
-void NavigateCV::Interrupted(){
-	drive->arcadeDrive(0,0);
+void NavigateCV::Interrupted()
+{
+	drive->arcadeDrive(0, 0);
 }
 
 NavigateCV::~NavigateCV()

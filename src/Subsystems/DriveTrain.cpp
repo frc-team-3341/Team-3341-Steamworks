@@ -10,36 +10,35 @@
 #define max(x, y) (((x) > (y)) ? (x) : (y))
 
 DriveTrain::DriveTrain() :
-    Subsystem("DriveTrain"), left(new Talon(0)), right(new Talon(1)),
-    encoderLeft(new Encoder(ENCODER_LEFT_1, ENCODER_LEFT_2)),
-    encoderRight(new Encoder(ENCODER_RIGHT_1, ENCODER_RIGHT_2)), mult(1.0),
-	ticksToDistance(114), // 112 < ticksToDistance < 117
-	accel(), //reverse(false),
-	gyro(new wvrobotics::NewGyro(I2C::kOnboard, 0x6b)),
-	axis(gyro->getAxis())
+		Subsystem("DriveTrain"), left(new Talon(0)), right(new Talon(1)), encoderLeft(
+				new Encoder(ENCODER_LEFT_1, ENCODER_LEFT_2)), encoderRight(
+				new Encoder(ENCODER_RIGHT_1, ENCODER_RIGHT_2)), mult(1.0), ticksToDistance(
+				114), // 112 < ticksToDistance < 117
+		accel(), //reverse(false),
+		gyro(new wvrobotics::NewGyro(I2C::kOnboard, 0x6b)), axis(
+				gyro->getAxis())
 {
-    encoderLeft->SetDistancePerPulse(1.0);
-    encoderRight->SetDistancePerPulse(1.0);
-    left->SetInverted(true);
-    right->SetInverted(true);
-    //gyro->Calibrate();
-    //gyro->Reset();
+	encoderLeft->SetDistancePerPulse(1.0);
+	encoderRight->SetDistancePerPulse(1.0);
+	left->SetInverted(true);
+	right->SetInverted(true);
+	//gyro->Calibrate();
+	//gyro->Reset();
 }
-
 
 DriveTrain::~DriveTrain()
 {
-    delete left;
-    delete right;
-    delete encoderLeft;
-    delete encoderRight;
-    //delete accel;
-    delete gyro;
+	delete left;
+	delete right;
+	delete encoderLeft;
+	delete encoderRight;
+	//delete accel;
+	delete gyro;
 }
 
 void DriveTrain::setMult(float m)
 {
-    mult = m;
+	mult = m;
 }
 
 int DriveTrain::getMult()
@@ -49,105 +48,101 @@ int DriveTrain::getMult()
 
 void DriveTrain::resetEncoders()
 {
-    encoderLeft->Reset();
-    encoderRight->Reset();
+	encoderLeft->Reset();
+	encoderRight->Reset();
 }
 
 void DriveTrain::arcadeDrive(float moveValue, float rotateValue)
 {
-    float leftMotorOutput;
-    float rightMotorOutput;
+	float leftMotorOutput;
+	float rightMotorOutput;
 
-    moveValue = DriveTrain::Limit(moveValue, 1) * mult;
-    rotateValue = DriveTrain::Limit(rotateValue, 1);
+	moveValue = DriveTrain::Limit(moveValue, 1) * mult;
+	rotateValue = DriveTrain::Limit(rotateValue, 1);
 
-    // Standard ArcadeDriveTrain algorithm from Google
-    if(moveValue > 0.0)
-    {
-        if(rotateValue > 0.0)
-        {
-            leftMotorOutput = moveValue - rotateValue;
-            rightMotorOutput = max(moveValue, rotateValue);
-        }
-        else
-        {
-            leftMotorOutput = max(moveValue, -rotateValue);
-            rightMotorOutput = moveValue + rotateValue;
-        }
-    }
-    else
-    {
-        if(rotateValue > 0.0)
-        {
-            leftMotorOutput = - max(-moveValue, rotateValue);
-            rightMotorOutput = moveValue + rotateValue;
-        }
-        else
-        {
-            leftMotorOutput = moveValue - rotateValue;
-            rightMotorOutput = - max(-moveValue, -rotateValue);
-        }
-    }
+	// Standard ArcadeDriveTrain algorithm from Google
+	if (moveValue > 0.0)
+	{
+		if (rotateValue > 0.0)
+		{
+			leftMotorOutput = moveValue - rotateValue;
+			rightMotorOutput = max(moveValue, rotateValue);
+		}
+		else
+		{
+			leftMotorOutput = max(moveValue, -rotateValue);
+			rightMotorOutput = moveValue + rotateValue;
+		}
+	}
+	else
+	{
+		if (rotateValue > 0.0)
+		{
+			leftMotorOutput = -max(-moveValue, rotateValue);
+			rightMotorOutput = moveValue + rotateValue;
+		}
+		else
+		{
+			leftMotorOutput = moveValue - rotateValue;
+			rightMotorOutput = -max(-moveValue, -rotateValue);
+		}
+	}
 
-    float limitedL = DriveTrain::Limit(leftMotorOutput, 1.0);
-    float limitedR = -DriveTrain::Limit(rightMotorOutput, 1.0);
+	float limitedL = DriveTrain::Limit(leftMotorOutput, 1.0);
+	float limitedR = -DriveTrain::Limit(rightMotorOutput, 1.0);
 
-    left->Set(-limitedL);
-    right->Set(-limitedR); //removed negatives
+	left->Set(-limitedL);
+	right->Set(-limitedR); //removed negatives
 }
 
 void DriveTrain::tankDrive(float moveValueLeft, float moveValueRight)
 {
-    //float leftMotorOutput;
-    //float rightMotorOutput;
+	//float leftMotorOutput;
+	//float rightMotorOutput;
 
-    moveValueLeft = DriveTrain::Limit(moveValueLeft, 1.0);
-    moveValueRight = -DriveTrain::Limit(moveValueRight, 1.0);
+	moveValueLeft = DriveTrain::Limit(moveValueLeft, 1.0);
+	moveValueRight = -DriveTrain::Limit(moveValueRight, 1.0);
 
-    //std::cout << "LeftRaw: " << limitedL<< "\n";
+	//std::cout << "LeftRaw: " << limitedL<< "\n";
 	//std::cout << "RightRaw: " << limitedR << "\n";
-    // TODO: mult should never be 0, but robot wasn't driving for some reason
-    if (mult != 0) {
+	// TODO: mult should never be 0, but robot wasn't driving for some reason
+	if (mult != 0)
+	{
 		left->Set(-moveValueLeft);
 		right->Set(-moveValueRight);
-    }
-    else {
-    	left->Set(-moveValueLeft);
+	}
+	else
+	{
+		left->Set(-moveValueLeft);
 		right->Set(-moveValueRight);
-    }
+	}
 }
 
 float DriveTrain::Limit(float num, float max)
 {
-    if(num > max)
-        return max;
+	if (num > max)
+		return max;
 
-    if(num < -max)
-        return -max;
+	if (num < -max)
+		return -max;
 
-    return num;
+	return num;
 }
 
 // Return distance in feet
 double DriveTrain::getDistance()
 {
-    // Average of both encoders (must negate to get proper direction)
-    return
-    (
-        (double) ((encoderLeft->Get()) / ticksToDistance) -
-        (double) ((encoderRight->Get()) / ticksToDistance)
-    ) / 2.0;
+	// Average of both encoders (must negate to get proper direction)
+	return ((double) ((encoderLeft->Get()) / ticksToDistance)
+			- (double) ((encoderRight->Get()) / ticksToDistance)) / 2.0;
 }
 
 double DriveTrain::getRate()
 {
-    // Average of both encoder rates (must negate to get proper direction)
-    // TODO: test to see if negation is necessary
-    return
-    (
-        (double) ((encoderLeft->GetRate()) / ticksToDistance) -
-        (double) ((encoderRight->GetRate()) / ticksToDistance)
-    ) / 2.0;
+	// Average of both encoder rates (must negate to get proper direction)
+	// TODO: test to see if negation is necessary
+	return ((double) ((encoderLeft->GetRate()) / ticksToDistance)
+			- (double) ((encoderRight->GetRate()) / ticksToDistance)) / 2.0;
 
 }
 
@@ -161,9 +156,8 @@ void DriveTrain::getAccelerations(double* x, double* y, double* z)
 void DriveTrain::InitDefaultCommand()
 {
 	//std::cout<<"pushpush"<<std::endl;
-    SetDefaultCommand(new TankDrive());
+	SetDefaultCommand(new TankDrive());
 }
-
 
 double DriveTrain::getLeftEncoderDistance()
 {
@@ -180,31 +174,33 @@ double DriveTrain::getRightEncoderDistance()
 
 double DriveTrain::getGyroAngle()
 {
-    return axis->getzAxis();
+	return axis->getzAxis();
 }
 
 void DriveTrain::resetGyro()
 {
-    gyro->resetGyro();
+	gyro->resetGyro();
 }
 
 double DriveTrain::readUltra(uint16_t sensorIndex)
 {
-	return 0.0;//ultrasonicSensors->ReadUltra(sensorIndex);
+	return 0.0;	//ultrasonicSensors->ReadUltra(sensorIndex);
 }
 
-void DriveTrain::setSpeedLeft(double speed){
+void DriveTrain::setSpeedLeft(double speed)
+{
 	left->SetSpeed(speed);
 }
 
-void DriveTrain::setSpeedRight(double speed){
+void DriveTrain::setSpeedRight(double speed)
+{
 	right->SetSpeed(speed);
 }
 
 //void DriveTrain::SetReverse(){
-	//if(reverse)
-		//SetDefaultCommand(new TankDriveReverse());
-	//else
-		//SetDefaultCommand(new TankDrive());
-	//reverse = !reverse;
+//if(reverse)
+//SetDefaultCommand(new TankDriveReverse());
+//else
+//SetDefaultCommand(new TankDrive());
+//reverse = !reverse;
 //}

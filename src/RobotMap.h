@@ -14,25 +14,23 @@
 // following variables to use with your drivetrain subsystem.
 //const int LEFTMOTOR = 1;
 //const int RIGHTMOTOR = 2;
-
 // If you are using multiple modules, make sure to define both the port
 // number and the module. For example you with a rangefinder:
 //const int RANGE_FINDER_PORT = 1;
 //const int RANGE_FINDER_MODULE = 1;
-
-const double PIDCON_INCHES = 0.13617;//inches
+const double PIDCON_INCHES = 0.13617; //inches
 const double CLICKS_TO_METERS = 0.0008842593;
 const double MIN_DIST_ERROR_CV = 0.2;
 const double MIN_ANGLE_ERROR_CV = 0.5;
-const double ENCODER_RIGHT_1=0;
-const double ENCODER_RIGHT_2=1;
-const double ENCODER_LEFT_1=2;
-const double ENCODER_LEFT_2=3;
+const double ENCODER_RIGHT_1 = 0;
+const double ENCODER_RIGHT_2 = 1;
+const double ENCODER_LEFT_1 = 2;
+const double ENCODER_LEFT_2 = 3;
 
 //Talon IDS: Winch 1, Shooter 2, Intake 3
 const double SHOOTER = 2; //change to 1 for RoboRIO #1  //shooter 2
-const double SHOOTER_ANGLE = 33;//set this to the constant angle
-const double TARGET_HEIGHT = 7;//whatever the height is
+const double SHOOTER_ANGLE = 33; //set this to the constant angle
+const double TARGET_HEIGHT = 7; //whatever the height is
 
 const int WINCH_PDP_PORT = 15;
 const int WINCH_CAN_ID = 1;

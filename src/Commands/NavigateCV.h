@@ -5,7 +5,6 @@
  *      Author: sauhaarda
  */
 
-
 #ifndef SRC_NAVIGATECV_H_
 #define SRC_NAVIGATECV_H_
 
@@ -15,17 +14,20 @@
 #include <WPILib.h>
 #include "../CommandBase.h"
 
-
 using namespace frc;
 
-class NavigateCV: public CommandBase{
+class NavigateCV: public CommandBase
+{
 
 private:
 
 	const double IIR_CONST = 0.5;
 	const double DRIVE_TIME = 1;
 
-	enum State {CV, INNER_LOOP, END};
+	enum State
+	{
+		CV, INNER_LOOP, END
+	};
 	State state;
 
 	clock_t start, end; // clocks for timing
@@ -55,8 +57,7 @@ private:
 public:
 	NavigateCV();
 	void Execute();
-	void Initialize();
-	bool IsFinished();
+	void Initialize();bool IsFinished();
 	void End();
 	void Interrupted();
 

@@ -2,7 +2,9 @@
 #include "../RobotMap.h"
 using namespace frc;
 
-Shooter::Shooter() : Subsystem("Shooter"), shooter(new CANTalon(SHOOTER)), servo(new Servo(2))
+Shooter::Shooter() :
+		Subsystem("Shooter"), shooter(new CANTalon(SHOOTER)), servo(
+				new Servo(2))
 {
 	shooter->SetControlMode(CANSpeedController::kPercentVbus);
 	shooter->SetFeedbackDevice(CANTalon::CtreMagEncoder_Relative);
@@ -30,7 +32,6 @@ bool Shooter::disable(bool button)
 	return button;
 }
 
-
 void Shooter::setPIDConstants(double F, double P, double I, double D)
 {
 	shooter->SetF(F);
@@ -45,12 +46,12 @@ void Shooter::setServo(int angle)
 }
 
 /*Shooter::~Shooter() //destructor
-{
-	 delete shooter;
-	//delete encoder;
-	shooter = NULL;
-	// encoder = NULL;
-} */
+ {
+ delete shooter;
+ //delete encoder;
+ shooter = NULL;
+ // encoder = NULL;
+ } */
 
 // Put methods for controlling this subsystem
 // here. Call these from Commands.

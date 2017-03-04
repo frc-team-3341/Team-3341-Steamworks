@@ -1,44 +1,44 @@
 #include "TankDrive.h"
 
-TankDrive::TankDrive()
-    : isReset(true)
+TankDrive::TankDrive() :
+		isReset(true)
 {
-    Requires(drive);
-    anglePid = new WVPIDController(.05, 0, 0, 0, false);
+	Requires(drive);
+	anglePid = new WVPIDController(.05, 0, 0, 0, false);
 }
 
 void TankDrive::Initialize()
 {
-    drive->resetGyro();
+	drive->resetGyro();
 }
 
 void TankDrive::Execute()
 {
-    double yLeftRaw = oi->getDriveStickLeft()->GetY();
-    double yRightRaw = oi->getDriveStickRight()->GetY();
+	double yLeftRaw = oi->getDriveStickLeft()->GetY();
+	double yRightRaw = oi->getDriveStickRight()->GetY();
 
-    double yLeftAdjusted  = mapToCubic(0.3, 0, yLeftRaw);
-    double yRightAdjusted = mapToCubic(0.3, 0, yRightRaw);
+	double yLeftAdjusted = mapToCubic(0.3, 0, yLeftRaw);
+	double yRightAdjusted = mapToCubic(0.3, 0, yRightRaw);
 
-    drive->tankDrive(-yLeftAdjusted, -yRightAdjusted);
+	drive->tankDrive(-yLeftAdjusted, -yRightAdjusted);
 }
 
 // Takes an input signal and maps it to a cubic output (for more precise driving)
 double TankDrive::mapToCubic(double a, double b, double signal)
 {
-    double control;
+	double control;
 
-    if(signal > 0)
-        control = b + (1 - b) * ((a * pow(signal, 3) + (1 - a) * signal));
-    else
-        control = -b + (1 - b) * ((a * pow(signal, 3) + (1 - a) * signal));
+	if (signal > 0)
+		control = b + (1 - b) * ((a * pow(signal, 3) + (1 - a) * signal));
+	else
+		control = -b + (1 - b) * ((a * pow(signal, 3) + (1 - a) * signal));
 
-    return control;
+	return control;
 }
 
 bool TankDrive::IsFinished()
 {
-    return false;
+	return false;
 }
 
 void TankDrive::End()

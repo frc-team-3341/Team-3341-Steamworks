@@ -1,5 +1,3 @@
-
-
 #include <WPILib.h>
 #include "Commands/SetDriveReverse.h"
 #include "Commands/SetDriveForward.h"
@@ -12,8 +10,9 @@
 #include "OI.h"
 using namespace frc;
 
-OI::OI():
-	driveStickLeft(new Joystick(2)), driveStickRight(new Joystick(1)), operatorStick(new Joystick(0))
+OI::OI() :
+		driveStickLeft(new Joystick(2)), driveStickRight(new Joystick(1)), operatorStick(
+				new Joystick(0))
 {
 	// 	: THis doesn't work :'(
 	// TODO: FInd good place for these buttons
@@ -25,10 +24,9 @@ OI::OI():
 	positionControl->WhenPressed(new PositionControl());
 	Button* posCon2 = new JoystickButton(operatorStick, 2);
 	posCon2->WhenPressed(new WinchMove);
- 	//Button* driveReverse = new JoystickButton(driveStickLeft, 4);
+	//Button* driveReverse = new JoystickButton(driveStickLeft, 4);
 	//driveReverse->WhenPressed(new SetDriveReverse());
 	//driveReverse->WhenReleased(new SetDriveForward());
-
 
 	Button* shootButt = new JoystickButton(operatorStick, 7);
 	shootButt->WhenPressed(new SetShooterSpeed());
@@ -45,44 +43,44 @@ OI::OI():
 
 Joystick* OI::getDriveStickLeft()
 {
-    return driveStickLeft;
+	return driveStickLeft;
 }
 
 Joystick* OI::getDriveStickRight()
 {
-    return driveStickRight;
+	return driveStickRight;
 }
 
 Joystick* OI::getOperatorStick()
 {
-    return operatorStick;
+	return operatorStick;
 }
 
 /*Button* OI::getWinchPositionPIDButton()
-{
-	return stopWinchPIDButton;
-}*/
+ {
+ return stopWinchPIDButton;
+ }*/
 /*
-Button* OI::shooterButtonValue()
-{
-	return shooterButton;
-}
-*/
+ Button* OI::shooterButtonValue()
+ {
+ return shooterButton;
+ }
+ */
 /*Button* OI::disableShooterButton()
-{
-	return disableShooterButton;
-}
-*/
+ {
+ return disableShooterButton;
+ }
+ */
 
 /*Button* OI::activatePositionControl()
-{
-	return positionControl;
-}*/
+ {
+ return positionControl;
+ }*/
 
 OI::~OI()
 {
-    delete driveStickLeft;
-    delete driveStickRight;
-    delete operatorStick;
-    //delete stopWinchPIDButton;
+	delete driveStickLeft;
+	delete driveStickRight;
+	delete operatorStick;
+	//delete stopWinchPIDButton;
 }

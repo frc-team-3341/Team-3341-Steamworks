@@ -6,8 +6,8 @@ SetShooterSpeed::SetShooterSpeed()
 	// eg. Requires(Robot::chassis.get());
 	Requires(shooter);
 
-		 // Use Requires() here to declare subsystem dependencies
-		// eg. Requires(Robot::chassis.get());
+	// Use Requires() here to declare subsystem dependencies
+	// eg. Requires(Robot::chassis.get());
 
 }
 
@@ -16,10 +16,9 @@ void SetShooterSpeed::Initialize()
 {
 	// TODO: figure out goalSpeed
 	goalSpeed = -15000; //2130
-	shooter->setPIDConstants(1,1,0,0);
+	shooter->setPIDConstants(1, 1, 0, 0);
 
 }
-
 
 // Called repeatedly when this Command is scheduled to run
 void SetShooterSpeed::Execute()
@@ -32,7 +31,7 @@ void SetShooterSpeed::Execute()
 bool SetShooterSpeed::IsFinished()
 {
 	return false; //may be return true but not sure
-	}
+}
 
 // Called once after isFinished returns true
 void SetShooterSpeed::End()

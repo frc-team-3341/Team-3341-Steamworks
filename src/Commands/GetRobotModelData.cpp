@@ -10,11 +10,13 @@
 
 using namespace std;
 
-GetRobotModelData::GetRobotModelData() {
+GetRobotModelData::GetRobotModelData()
+{
 	Requires(drive);
 	Initialize();
 }
-void GetRobotModelData::Initialize() {
+void GetRobotModelData::Initialize()
+{
 	state = MOVE;
 
 	leftDistance = 0;
@@ -31,7 +33,8 @@ void GetRobotModelData::Initialize() {
 	cout << "Encoder Data:" << endl;
 }
 
-void GetRobotModelData::Execute() {
+void GetRobotModelData::Execute()
+{
 	gyroVal = drive->getGyroAngle();
 	drive->arcadeDrive(0, POWER);
 	cout << "Gyro Val:" << gyroVal << endl;
@@ -62,17 +65,21 @@ void GetRobotModelData::Execute() {
 //	}
 }
 
-bool GetRobotModelData::IsFinished() {
+bool GetRobotModelData::IsFinished()
+{
 	return state == END;
 }
 
-void GetRobotModelData::End() {
+void GetRobotModelData::End()
+{
 	drive->arcadeDrive(0, 0);
 }
 
-void GetRobotModelData::Interrupted() {
+void GetRobotModelData::Interrupted()
+{
 	drive->arcadeDrive(0, 0);
 }
 
-GetRobotModelData::~GetRobotModelData() {
+GetRobotModelData::~GetRobotModelData()
+{
 }

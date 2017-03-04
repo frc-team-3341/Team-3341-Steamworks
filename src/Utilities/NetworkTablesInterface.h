@@ -10,7 +10,8 @@
 
 #include "NetworkTables/NetworkTable.h"
 
-class NetworkTablesInterface {
+class NetworkTablesInterface
+{
 public:
 	//NetworkTablesInterface(); NOT REQUIRED
 	//virtual ~NetworkTablesInterface(); NOT REQUIRED

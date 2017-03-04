@@ -1,5 +1,3 @@
-
-
 #ifndef DriveXFeet_H
 #define DriveXFeet_H
 
@@ -9,21 +7,19 @@
 
 class TurnAndDrive: public CommandBase
 {
-    public:
-        TurnAndDrive(double distance, double angle);
-        void Initialize();
-        void Execute();
-        bool IsFinished();
-        void End();
-        void Interrupted();
-        void ForceFinish();
+public:
+	TurnAndDrive(double distance, double angle);
+	void Initialize();
+	void Execute();bool IsFinished();
+	void End();
+	void Interrupted();
+	void ForceFinish();
 
-    private:
-        double distance;
-        double angle;
-        bool forceFinish;
-        WVPIDController* distancePid;
-        WVPIDController* anglePid;
+private:
+	double distance;
+	double angle;bool forceFinish;
+	WVPIDController* distancePid;
+	WVPIDController* anglePid;
 };
 
 #endif

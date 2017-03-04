@@ -7,17 +7,17 @@
 
 #include "NetworkTablesInterface.h"
 
-
 /*NetworkTablesInterface::NetworkTablesInterface() {
-	// TODO Auto-generated constructor stub
+ // TODO Auto-generated constructor stub
 
-}
+ }
 
-NetworkTablesInterface::~NetworkTablesInterface() {
-	// TODO Auto-generated destructor stub
-}*/
+ NetworkTablesInterface::~NetworkTablesInterface() {
+ // TODO Auto-generated destructor stub
+ }*/
 
-bool NetworkTablesInterface::gearFound(){
+bool NetworkTablesInterface::gearFound()
+{
 	return NetworkTable::GetTable("cv")->GetBoolean("gearFound", false);
 	//returns true if the gear has been detected
 }

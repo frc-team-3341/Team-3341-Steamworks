@@ -7,14 +7,17 @@
 
 #include "GyroAxis.h"
 
-namespace wvrobotics {
+namespace wvrobotics
+{
 
-GyroAxis::GyroAxis() {
+GyroAxis::GyroAxis()
+{
 	// TODO Auto-generated constructor stub
 
 }
 
-GyroAxis::~GyroAxis() {
+GyroAxis::~GyroAxis()
+{
 	// TODO Auto-generated destructor stub
 }
 
