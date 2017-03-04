@@ -3,6 +3,7 @@
 #include "../RobotMap.h"
 #include "../CommandBase.h"
 #include "../Commands/TankDrive.h"
+//#include "../Commands/TankDriveReverse.h"
 
 #include "DriveTrain.h"
 
@@ -13,7 +14,7 @@ DriveTrain::DriveTrain() :
     encoderLeft(new Encoder(ENCODER_LEFT_1, ENCODER_LEFT_2)),
     encoderRight(new Encoder(ENCODER_RIGHT_1, ENCODER_RIGHT_2)), mult(1.0),
 	ticksToDistance(114), // 112 < ticksToDistance < 117
-	accel(),
+	accel(), //reverse(false),
 	gyro(new wvrobotics::NewGyro(I2C::kOnboard, 0x6b)),
 	axis(gyro->getAxis())
 {
@@ -159,6 +160,7 @@ void DriveTrain::getAccelerations(double* x, double* y, double* z)
 
 void DriveTrain::InitDefaultCommand()
 {
+	//std::cout<<"pushpush"<<std::endl;
     SetDefaultCommand(new TankDrive());
 }
 
@@ -198,3 +200,11 @@ void DriveTrain::setSpeedLeft(double speed){
 void DriveTrain::setSpeedRight(double speed){
 	right->SetSpeed(speed);
 }
+
+//void DriveTrain::SetReverse(){
+	//if(reverse)
+		//SetDefaultCommand(new TankDriveReverse());
+	//else
+		//SetDefaultCommand(new TankDrive());
+	//reverse = !reverse;
+//}

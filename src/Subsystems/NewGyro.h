@@ -21,10 +21,11 @@ namespace wvrobotics {
 
 class NewGyro {
 	enum State {
-		UNCONNECTED = 0,
-		INITIALIZATION = 1,
-		CALIBRATING = 2,
-		READY
+			UNCONNECTED = 0,
+			WAIT = 1,
+			INITIALIZATION = 2,
+			CALIBRATING = 3,
+			READY
 	};
 
     typedef enum
@@ -118,6 +119,7 @@ private:
     std::chrono::high_resolution_clock::time_point gyroFinal;
     int TOTAL_COUNT = 200;
     const unsigned char ADDRESS = 0xF;
+    int waitTime = 3;
     unsigned char whoAmI = 0b11010111;
     bool isVerified;
 

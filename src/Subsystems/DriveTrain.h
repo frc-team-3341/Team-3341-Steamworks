@@ -20,6 +20,7 @@ class DriveTrain: public Subsystem
         float mult;
         int ticksToDistance;
         BuiltInAccelerometer* accel;
+        //bool reverse;
         //wvrobotics::GyroL3GD20H* gyro;
         //DigitalGyro* gyro;
         //UltrasonicSensors* ultrasonicSensors;
@@ -54,6 +55,8 @@ class DriveTrain: public Subsystem
         void setSpeedRight(double speed);   //if needed
 
         void InitDefaultCommand();
+
+        //void SetReverse();
 };
 
 #endif

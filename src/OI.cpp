@@ -38,6 +38,9 @@ OI::OI():
 	servoMotor->WhenPressed(new OpenGate());
 	servoMotor->WhenReleased(new CloseGate());
 
+	//Button* togRev = new JoystickButton(driveStickRight, 1);
+	//togRev->WhenPressed(new ToggleReverse());
+
 }
 
 Joystick* OI::getDriveStickLeft()

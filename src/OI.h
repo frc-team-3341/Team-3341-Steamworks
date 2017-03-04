@@ -21,10 +21,6 @@ class OI
         Joystick* getDriveStickLeft();
         Joystick* getDriveStickRight();
         Joystick* getOperatorStick();
-        /*Button* getWinchPositionPIDButton();
-        Button* activatePositionControl();
-        Button* shooterButtonValue();
-*/
 };
 
 #endif
