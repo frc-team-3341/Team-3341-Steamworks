@@ -3,8 +3,7 @@
 
 #include "../CommandBase.h"
 
-class SetDriveForward: public CommandBase
-{
+class SetDriveForward: public CommandBase {
 public:
 	SetDriveForward();
 	void Initialize();

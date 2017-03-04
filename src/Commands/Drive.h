@@ -5,9 +5,9 @@
 #include "../Utilities/WVPIDController.h"
 #include "WPILib.h"
 
-class TurnAndDrive: public CommandBase {
+class Drive: public CommandBase {
 public:
-	TurnAndDrive(double distance, double angle);
+	Drive(double inDistance);
 	void Initialize();
 	void Execute();bool IsFinished();
 	void End();
@@ -18,7 +18,6 @@ private:
 	double distance;
 	double angle;bool forceFinish;
 	WVPIDController* distancePid;
-	WVPIDController* anglePid;
 };
 
 #endif

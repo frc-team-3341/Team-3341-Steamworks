@@ -23,12 +23,10 @@ using namespace std::chrono_literals;
  * @param deviceAddress The I2C address of the accelerometer (0x1D or 0x53)
  */
 
-namespace wvrobotics
-{
+namespace wvrobotics {
 
 NewGyro::NewGyro(I2C::Port port, int deviceAddress) :
-		m_i2c(port, deviceAddress)
-{
+		m_i2c(port, deviceAddress) {
 
 	m_i2c.Write(GYRO_REGISTER_CTRL_REG1, 0x0F);
 
@@ -59,16 +57,13 @@ NewGyro::NewGyro(I2C::Port port, int deviceAddress) :
 	 */
 }
 
-NewGyro::~NewGyro()
-{
+NewGyro::~NewGyro() {
 	// TODO Auto-generated destructor stub
 }
 
-void NewGyro::periodicProcessing(int startupTime)
-{
+void NewGyro::periodicProcessing(int startupTime) {
 	isVerified = m_i2c.VerifySensor(ADDRESS, 1, &whoAmI);
-	if (isVerified == false)
-	{
+	if (isVerified == false) {
 		mState = UNCONNECTED;
 		std::cout << "gyro state " << mState << std::endl;
 	}
@@ -77,8 +72,7 @@ void NewGyro::periodicProcessing(int startupTime)
 	std::chrono::high_resolution_clock::time_point t_end =
 			std::chrono::high_resolution_clock::now();
 	std::chrono::duration<double> time_span;
-	switch (mState)
-	{
+	switch (mState) {
 	case UNCONNECTED:
 		std::cout << "STATE: " << mState << std::endl;
 		std::cout << "Your gyro is not connected." << std::endl;
@@ -88,8 +82,7 @@ void NewGyro::periodicProcessing(int startupTime)
 		time_span = std::chrono::duration_cast<std::chrono::duration<double>>(
 				t_end - t_start);
 
-		if (time_span.count() > startupTime)
-		{
+		if (time_span.count() > startupTime) {
 			mState = INITIALIZATION;
 		}
 		break;
@@ -101,8 +94,7 @@ void NewGyro::periodicProcessing(int startupTime)
 		//std::cout << "It took me " << time_span.count() << " seconds" << std::endl;
 		//timeDiff = clock_initial - clock_gyro;
 		//std::cout << "time difference: " << timeDiff << std::endl;
-		if (time_span.count() > waitTime)
-		{
+		if (time_span.count() > waitTime) {
 			initializeGyro();
 			mState = CALIBRATING;
 			std::cout << "gyro state " << mState << std::endl;
@@ -112,8 +104,7 @@ void NewGyro::periodicProcessing(int startupTime)
 	case CALIBRATING:
 		std::cout << "STATE: " << mState << std::endl;
 		readGyroData();
-		if (TOTAL_COUNT < count)
-		{
+		if (TOTAL_COUNT < count) {
 			//avg = sum.getzAxis()/count;
 			sum.setAxis(0, 0, 0);
 			count = 0;
@@ -126,8 +117,7 @@ void NewGyro::periodicProcessing(int startupTime)
 		int temp = count;
 		readGyroData();
 		int totalCount = count - temp;
-		if (totalCount > 0)
-		{
+		if (totalCount > 0) {
 			sum.overrunofAxis();
 			sum.setzAxis(sum.getzAxis() - (double) (avg * totalCount));
 			//std::cout << "Gyro z axis: " << (sum.getzAxis() - (double)(avg*totalCount)) << std::endl;
@@ -138,8 +128,7 @@ void NewGyro::periodicProcessing(int startupTime)
 	}
 }
 
-void NewGyro::initializeGyro()
-{
+void NewGyro::initializeGyro() {
 
 	/* Set CTRL_REG1 (0x20)
 	 ====================================================================
@@ -205,8 +194,7 @@ void NewGyro::initializeGyro()
 
 	/* Adjust resolution if requested */
 	auto range = GYRO_RANGE_500DPS;
-	switch (range)
-	{
+	switch (range) {
 	case GYRO_RANGE_250DPS:
 		m_i2c.Write(GYRO_REGISTER_CTRL_REG4, 0x00);
 		conversionFactor = GYRO_SENSITIVITY_250DPS / dataRate;
@@ -243,8 +231,7 @@ void NewGyro::initializeGyro()
 
 }
 
-GyroAxis* NewGyro::getAxis()
-{
+GyroAxis* NewGyro::getAxis() {
 	return &sum;
 }
 
@@ -260,19 +247,17 @@ GyroAxis NewGyro::readGyroData() //read gyro status, read FIFO source, read GYRO
 	//std::cout << "Status of gyro: " << std::hex << (int)status << std::dec << std::endl;
 
 	if (status & ZYXDA) // check for data available
-	{
+			{
 		m_i2c.Read(GYRO_REGISTER_FIFO_SRC_REG, 1, &registerVal);
 		//std::cout << "FIFO Source Register: " << std::hex << (int)registerVal << std::dec  << std::endl;
 
-		if (FIFOSOURCE_OVERRUN & registerVal)
-		{
+		if (FIFOSOURCE_OVERRUN & registerVal) {
 			overrunGyroCount++;
 			std::cout << "Gyro overrun: " << overrunGyroCount << std::endl;
 		}
 
 		dataAvailable = (registerVal & FIFOSOURCE_DATA_SAMPLES) + 1;
-		for (int i = 0; i < dataAvailable; i++)
-		{
+		for (int i = 0; i < dataAvailable; i++) {
 			//m_i2c.Read(GYRO_REGISTER_OUT_X_L | AUTO_INCREMENT, 6, (uint8_t*)data);
 
 			m_i2c.Read(GYRO_REGISTER_OUT_X_L, 1, byteData);

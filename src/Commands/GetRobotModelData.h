@@ -16,16 +16,14 @@
 
 using namespace frc;
 
-class GetRobotModelData: public CommandBase
-{
+class GetRobotModelData: public CommandBase {
 
 private:
 
 	const double RUN_TIME = 5; // in seconds
 	const double POWER = 0.5;
 
-	enum State
-	{
+	enum State {
 		MOVE, TURN, END
 	};
 	State state;

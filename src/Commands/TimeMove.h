@@ -6,8 +6,7 @@
 
 //#include ""
 
-class TimeMove: public CommandBase
-{
+class TimeMove: public CommandBase {
 public:
 	TimeMove(float pspeed, float tspeed, float timeout);
 	void Initialize();

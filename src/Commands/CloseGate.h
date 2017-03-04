@@ -3,8 +3,7 @@
 
 #include "../CommandBase.h"
 
-class CloseGate: public CommandBase
-{
+class CloseGate: public CommandBase {
 public:
 	CloseGate();
 	void Initialize();

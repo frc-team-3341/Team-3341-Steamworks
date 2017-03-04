@@ -1,7 +1,6 @@
 #include "AutonomousRight.h"
 #include "TurnAndDrive.h"
-AutonomousRight::AutonomousRight()
-{
+AutonomousRight::AutonomousRight() {
 
 	//Requires(drive);
 	// AddSequential(new TurnAndDrive(93.3,0));

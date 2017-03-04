@@ -9,8 +9,7 @@
 
 using namespace frc;
 
-class SetShooterSpeed: public CommandBase
-{
+class SetShooterSpeed: public CommandBase {
 public:
 	SetShooterSpeed();
 	void Initialize();

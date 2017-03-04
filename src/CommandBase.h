@@ -16,8 +16,7 @@
  * subsystem elsewhere in your code in your code use
  * CommandBase::exampleSubsystem
  */
-class CommandBase: public frc::Command
-{
+class CommandBase: public frc::Command {
 public:
 	CommandBase(const std::string& name);
 	CommandBase() = default;

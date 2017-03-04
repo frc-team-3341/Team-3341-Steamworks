@@ -1,13 +1,13 @@
-#ifndef DriveXFeet_H
-#define DriveXFeet_H
+#ifndef TURN_H
+#define TURN_H
 
 #include "../CommandBase.h"
 #include "../Utilities/WVPIDController.h"
 #include "WPILib.h"
 
-class TurnAndDrive: public CommandBase {
+class Turn : public CommandBase {
 public:
-	TurnAndDrive(double distance, double angle);
+	Turn(double inAngle);
 	void Initialize();
 	void Execute();bool IsFinished();
 	void End();
@@ -15,9 +15,8 @@ public:
 	void ForceFinish();
 
 private:
-	double distance;
-	double angle;bool forceFinish;
-	WVPIDController* distancePid;
+	double angle;
+	bool forceFinish;
 	WVPIDController* anglePid;
 };
 

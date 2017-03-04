@@ -4,8 +4,7 @@
 #include "../CommandBase.h"
 #include "../Utilities/WVPIDController.h"
 
-class DriveToShoot: public CommandBase
-{
+class DriveToShoot: public CommandBase {
 
 private:
 private:

@@ -1,7 +1,6 @@
 #include "MoveAndShoot.h"
 
-MoveAndShoot::MoveAndShoot()
-{
+MoveAndShoot::MoveAndShoot() {
 	void AddSequential(frc::Command* NavigateCV);
 	void AddSequential(frc::Command* SetShooterSpeedPID());
 	// Add Commands here:

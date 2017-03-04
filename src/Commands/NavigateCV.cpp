@@ -12,13 +12,11 @@ using namespace std;
 
 // #define DEBUG 1
 
-NavigateCV::NavigateCV()
-{
+NavigateCV::NavigateCV() {
 	Requires(drive);
 	Initialize();
 }
-void NavigateCV::Initialize()
-{
+void NavigateCV::Initialize() {
 	state = CV;
 
 	// Temporary initial values for Kp, Ki, and Kd.
@@ -58,15 +56,12 @@ void NavigateCV::Initialize()
 	cout << "Executing NavigateCV" << endl;
 }
 
-void NavigateCV::Execute()
-{
-	if (state == CV)
-	{
+void NavigateCV::Execute() {
+	if (state == CV) {
 		if (NetworkTablesInterface::gearFound()
 				&& distGoal != NetworkTablesInterface::getGearDistance()
-				&& angleGoal != NetworkTablesInterface::getGearAzimuth())
-		{ // Wait Until Gear is Found
-			// Get CV Data
+				&& angleGoal != NetworkTablesInterface::getGearAzimuth()) { // Wait Until Gear is Found
+																			// Get CV Data
 			distGoal = NetworkTablesInterface::getGearDistance();
 			angleGoal = NetworkTablesInterface::getGearAzimuth();
 
@@ -75,9 +70,8 @@ void NavigateCV::Execute()
 			cout << "CV Azimuth:\t" << angleGoal << endl;
 #endif
 
-			if (distGoal > 0.7)
-			{ // Need to continue
-				// Initialize PIDs with CV Data
+			if (distGoal > 0.7) { // Need to continue
+								  // Initialize PIDs with CV Data
 				distPID->SetSetPoint(distGoal);
 				anglePID->SetSetPoint(angleGoal);
 
@@ -97,26 +91,20 @@ void NavigateCV::Execute()
 #ifdef DEBUG
 				cout << "Moving from CV to INNER_LOOP" << endl;
 #endif
-			}
-			else
-			{ // We are done, close enough to the target to end loop.
+			} else { // We are done, close enough to the target to end loop.
 				state = END;
 				drive->arcadeDrive(0, 0);
 #ifdef DEBUG
 				cout << "Moving from CV to END" << endl;
 #endif
 			}
-		}
-		else
-		{
+		} else {
 			state = INNER_LOOP;
 #ifdef DEBUG
 			cout << "Another cycle spent waiting for CV." << endl;
 #endif
 		}
-	}
-	else if (state == INNER_LOOP)
-	{
+	} else if (state == INNER_LOOP) {
 //		end = clock();
 //
 //		if((double(end - start)/CLOCKS_PER_SEC) < DRIVE_TIME){ // until drive time is elapsed
@@ -164,23 +152,19 @@ void NavigateCV::Execute()
 	}
 }
 
-bool NavigateCV::IsFinished()
-{
+bool NavigateCV::IsFinished() {
 	return state == END;
 }
 
-void NavigateCV::End()
-{
+void NavigateCV::End() {
 	drive->arcadeDrive(0, 0);
 }
 
-void NavigateCV::Interrupted()
-{
+void NavigateCV::Interrupted() {
 	drive->arcadeDrive(0, 0);
 }
 
-NavigateCV::~NavigateCV()
-{
+NavigateCV::~NavigateCV() {
 	delete distPID;
 	delete anglePID;
 }

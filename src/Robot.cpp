@@ -18,8 +18,7 @@
 
 using namespace frc;
 
-class Robot: public frc::IterativeRobot
-{
+class Robot: public frc::IterativeRobot {
 
 private:
 	//wvrobotics::NewGyro* gyro;
@@ -30,8 +29,7 @@ private:
 	//Shooter* shooter;
 public:
 
-	static void VisionThread3()
-	{
+	static void VisionThread3() {
 
 		// Get the USB camera from CameraServer
 		cs::UsbCamera camera =
@@ -49,12 +47,10 @@ public:
 		// Mats are very memory expensive. Lets reuse this Mat.
 		cv::Mat mat;
 
-		while (true)
-		{
+		while (true) {
 			// Tell the CvSink to grab a frame from the camera and put it
 			// in the source mat.  If there is an error notify the output.
-			if (cvSink.GrabFrame(mat) == 0)
-			{
+			if (cvSink.GrabFrame(mat) == 0) {
 				// Send the output the error.
 				outputStream.NotifyError(cvSink.GetError());
 				// skip the rest of the current iteration
@@ -67,8 +63,7 @@ public:
 			outputStream.PutFrame(mat);
 		}
 	}
-	static void VisionThread4()
-	{
+	static void VisionThread4() {
 
 		// Get the USB camera from CameraServer
 		cs::UsbCamera camera1 =
@@ -87,12 +82,10 @@ public:
 		// Mats are very memory expensive. Lets reuse this Mat.
 		cv::Mat mat;
 
-		while (true)
-		{
+		while (true) {
 			// Tell the CvSink to grab a frame from the camera and put it
 			// in the source mat.  If there is an error notify the output.
-			if (cvSink.GrabFrame(mat) == 0)
-			{
+			if (cvSink.GrabFrame(mat) == 0) {
 				// Send the output the error.
 				outputStream.NotifyError(cvSink.GetError());
 				// skip the rest of the current iteration
@@ -191,8 +184,7 @@ public:
 		 else {
 		 turningCommand->Start();
 		 }*/
-		if (turningCommand != nullptr)
-		{
+		if (turningCommand != nullptr) {
 			turningCommand->Start();
 		}
 	}
@@ -217,8 +209,7 @@ public:
 		 else {
 		 turningCommand->Cancel();
 		 }*/
-		if (turningCommand != nullptr)
-		{
+		if (turningCommand != nullptr) {
 			turningCommand->Cancel();
 		}
 	}

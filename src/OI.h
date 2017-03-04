@@ -4,8 +4,7 @@
 #include "RobotMap.h"
 #include "WPILib.h"
 
-class OI
-{
+class OI {
 private:
 	Joystick* driveStickLeft;
 	Joystick* driveStickRight;
@@ -17,7 +16,6 @@ private:
 	void driveButtons();
 	void winchButtons();
 	void shooterButtons();
-
 
 public:
 	OI();

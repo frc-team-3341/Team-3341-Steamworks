@@ -12,8 +12,7 @@ using namespace frc;
 
 OI::OI() :
 		driveStickLeft(new Joystick(2)), driveStickRight(new Joystick(1)), operatorStick(
-				new Joystick(0))
-{
+				new Joystick(0)) {
 	// 	: THis doesn't work :'(
 	// TODO: FInd good place for these buttons
 	//Button* stopWinchPositionPIDButton = new JoystickButton(driveStickRight, 4);
@@ -24,26 +23,23 @@ OI::OI() :
 	//driveReverse->WhenPressed(new SetDriveReverse());
 	//driveReverse->WhenReleased(new SetDriveForward());
 
-
-
 	//Button* togRev = new JoystickButton(driveStickRight, 1);
 	//togRev->WhenPressed(new ToggleReverse());
 
 }
 
-
-void OI::driveButtons(){
-	Button* toggleDriveDirection = new JoystickButton(driveStickRight, 1);
+void OI::driveButtons() {
+	Button* toggleDriveDirection = new JoystickButton(driveStickRight, 2);
 	toggleDriveDirection->WhenReleased(new SetDriveReverse());
 }
-void OI::winchButtons(){
+void OI::winchButtons() {
 	Button* positionControl = new JoystickButton(operatorStick, 1);
 	positionControl->WhenPressed(new PositionControl());
 	Button* posCon2 = new JoystickButton(operatorStick, 2);
 	posCon2->WhenPressed(new WinchMove);
 }
 
-void OI::shooterButtons(){
+void OI::shooterButtons() {
 	Button* shootButt = new JoystickButton(operatorStick, 7); // Shooter On/Off
 	shootButt->WhenPressed(new SetShooterSpeed());
 	shootButt->WhenReleased(new ShooterOff());
@@ -53,18 +49,15 @@ void OI::shooterButtons(){
 	servoMotor->WhenReleased(new CloseGate());
 }
 
-Joystick* OI::getDriveStickLeft()
-{
+Joystick* OI::getDriveStickLeft() {
 	return driveStickLeft;
 }
 
-Joystick* OI::getDriveStickRight()
-{
+Joystick* OI::getDriveStickRight() {
 	return driveStickRight;
 }
 
-Joystick* OI::getOperatorStick()
-{
+Joystick* OI::getOperatorStick() {
 	return operatorStick;
 }
 
@@ -89,8 +82,7 @@ Joystick* OI::getOperatorStick()
  return positionControl;
  }*/
 
-OI::~OI()
-{
+OI::~OI() {
 	delete driveStickLeft;
 	delete driveStickRight;
 	delete operatorStick;

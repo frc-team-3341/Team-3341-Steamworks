@@ -4,8 +4,7 @@
 #include <Commands/CommandGroup.h>
 #include "../CommandBase.h"
 
-class AutonomousLeft: public CommandGroup
-{
+class AutonomousLeft: public CommandGroup {
 public:
 	AutonomousLeft();
 };

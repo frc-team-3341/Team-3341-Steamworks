@@ -16,16 +16,14 @@
 
 using namespace frc;
 
-class NavigateCV: public CommandBase
-{
+class NavigateCV: public CommandBase {
 
 private:
 
 	const double IIR_CONST = 0.5;
 	const double DRIVE_TIME = 1;
 
-	enum State
-	{
+	enum State {
 		CV, INNER_LOOP, END
 	};
 	State state;

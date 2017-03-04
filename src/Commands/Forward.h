@@ -3,8 +3,7 @@
 
 #include "../CommandBase.h"
 
-class Forward: public CommandBase
-{
+class Forward: public CommandBase {
 public:
 	Forward();
 	void Initialize();

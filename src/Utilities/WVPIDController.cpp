@@ -2,8 +2,7 @@
 
 WVPIDController::WVPIDController(double Kp, double Ki, double Kd,
 		double setPoint, bool integralThreshold) :
-		lastPWM(0), error(0)
-{
+		lastPWM(0), error(0) {
 	this->Kp = Kp;
 	this->Ki = Ki;
 	this->Kd = Kd;
@@ -15,15 +14,12 @@ WVPIDController::WVPIDController(double Kp, double Ki, double Kd,
 	lastPWM = 0;
 }
 
-double WVPIDController::Tick(double measuredValue)
-{
+double WVPIDController::Tick(double measuredValue) {
 	error = setPoint - measuredValue;
-	if (integralThreshold)
-	{
+	if (integralThreshold) {
 		if (error <= .1)
 			integral += error;
-	}
-	else
+	} else
 		integral += error;
 	double derivative = error - previousError;
 	previousError = error;
@@ -32,55 +28,45 @@ double WVPIDController::Tick(double measuredValue)
 	return lastPWM;
 }
 
-void WVPIDController::SetSetPoint(double setPoint)
-{
+void WVPIDController::SetSetPoint(double setPoint) {
 	this->setPoint = setPoint;
 	integral = 0;
 	previousError = 0;
 	error = 0;
 }
 
-double WVPIDController::GetSetPoint()
-{
+double WVPIDController::GetSetPoint() {
 	return setPoint;
 }
 
-void WVPIDController::SetKp(double Kp)
-{
+void WVPIDController::SetKp(double Kp) {
 	this->Kp = Kp;
 }
 
-double WVPIDController::GetKp()
-{
+double WVPIDController::GetKp() {
 	return Kp;
 }
 
-void WVPIDController::SetKi(double Ki)
-{
+void WVPIDController::SetKi(double Ki) {
 	this->Ki = Ki;
 }
 
-double WVPIDController::GetKi()
-{
+double WVPIDController::GetKi() {
 	return Ki;
 }
 
-void WVPIDController::SetKd(double Kd)
-{
+void WVPIDController::SetKd(double Kd) {
 	this->Kd = Kd;
 }
 
-double WVPIDController::GetKd()
-{
+double WVPIDController::GetKd() {
 	return Kd;
 }
 
-double WVPIDController::GetError()
-{
+double WVPIDController::GetError() {
 	return error;
 }
 
-double WVPIDController::GetLastPWM()
-{
+double WVPIDController::GetLastPWM() {
 	return lastPWM;
 }

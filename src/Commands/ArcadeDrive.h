@@ -6,8 +6,7 @@
 #include "WPILib.h"
 //#include ""
 
-class ArcadeDrive: public CommandBase
-{
+class ArcadeDrive: public CommandBase {
 public:
 	ArcadeDrive();
 	void Initialize();

@@ -2,8 +2,7 @@
 #include <Commands/WinchMove.h>
 #include <RobotMap.h>
 
-WinchMove::WinchMove()
-{
+WinchMove::WinchMove() {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
 	Requires(winch);
@@ -19,34 +18,28 @@ WinchMove::WinchMove()
 }
 
 // Called just before this Command runs the first time
-void WinchMove::Initialize()
-{
+void WinchMove::Initialize() {
 
 }
 
 // Called repeatedly when this Command is scheduled to run
-void WinchMove::Execute()
-{
+void WinchMove::Execute() {
 	setPoint = -oi->getOperatorStick()->GetY();
 	_talon->Set(setPoint);
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool WinchMove::IsFinished()
-{
-	if (_lastButton1 == true)
-	{
+bool WinchMove::IsFinished() {
+	if (_lastButton1 == true) {
 		return true;
 	}
 	return false;
 }
 
-void WinchMove::End()
-{
+void WinchMove::End() {
 
 }
 
-void WinchMove::Interrupted()
-{
+void WinchMove::Interrupted() {
 
 }

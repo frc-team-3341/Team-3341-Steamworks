@@ -5,8 +5,7 @@
 #include "Commands/Subsystem.h"
 #include "WPILib.h"
 
-class Winch: public Subsystem
-{
+class Winch: public Subsystem {
 private:
 	CANTalon* talonMotor;
 	//Encoder* distEncoder;

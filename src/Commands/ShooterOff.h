@@ -3,8 +3,7 @@
 
 #include "../CommandBase.h"
 
-class ShooterOff: public CommandBase
-{
+class ShooterOff: public CommandBase {
 public:
 	ShooterOff();
 	void Initialize();

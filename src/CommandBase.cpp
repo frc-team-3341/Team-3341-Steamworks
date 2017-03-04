@@ -19,16 +19,14 @@ Winch* CommandBase::winch = nullptr;
 std::unique_ptr<OI> CommandBase::oi;
 
 CommandBase::CommandBase(const std::string &name) :
-		frc::Command(name)
-{
+		frc::Command(name) {
 
 }
 
 /* Instantiate static data
  * It is important that subsystems are constructed before OI, which creates commands.
  */
-void CommandBase::initialize()
-{
+void CommandBase::initialize() {
 	drive = new DriveTrain();
 	shooter = new Shooter();
 	winch = new Winch(WINCH_PDP_PORT, WINCH_CAN_ID);

@@ -1,19 +1,16 @@
 #include "TankDrive.h"
 
 TankDrive::TankDrive() :
-		isReset(true)
-{
+		isReset(true) {
 	Requires(drive);
 	anglePid = new WVPIDController(.05, 0, 0, 0, false);
 }
 
-void TankDrive::Initialize()
-{
+void TankDrive::Initialize() {
 	drive->resetGyro();
 }
 
-void TankDrive::Execute()
-{
+void TankDrive::Execute() {
 	double yLeftRaw = oi->getDriveStickLeft()->GetY();
 	double yRightRaw = oi->getDriveStickRight()->GetY();
 
@@ -24,8 +21,7 @@ void TankDrive::Execute()
 }
 
 // Takes an input signal and maps it to a cubic output (for more precise driving)
-double TankDrive::mapToCubic(double a, double b, double signal)
-{
+double TankDrive::mapToCubic(double a, double b, double signal) {
 	double control;
 
 	if (signal > 0)
@@ -36,15 +32,12 @@ double TankDrive::mapToCubic(double a, double b, double signal)
 	return control;
 }
 
-bool TankDrive::IsFinished()
-{
+bool TankDrive::IsFinished() {
 	return false;
 }
 
-void TankDrive::End()
-{
+void TankDrive::End() {
 }
 
-void TankDrive::Interrupted()
-{
+void TankDrive::Interrupted() {
 }

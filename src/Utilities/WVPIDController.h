@@ -1,8 +1,7 @@
 #ifndef PIDCONTROLLER_H
 #define PIDCONTROLLER_H
 
-class WVPIDController
-{
+class WVPIDController {
 public:
 	WVPIDController(double Kp, double Ki, double Kd, double setPoint,
 			bool integralThreshold);

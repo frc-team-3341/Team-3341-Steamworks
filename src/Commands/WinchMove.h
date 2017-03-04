@@ -6,8 +6,7 @@
 #include "OI.h"
 using namespace frc;
 
-class WinchMove: public CommandBase
-{
+class WinchMove: public CommandBase {
 
 private:
 	Joystick* winchMove;

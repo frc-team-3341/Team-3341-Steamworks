@@ -1,7 +1,6 @@
 #include "DriveToShoot.h"
 
-DriveToShoot::DriveToShoot()
-{
+DriveToShoot::DriveToShoot() {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
 	Requires(drive);
@@ -28,8 +27,7 @@ DriveToShoot::DriveToShoot()
 }
 
 // Called just before this Command runs the first time
-void DriveToShoot::Initialize()
-{
+void DriveToShoot::Initialize() {
 	//Initialize cvChanged to false, signifying that CV has not yet changed their set point.
 	/**cvChanged = false;
 
@@ -49,8 +47,7 @@ void DriveToShoot::Initialize()
 }
 
 // Called repeatedly when this Command is scheduled to run
-void DriveToShoot::Execute()
-{
+void DriveToShoot::Execute() {
 	/*	if(distGoal != NetworkTablesInterface::getGearDistance() || angleGoal != NetworkTablesInterface::getGearAzimuth())
 	 {
 	 cvChanged = true;
@@ -76,21 +73,18 @@ void DriveToShoot::Execute()
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool DriveToShoot::IsFinished()
-{
+bool DriveToShoot::IsFinished() {
 	const double epsilon = 0.1;
 	return abs(distGoal - abs(CVDistance)) < epsilon;
 }
 
 // Called once after isFinished returns true
-void DriveToShoot::End()
-{
+void DriveToShoot::End() {
 
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void DriveToShoot::Interrupted()
-{
+void DriveToShoot::Interrupted() {
 
 }

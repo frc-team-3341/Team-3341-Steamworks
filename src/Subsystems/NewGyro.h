@@ -16,18 +16,14 @@ using namespace frc;
 #include <ctime>
 #include <thread>
 
-namespace wvrobotics
-{
+namespace wvrobotics {
 
-class NewGyro
-{
-	enum State
-	{
+class NewGyro {
+	enum State {
 		UNCONNECTED = 0, WAIT = 1, INITIALIZATION = 2, CALIBRATING = 3, READY
 	};
 
-	typedef enum
-	{
+	typedef enum {
 		GYRO_RANGE_250DPS = 250,
 		GYRO_RANGE_500DPS = 500,
 		GYRO_RANGE_2000DPS = 2000
@@ -59,8 +55,7 @@ class NewGyro
 		FIFO_DYNAMIC_STREAM_MODE = 0xC0
 
 	};
-	typedef enum
-	{                                            // DEFAULT    TYPE
+	typedef enum {                                            // DEFAULT    TYPE
 		GYRO_REGISTER_WHO_AM_I = 0x0F,   // 11010100   r
 		GYRO_REGISTER_CTRL_REG1 = 0x20,   // 00000111   rw
 		GYRO_REGISTER_CTRL_REG2 = 0x21,   // 00000000   rw
@@ -89,8 +84,7 @@ class NewGyro
 		GYRO_REGISTER_INT1_DURATION = 0x38    // 00000000   rw
 	} gyroRegisters_t;
 
-	enum
-	{
+	enum {
 
 		L3GD20_ADDRESS = 0x6B,      // 1101011
 		L3GD20_POLL_TIMEOUT = (100),         // Maximum number of read attempts
@@ -131,17 +125,14 @@ public:
 	void checkForZAxis(int counterGyro);
 	GyroAxis readGyroData();
 	GyroAxis* getAxis();
-	void resetGyro()
-	{
+	void resetGyro() {
 		sum.setAxis(0, 0, 0);
 		count = 0;
 	}
-	void getAngle(GyroAxis* pAxis)
-	{
+	void getAngle(GyroAxis* pAxis) {
 		*pAxis = sum;
 	}
-	int getCount()
-	{
+	int getCount() {
 		return count;
 	}
 

@@ -12,8 +12,7 @@
 #include "../CommandBase.h"
 using namespace frc;
 
-class PositionControl: public CommandBase
-{
+class PositionControl: public CommandBase {
 
 private:
 	//Joystick * _joy = new Joystick(0);

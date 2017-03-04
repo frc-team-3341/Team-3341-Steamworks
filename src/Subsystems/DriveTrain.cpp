@@ -16,8 +16,7 @@ DriveTrain::DriveTrain() :
 				114), // 112 < ticksToDistance < 117
 		accel(), //reverse(false),
 		gyro(new wvrobotics::NewGyro(I2C::kOnboard, 0x6b)), axis(
-				gyro->getAxis())
-{
+				gyro->getAxis()) {
 	encoderLeft->SetDistancePerPulse(1.0);
 	encoderRight->SetDistancePerPulse(1.0);
 	left->SetInverted(true);
@@ -26,8 +25,7 @@ DriveTrain::DriveTrain() :
 	//gyro->Reset();
 }
 
-DriveTrain::~DriveTrain()
-{
+DriveTrain::~DriveTrain() {
 	delete left;
 	delete right;
 	delete encoderLeft;
@@ -36,53 +34,40 @@ DriveTrain::~DriveTrain()
 	delete gyro;
 }
 
-void DriveTrain::setMult(float m)
-{
+void DriveTrain::setMult(float m) {
 	mult = m;
 }
 
-int DriveTrain::getMult()
-{
+int DriveTrain::getMult() {
 	return mult;
 }
 
-void DriveTrain::resetEncoders()
-{
+void DriveTrain::resetEncoders() {
 	encoderLeft->Reset();
 	encoderRight->Reset();
 }
 
-void DriveTrain::arcadeDrive(float moveValue, float rotateValue)
-{
+void DriveTrain::arcadeDrive(float moveValue, float rotateValue) {
 	float leftMotorOutput;
 	float rightMotorOutput;
 
-	moveValue = DriveTrain::Limit(moveValue, 1) * mult;
+	moveValue = DriveTrain::Limit(moveValue, 1);
 	rotateValue = DriveTrain::Limit(rotateValue, 1);
 
 	// Standard ArcadeDriveTrain algorithm from Google
-	if (moveValue > 0.0)
-	{
-		if (rotateValue > 0.0)
-		{
+	if (moveValue > 0.0) {
+		if (rotateValue > 0.0) {
 			leftMotorOutput = moveValue - rotateValue;
 			rightMotorOutput = max(moveValue, rotateValue);
-		}
-		else
-		{
+		} else {
 			leftMotorOutput = max(moveValue, -rotateValue);
 			rightMotorOutput = moveValue + rotateValue;
 		}
-	}
-	else
-	{
-		if (rotateValue > 0.0)
-		{
+	} else {
+		if (rotateValue > 0.0) {
 			leftMotorOutput = -max(-moveValue, rotateValue);
 			rightMotorOutput = moveValue + rotateValue;
-		}
-		else
-		{
+		} else {
 			leftMotorOutput = moveValue - rotateValue;
 			rightMotorOutput = -max(-moveValue, -rotateValue);
 		}
@@ -95,8 +80,7 @@ void DriveTrain::arcadeDrive(float moveValue, float rotateValue)
 	right->Set(-limitedR); //removed negatives
 }
 
-void DriveTrain::tankDrive(float moveValueLeft, float moveValueRight)
-{
+void DriveTrain::tankDrive(float moveValueLeft, float moveValueRight) {
 	//float leftMotorOutput;
 	//float rightMotorOutput;
 
@@ -106,20 +90,16 @@ void DriveTrain::tankDrive(float moveValueLeft, float moveValueRight)
 	//std::cout << "LeftRaw: " << limitedL<< "\n";
 	//std::cout << "RightRaw: " << limitedR << "\n";
 	// TODO: mult should never be 0, but robot wasn't driving for some reason
-	if (mult != 0)
-	{
+	if (mult != 0) {
 		left->Set(-moveValueLeft);
 		right->Set(-moveValueRight);
-	}
-	else
-	{
+	} else {
 		left->Set(-moveValueLeft);
 		right->Set(-moveValueRight);
 	}
 }
 
-float DriveTrain::Limit(float num, float max)
-{
+float DriveTrain::Limit(float num, float max) {
 	if (num > max)
 		return max;
 
@@ -130,15 +110,13 @@ float DriveTrain::Limit(float num, float max)
 }
 
 // Return distance in feet
-double DriveTrain::getDistance()
-{
+double DriveTrain::getDistance() {
 	// Average of both encoders (must negate to get proper direction)
 	return ((double) ((encoderLeft->Get()) / ticksToDistance)
 			- (double) ((encoderRight->Get()) / ticksToDistance)) / 2.0;
 }
 
-double DriveTrain::getRate()
-{
+double DriveTrain::getRate() {
 	// Average of both encoder rates (must negate to get proper direction)
 	// TODO: test to see if negation is necessary
 	return ((double) ((encoderLeft->GetRate()) / ticksToDistance)
@@ -146,55 +124,46 @@ double DriveTrain::getRate()
 
 }
 
-void DriveTrain::getAccelerations(double* x, double* y, double* z)
-{
+void DriveTrain::getAccelerations(double* x, double* y, double* z) {
 	//*x = accel->GetX();
 	//*y = accel->GetY();
 	//*z = accel->GetZ();
 }
 
-void DriveTrain::InitDefaultCommand()
-{
+void DriveTrain::InitDefaultCommand() {
 	//std::cout<<"pushpush"<<std::endl;
 	SetDefaultCommand(new TankDrive());
 }
 
-double DriveTrain::getLeftEncoderDistance()
-{
+double DriveTrain::getLeftEncoderDistance() {
 	//TODO negate this and the right one below
 	//return this->left->GetPosition();
 
 	return -this->encoderLeft->GetDistance();
 }
 
-double DriveTrain::getRightEncoderDistance()
-{
+double DriveTrain::getRightEncoderDistance() {
 	return this->encoderRight->GetDistance();
 }
 
-double DriveTrain::getGyroAngle()
-{
+double DriveTrain::getGyroAngle() {
 	return axis->getzAxis();
 }
 
-void DriveTrain::resetGyro()
-{
+void DriveTrain::resetGyro() {
 	gyro->resetGyro();
 }
 
-double DriveTrain::readUltra(uint16_t sensorIndex)
-{
+double DriveTrain::readUltra(uint16_t sensorIndex) {
 	return 0.0;	//ultrasonicSensors->ReadUltra(sensorIndex);
 }
 
-void DriveTrain::setSpeedLeft(double speed)
-{
-	left->SetSpeed(speed);
+void DriveTrain::setSpeedLeft(double speed) {
+	left->SetSpeed(speed * mult);
 }
 
-void DriveTrain::setSpeedRight(double speed)
-{
-	right->SetSpeed(speed);
+void DriveTrain::setSpeedRight(double speed) {
+	right->SetSpeed(speed * mult);
 }
 
 //void DriveTrain::SetReverse(){

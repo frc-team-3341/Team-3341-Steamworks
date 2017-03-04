@@ -7,8 +7,7 @@
 #include "Subsystems/NewGyro.h"
 #include "Subsystems/GyroAxis.h"
 //using namespace frc;
-class DriveTrain: public Subsystem
-{
+class DriveTrain: public Subsystem {
 private:
 
 	Talon* left;
