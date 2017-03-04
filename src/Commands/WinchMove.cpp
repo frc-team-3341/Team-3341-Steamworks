@@ -28,7 +28,7 @@ void WinchMove::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void WinchMove::Execute()
 {
-	setPoint = oi->getOperatorStick()->GetY();
+	setPoint = -oi->getOperatorStick()->GetY();
 	_talon->Set(setPoint);
 }
 

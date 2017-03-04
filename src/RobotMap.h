@@ -35,7 +35,7 @@ const double SHOOTER_ANGLE = 33;//set this to the constant angle
 const double TARGET_HEIGHT = 7;//whatever the height is
 
 const int WINCH_PDP_PORT = 0;
-const int WINCH_CAN_ID = 0;
+const int WINCH_CAN_ID = 1;
 const int MOTORPORT = 0;
 
 #endif

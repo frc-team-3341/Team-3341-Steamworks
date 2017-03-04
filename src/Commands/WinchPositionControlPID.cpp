@@ -1,6 +1,6 @@
 #include <Commands/WinchPositionControlPID.h>
 #include <iostream>
-#include "CANTalon.h";
+#include "CANTalon.h"
 
 PositionControl::PositionControl() {
 	// Use Requires() here to declare subsystem dependencies

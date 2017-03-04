@@ -17,11 +17,11 @@ OI::OI():
 {
 	// 	: THis doesn't work :'(
 	// TODO: FInd good place for these buttons
-	Button* stopWinchPositionPIDButton = new JoystickButton(driveStickRight, 4);
+	//Button* stopWinchPositionPIDButton = new JoystickButton(driveStickRight, 4);
 	//shooterButton = new JoystickButton(driveStickRight, 5);
 	//shooterButton->WhenPressed(new SetShooterSpeed());
 	//new JoystickButton(operatorStick, 1);
-	positionControl = new JoystickButton(operatorStick, 1);
+	Button* positionControl = new JoystickButton(operatorStick, 1);
 	positionControl->WhenPressed(new PositionControl());
 	positionControl->WhenReleased(new WinchMove);
  	//Button* driveReverse = new JoystickButton(driveStickLeft, 4);
@@ -36,6 +36,9 @@ OI::OI():
 	Button* servoMotor = new JoystickButton(operatorStick, 7);
 	servoMotor->WhenPressed(new OpenGate());
 	servoMotor->WhenReleased(new CloseGate());
+
+	//Button* togRev = new JoystickButton(driveStickRight, 1);
+	//togRev->WhenPressed(new ToggleReverse());
 
 }
 
@@ -54,10 +57,10 @@ Joystick* OI::getOperatorStick()
     return operatorStick;
 }
 
-Button* OI::getWinchPositionPIDButton()
+/*Button* OI::getWinchPositionPIDButton()
 {
 	return stopWinchPIDButton;
-}
+}*/
 /*
 Button* OI::shooterButtonValue()
 {
@@ -70,15 +73,15 @@ Button* OI::shooterButtonValue()
 }
 */
 
-Button* OI::activatePositionControl()
+/*Button* OI::activatePositionControl()
 {
 	return positionControl;
-}
+}*/
 
 OI::~OI()
 {
     delete driveStickLeft;
     delete driveStickRight;
     delete operatorStick;
-    delete stopWinchPIDButton;
+    //delete stopWinchPIDButton;
 }

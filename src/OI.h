@@ -11,9 +11,9 @@ class OI
         Joystick* driveStickLeft;
         Joystick* driveStickRight;
         Joystick* operatorStick;
-        Button* stopWinchPIDButton;
-        Button* positionControl;
-        Button* shooterButton;
+        //Button* stopWinchPIDButton;
+        //Button* positionControl;
+        //Button* shooterButton;
     public:
         OI();
         ~OI();
@@ -21,9 +21,9 @@ class OI
         Joystick* getDriveStickLeft();
         Joystick* getDriveStickRight();
         Joystick* getOperatorStick();
-        Button* getWinchPositionPIDButton();
-        Button* activatePositionControl();
-        Button* shooterButtonValue();
+        //Button* getWinchPositionPIDButton();
+        //Button* activatePositionControl();
+        //Button* shooterButtonValue();
 };
 
 #endif
