@@ -20,25 +20,37 @@ OI::OI() :
 	//shooterButton = new JoystickButton(driveStickRight, 5);
 	//shooterButton->WhenPressed(new SetShooterSpeed());
 	//new JoystickButton(operatorStick, 1);
-	Button* positionControl = new JoystickButton(operatorStick, 1);
-	positionControl->WhenPressed(new PositionControl());
-	Button* posCon2 = new JoystickButton(operatorStick, 2);
-	posCon2->WhenPressed(new WinchMove);
 	//Button* driveReverse = new JoystickButton(driveStickLeft, 4);
 	//driveReverse->WhenPressed(new SetDriveReverse());
 	//driveReverse->WhenReleased(new SetDriveForward());
 
-	Button* shootButt = new JoystickButton(operatorStick, 7);
-	shootButt->WhenPressed(new SetShooterSpeed());
-	shootButt->WhenReleased(new ShooterOff());
 
-	Button* servoMotor = new JoystickButton(operatorStick, 6);
-	servoMotor->WhenPressed(new OpenGate());
-	servoMotor->WhenReleased(new CloseGate());
 
 	//Button* togRev = new JoystickButton(driveStickRight, 1);
 	//togRev->WhenPressed(new ToggleReverse());
 
+}
+
+
+void OI::driveButtons(){
+	Button* toggleDriveDirection = new JoystickButton(driveStickRight, 1);
+	toggleDriveDirection->WhenReleased(new SetDriveReverse());
+}
+void OI::winchButtons(){
+	Button* positionControl = new JoystickButton(operatorStick, 1);
+	positionControl->WhenPressed(new PositionControl());
+	Button* posCon2 = new JoystickButton(operatorStick, 2);
+	posCon2->WhenPressed(new WinchMove);
+}
+
+void OI::shooterButtons(){
+	Button* shootButt = new JoystickButton(operatorStick, 7); // Shooter On/Off
+	shootButt->WhenPressed(new SetShooterSpeed());
+	shootButt->WhenReleased(new ShooterOff());
+
+	Button* servoMotor = new JoystickButton(operatorStick, 6); // Open Release Door
+	servoMotor->WhenPressed(new OpenGate());
+	servoMotor->WhenReleased(new CloseGate());
 }
 
 Joystick* OI::getDriveStickLeft()

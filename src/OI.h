@@ -13,6 +13,12 @@ private:
 	//Button* stopWinchPIDButton;
 	//Button* positionControl;
 	//Button* shooterButton;
+
+	void driveButtons();
+	void winchButtons();
+	void shooterButtons();
+
+
 public:
 	OI();
 	~OI();

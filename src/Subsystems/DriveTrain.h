@@ -15,7 +15,6 @@ private:
 	Talon* right;
 	Encoder* encoderLeft;
 	Encoder* encoderRight;
-	float mult;
 	int ticksToDistance;
 	BuiltInAccelerometer* accel;
 	//bool reverse;
@@ -55,6 +54,7 @@ public:
 	void InitDefaultCommand();
 
 	//void SetReverse();
+	float mult;
 };
 
 #endif

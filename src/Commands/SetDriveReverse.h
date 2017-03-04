@@ -11,6 +11,7 @@ public:
 	void Execute();bool IsFinished();
 	void End();
 	void Interrupted();
+	bool currentMult;
 };
 
 #endif  // SetDriveReverse_H
