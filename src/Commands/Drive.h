@@ -7,7 +7,7 @@
 
 class Drive: public CommandBase {
 public:
-	Drive(double inDistance);
+	Drive(double inDistance, double inPower);
 	void Initialize();
 	void Execute();bool IsFinished();
 	void End();
@@ -16,6 +16,7 @@ public:
 
 private:
 	double distance;
+	double power;
 	double angle;bool forceFinish;
 	WVPIDController* distancePid;
 };

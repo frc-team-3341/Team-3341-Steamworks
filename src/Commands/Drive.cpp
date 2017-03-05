@@ -1,10 +1,11 @@
 #include "Commands/Drive.h"
 
-Drive::Drive(double inDistance) :
+Drive::Drive(double inDistance, double inPower) :
 		distance(inDistance * PIDCON_INCHES * 1.185){
 	Requires(drive);
 	distancePid = NULL;
 	forceFinish = false;
+	power = inPower;
 }
 
 void Drive::Initialize() {
@@ -25,7 +26,7 @@ void Drive::Execute() {
 	//std::cout << "Gyro PV: " << current_angle << std::endl;
 	// std::cout << "Gyro error: " << anglePid->GetError() << std::endl;
 
-	drive->arcadeDrive(DriveTrain::Limit(pwm_val, 0.5), 0);
+	drive->arcadeDrive(DriveTrain::Limit(pwm_val, power), 0);
 }
 
 bool Drive::IsFinished() {

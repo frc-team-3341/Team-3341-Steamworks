@@ -1,21 +1,19 @@
 #include <Commands/AutonomousLeft.h>
 #include "Drive.h"
 #include "Turn.h"
-#include "NavigateCV.h"
+#include "Delay.h"
+#include "GetCV.h"
 #include "TimeMove.h"
 #include "GetRobotModelData.h"
 #include "../CommandBase.h"
 
 AutonomousLeft::AutonomousLeft() {
-	AddSequential(new Drive(128));
+	AddSequential(new Drive(128,1));
 	AddSequential(new Turn(60));
-	AddSequential(new Drive(35));
-
-
-	// Move forward while wiggling a bit. Should take 5 seconds
-	AddSequential(new TimeMove(-0.1, 0, 0.25)); // Creep forward at the end to ensure peg is in box
-	AddSequential(new TimeMove(0.2, 0.2, 1)); // Creep forward at the end to ensure peg is in box
-	AddSequential(new TimeMove(0.2, -0.2, 1)); // Creep forward at the end to ensure peg is in box
-	AddSequential(new TimeMove(0.2, 0, 1)); // Creep forward at the end to ensure peg is in box
+	AddSequential(new Drive(10, 1)); // Move forward a short distance
+	AddSequential(new Delay(2)); // Delay for 2 seconds
+	AddSequential(new GetCV(distance, azimuth)); // Get CV Values
+	AddSequential(new Turn(*azimuth));
+	AddSequential(new Drive(*distance, 0.3));
 }
 

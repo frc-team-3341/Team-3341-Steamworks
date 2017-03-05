@@ -7,6 +7,8 @@
 class AutonomousLeft: public CommandGroup {
 public:
 	AutonomousLeft();
+	double* distance;
+	double* azimuth;
 };
 
 #endif  // MasterAutonomous_H
