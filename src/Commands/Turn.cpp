@@ -17,7 +17,8 @@ void Turn::Execute() {
 	double current_angle = drive->getGyroAngle();
 	double rotateVal = anglePid->Tick(current_angle);
 
-	std::cout << "curr_dist: " << current_angle << std::endl;
+	std::cout << "curr_angle: " << current_angle << std::endl;
+	std::cout << "curr_response: " << rotateVal << std::endl;
 
 	//std::cout << "Gyro PV: " << current_angle << std::endl;
 	// std::cout << "Gyro error: " << anglePid->GetError() << std::endl;
@@ -26,7 +27,7 @@ void Turn::Execute() {
 }
 
 bool Turn::IsFinished() {
-	bool finished = (fabs(anglePid->GetError()) < 1);
+	bool finished = (fabs(anglePid->GetError()) < 5);
 
 	if (finished)
 		std::cout << "Autonomous finished" << std::endl;

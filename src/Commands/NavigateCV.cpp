@@ -25,8 +25,8 @@ void NavigateCV::Initialize() {
 	distKi = 0.004972;
 	distKd = 0;
 
-	angleKp = 1.7762;
-	angleKi = 0.53207;
+	angleKp = 0.48844;
+	angleKi = 0.10423;
 	angleKd = 0;
 
 	// Set the goal distance and angle to 0. We are at this point right now so nothing will happen.

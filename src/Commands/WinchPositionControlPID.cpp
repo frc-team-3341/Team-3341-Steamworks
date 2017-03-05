@@ -17,7 +17,7 @@ void PositionControl::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void PositionControl::Execute() {
-	// hello my name is Sass
+	RobotPrintPositionControlLoopStatus(winch->getTalon());
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -65,7 +65,7 @@ void PositionControl::RobotSetClosedPositionLoop(CANTalon* _talon,
 	/* lets grab the 360 degree position of the MagEncoder's absolute position */
 	int absolutePosition = _talon->GetPulseWidthPosition() & 0xFFF; /* mask out the bottom12 bits, we don't care about the wrap arounds */
 	/* use the low level API to set the quad encoder signal */
-	_talon->SetEncPosition(absolutePosition);
+	//_talon->SetEncPosition(absolutePosition);
 
 	/* choose the sensor and sensor direction */
 	//_talon->SetFeedbackDevice(CANTalon::CtreMagEncoder_Relative);
@@ -90,8 +90,9 @@ void PositionControl::RobotSetClosedPositionLoop(CANTalon* _talon,
 	_talon->SetD(0.0);
 
 	targetPositionRotations = absolutePosition;
+	_talon->SetPosition(0.0);
 	_talon->SetControlMode(CANSpeedController::kPosition);
-	_talon->Set(targetPositionRotations); /* 50 rotations in either direction */
+	_talon->Set(0.0); /* 50 rotations in either direction */
 }
 
 void PositionControl::TeleopPeriodic() {

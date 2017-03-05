@@ -8,7 +8,7 @@ Drive::Drive(double inDistance) :
 }
 
 void Drive::Initialize() {
-	SetTimeout(5);
+	SetTimeout(20);
 	drive->resetEncoders();
 	drive->resetGyro();
 	distancePid = new WVPIDController(0.15, 0.0, 0.0, distance, false);
@@ -25,11 +25,11 @@ void Drive::Execute() {
 	//std::cout << "Gyro PV: " << current_angle << std::endl;
 	// std::cout << "Gyro error: " << anglePid->GetError() << std::endl;
 
-	drive->arcadeDrive(DriveTrain::Limit(pwm_val, 0.3), 0);
+	drive->arcadeDrive(DriveTrain::Limit(pwm_val, 0.5), 0);
 }
 
 bool Drive::IsFinished() {
-	bool finished = (((fabs(distancePid->GetError()) < 0.3)));
+	bool finished = (((fabs(distancePid->GetError()) < 1)));
 	if (finished)
 		std::cout << "Drive finished" << std::endl;
 	return finished || forceFinish || IsTimedOut();
