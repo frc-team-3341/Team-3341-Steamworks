@@ -14,6 +14,6 @@ AutonomousLeft::AutonomousLeft() {
 	AddSequential(new Delay(2)); // Delay for 2 seconds
 	AddSequential(new GetCV(distance, azimuth)); // Get CV Values
 	AddSequential(new Turn(*azimuth));
-	AddSequential(new Drive(*distance, 0.3));
+	AddSequential(new Drive(*distance * 39.3701, 0.3)); // Drive the rest of the distance to the target, and convert CV meters to inches
 }
 
