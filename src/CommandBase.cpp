@@ -5,7 +5,7 @@
 #include <Commands/WinchPositionControlPID.h>
 #include "Subsystems/Winch.h"
 #include "RobotMap.h"
- using namespace frc;
+using namespace frc;
 
 //#include "Subsystems/ExampleSubsystem.h"
 
@@ -23,12 +23,10 @@ CommandBase::CommandBase(const std::string &name) :
 
 }
 
-
 /* Instantiate static data
  * It is important that subsystems are constructed before OI, which creates commands.
  */
-void CommandBase::initialize()
-{
+void CommandBase::initialize() {
 	drive = new DriveTrain();
 	shooter = new Shooter();
 	winch = new Winch(WINCH_PDP_PORT, WINCH_CAN_ID);

@@ -3,12 +3,11 @@
 
 #include "../CommandBase.h"
 
-class Forward : public CommandBase {
+class Forward: public CommandBase {
 public:
 	Forward();
 	void Initialize();
-	void Execute();
-	bool IsFinished();
+	void Execute();bool IsFinished();
 	void End();
 	void Interrupted();
 };

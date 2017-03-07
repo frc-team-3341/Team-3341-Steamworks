@@ -12,13 +12,12 @@ PositionControl::PositionControl() {
 // Called just before this Command runs the first time
 void PositionControl::Initialize() {
 	//winch->getTalon()->Set(0.5);
-	RobotSetClosedPositionLoop(winch->getTalon(),0);
+	RobotSetClosedPositionLoop(winch->getTalon(), 0);
 }
 
 // Called repeatedly when this Command is scheduled to run
-void PositionControl::Execute()
-{
- // hello my name is Sass
+void PositionControl::Execute() {
+	RobotPrintPositionControlLoopStatus(winch->getTalon());
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -35,40 +34,38 @@ void PositionControl::End() {
 void PositionControl::Interrupted() {
 }
 
-void PositionControl::RobotInit()
-{
+void PositionControl::RobotInit() {
 
 }
 
-void PositionControl::RobotPrintPositionControlLoopStatus(CANTalon* _talon)
-{
+void PositionControl::RobotPrintPositionControlLoopStatus(CANTalon* _talon) {
 	/* if Talon is in position closed-loop, print some more info */
-			//int absolutePosition = _talon->GetPulseWidthPosition() & 0xFFF;
-			//if (_talon->GetClosedLoopError() == absolutePosition)
-			if (_talon->GetControlMode() == CANSpeedController::kPosition) {
-				/* append more signals to print when in speed mode. */
-				_sb.append("\terrNative:");
-				_sb.append(std::to_string(_talon->GetClosedLoopError()));
-				_sb.append("\ttrg:");
-				_sb.append(std::to_string(targetPositionRotations));
-				_sb.append("\tCurrentPosition:");
-				int absolutePosition = _talon->GetPulseWidthPosition() & 0xFFF;
-				_sb.append(std::to_string(absolutePosition));
-			}
-			/* print every ten loops, printing too much too fast is generally bad for performance */
-			if (++_loops >= 10) {
-				_loops = 0;
-				printf("%s\n",_sb.c_str());
-			}
-			_sb.clear();
+	//int absolutePosition = _talon->GetPulseWidthPosition() & 0xFFF;
+	//if (_talon->GetClosedLoopError() == absolutePosition)
+	if (_talon->GetControlMode() == CANSpeedController::kPosition) {
+		/* append more signals to print when in speed mode. */
+		_sb.append("\terrNative:");
+		_sb.append(std::to_string(_talon->GetClosedLoopError()));
+		_sb.append("\ttrg:");
+		_sb.append(std::to_string(targetPositionRotations));
+		_sb.append("\tCurrentPosition:");
+		int absolutePosition = _talon->GetPulseWidthPosition() & 0xFFF;
+		_sb.append(std::to_string(absolutePosition));
+	}
+	/* print every ten loops, printing too much too fast is generally bad for performance */
+	if (++_loops >= 10) {
+		_loops = 0;
+		printf("%s\n", _sb.c_str());
+	}
+	_sb.clear();
 }
 
-void PositionControl::RobotSetClosedPositionLoop(CANTalon* _talon,int movedown)
-{
+void PositionControl::RobotSetClosedPositionLoop(CANTalon* _talon,
+		int movedown) {
 	/* lets grab the 360 degree position of the MagEncoder's absolute position */
 	int absolutePosition = _talon->GetPulseWidthPosition() & 0xFFF; /* mask out the bottom12 bits, we don't care about the wrap arounds */
 	/* use the low level API to set the quad encoder signal */
-	_talon->SetEncPosition(absolutePosition);
+	//_talon->SetEncPosition(absolutePosition);
 
 	/* choose the sensor and sensor direction */
 	//_talon->SetFeedbackDevice(CANTalon::CtreMagEncoder_Relative);
@@ -92,13 +89,13 @@ void PositionControl::RobotSetClosedPositionLoop(CANTalon* _talon,int movedown)
 	_talon->SetI(0.0);
 	_talon->SetD(0.0);
 
-	targetPositionRotations =  absolutePosition;
+	targetPositionRotations = absolutePosition;
+	_talon->SetPosition(0.0);
 	_talon->SetControlMode(CANSpeedController::kPosition);
-	_talon->Set(targetPositionRotations); /* 50 rotations in either direction */
+	_talon->Set(0.0); /* 50 rotations in either direction */
 }
 
-void PositionControl::TeleopPeriodic()
-{
+void PositionControl::TeleopPeriodic() {
 	/* get gamepad axis */
 #if 0
 	double leftYstick = _joy->GetAxis(Joystick::kYAxis);
@@ -111,24 +108,26 @@ void PositionControl::TeleopPeriodic()
 	_sb.append("\tpos:");
 	_sb.append(std::to_string(_talon->GetPosition()));
 	/* on button1 press enter closed-loop mode on target position */
-	if (!_lastButton1 && button1) {
+	if (!_lastButton1 && button1)
+	{
 		/* Position mode - button just pressed */
 
 		targetPositionRotations = leftYstick * 50.0; /* 50 Rotations in either direction */
 #endif
 #if 0
-		targetPositionRotations = 2 * 50.0;
-		_talon->SetControlMode(CANSpeedController::kPosition);
-		_talon->Set(targetPositionRotations); /* 50 rotations in either direction */
+	targetPositionRotations = 2 * 50.0;
+	_talon->SetControlMode(CANSpeedController::kPosition);
+	_talon->Set(targetPositionRotations); /* 50 rotations in either direction */
 #endif
 #if 0
-	}
-	/* on button2 just straight drive */
-	if (button2) {
-		/* Percent voltage mode */
-		_talon->SetControlMode(CANSpeedController::kPercentVbus);
-		_talon->Set(leftYstick);
-	}
+}
+/* on button2 just straight drive */
+if (button2)
+{
+	/* Percent voltage mode */
+	_talon->SetControlMode(CANSpeedController::kPercentVbus);
+	_talon->Set(leftYstick);
+}
 #endif
 	RobotPrintPositionControlLoopStatus(winch->getTalon());
 #if 0

@@ -4,9 +4,7 @@
 #include <Commands/CommandGroup.h>
 using namespace frc;
 
-class MoveAndShoot : public CommandGroup
-{
-
+class MoveAndShoot: public CommandGroup {
 
 public:
 	MoveAndShoot();

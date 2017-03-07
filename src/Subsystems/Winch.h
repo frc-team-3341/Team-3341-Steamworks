@@ -5,8 +5,7 @@
 #include "Commands/Subsystem.h"
 #include "WPILib.h"
 
-class Winch: public Subsystem
-{
+class Winch: public Subsystem {
 private:
 	CANTalon* talonMotor;
 	//Encoder* distEncoder;
@@ -15,7 +14,7 @@ private:
 	uint32_t canBUSID;
 
 public:
-	Winch(int portNumber,uint32_t canID);
+	Winch(int portNumber, uint32_t canID);
 	~Winch();
 	CANTalon * getTalon();
 	double getDistance();
@@ -23,7 +22,7 @@ public:
 	double getCurrent();
 	void resetEncoder();
 	void setSpeed(double s);
-	void stopMotor ();
+	void stopMotor();
 	void InitDefaultCommand();
 
 };

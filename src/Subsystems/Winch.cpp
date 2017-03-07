@@ -3,68 +3,56 @@
 #include "WPILib.h"
 #include "../Commands/WinchMove.h"
 
-
-Winch::Winch(int portNumber, uint32_t canID):
-	Subsystem("Winch"),talonMotor(new CANTalon(canID)),
+Winch::Winch(int portNumber, uint32_t canID) :
+		Subsystem("Winch"), talonMotor(new CANTalon(canID)),
 //distEncoder(new Encoder(WINCH_ENCODER1 ,WINCH_ENCODER2)),
-	winchPortNumber(portNumber),
-	canBUSID(canID)
-{
+		winchPortNumber(portNumber), canBUSID(canID) {
 	//distEncoder->SetDistancePerPulse(1.0);
 }
 
-void Winch::InitDefaultCommand()
-{
+void Winch::InitDefaultCommand() {
 	SetDefaultCommand(new WinchMove());
 }
 
-Winch::~Winch()
-{
-   //delete distEncoder;
-   delete talonMotor;
+Winch::~Winch() {
+	//delete distEncoder;
+	delete talonMotor;
 
 }
 
-void Winch::resetEncoder()
-{
-    //distEncoder->Reset();
+void Winch::resetEncoder() {
+	//distEncoder->Reset();
 }
 
-double Winch::getCurrent()
-{
+double Winch::getCurrent() {
 	double current = pdp.GetCurrent(winchPortNumber);
 	return current;
 
 }
 
-double Winch::getDistance()
-{
-    // Average of both encoders (must negate to get proper direction)
+double Winch::getDistance() {
+	// Average of both encoders (must negate to get proper direction)
 	return 0;
-    //return distEncoder->GetDistance();
+	//return distEncoder->GetDistance();
 
 }
 
-CANTalon *Winch::getTalon()
-{
+CANTalon *Winch::getTalon() {
 	return talonMotor;
 }
 
-double Winch::getRate()
-{
+double Winch::getRate() {
 
-    return 0;//distEncoder->GetRate();
-
-}
-
-void Winch::setSpeed(double s)
-{
-    talonMotor->Set(s);
+	return 0; //distEncoder->GetRate();
 
 }
 
-void Winch::stopMotor()
-{
+void Winch::setSpeed(double s) {
+	talonMotor->Set(s);
+
+}
+
+void Winch::stopMotor() {
 	talonMotor->Set(0);
 
 }

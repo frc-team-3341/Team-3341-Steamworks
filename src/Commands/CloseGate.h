@@ -3,12 +3,11 @@
 
 #include "../CommandBase.h"
 
-class CloseGate : public CommandBase {
+class CloseGate: public CommandBase {
 public:
 	CloseGate();
 	void Initialize();
-	void Execute();
-	bool IsFinished();
+	void Execute();bool IsFinished();
 	void End();
 	void Interrupted();
 };

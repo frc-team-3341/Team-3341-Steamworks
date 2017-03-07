@@ -4,23 +4,26 @@
 #include "RobotMap.h"
 #include "WPILib.h"
 
+class OI {
+private:
+	Joystick* driveStickLeft;
+	Joystick* driveStickRight;
+	Joystick* operatorStick;
+	//Button* stopWinchPIDButton;
+	//Button* positionControl;
+	//Button* shooterButton;
 
-class OI
-{
-    private:
-        Joystick* driveStickLeft;
-        Joystick* driveStickRight;
-        Joystick* operatorStick;
-        //Button* stopWinchPIDButton;
-        //Button* positionControl;
-        //Button* shooterButton;
-    public:
-        OI();
-        ~OI();
+	void driveButtons();
+	void winchButtons();
+	void shooterButtons();
 
-        Joystick* getDriveStickLeft();
-        Joystick* getDriveStickRight();
-        Joystick* getOperatorStick();
+public:
+	OI();
+	~OI();
+
+	Joystick* getDriveStickLeft();
+	Joystick* getDriveStickRight();
+	Joystick* getOperatorStick();
 };
 
 #endif

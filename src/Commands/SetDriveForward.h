@@ -3,12 +3,11 @@
 
 #include "../CommandBase.h"
 
-class SetDriveForward : public CommandBase {
+class SetDriveForward: public CommandBase {
 public:
 	SetDriveForward();
 	void Initialize();
-	void Execute();
-	bool IsFinished();
+	void Execute();bool IsFinished();
 	void End();
 	void Interrupted();
 };

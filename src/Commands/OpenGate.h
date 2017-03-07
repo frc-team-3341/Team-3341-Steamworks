@@ -3,12 +3,11 @@
 
 #include "../CommandBase.h"
 
-class OpenGate : public CommandBase {
+class OpenGate: public CommandBase {
 public:
 	OpenGate();
 	void Initialize();
-	void Execute();
-	bool IsFinished();
+	void Execute();bool IsFinished();
 	void End();
 	void Interrupted();
 };

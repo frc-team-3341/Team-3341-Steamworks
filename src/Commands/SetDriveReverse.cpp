@@ -1,22 +1,23 @@
 #include "SetDriveReverse.h"
 
 SetDriveReverse::SetDriveReverse() {
-	Requires(drive);
+	done = false;
 }
 
 // Called just before this Command runs the first time
 void SetDriveReverse::Initialize() {
-
+	done = false;
+	drive->reverseDrive();
 }
 
 // Called repeatedly when this Command is scheduled to run
 void SetDriveReverse::Execute() {
-	drive->setMult(-1.0);
+	done = true;
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool SetDriveReverse::IsFinished() {
-	return false;
+	return done;
 }
 
 // Called once after isFinished returns true
