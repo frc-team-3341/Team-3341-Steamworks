@@ -32,7 +32,7 @@ OI::OI() :
 }
 
 void OI::driveButtons() {
-	Button* toggleDriveDirection = new JoystickButton(driveStickRight, 2);
+	Button* toggleDriveDirection = new JoystickButton(driveStickRight, 3);
 	toggleDriveDirection->WhenReleased(new SetDriveReverse());
 }
 void OI::winchButtons() {

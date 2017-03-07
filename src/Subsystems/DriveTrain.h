@@ -30,6 +30,7 @@ public:
 	static float Limit(float num, float max);
 
 	void setMult(float m);
+	void reverseDrive();
 	int getMult();
 	void arcadeDrive(float move, float rotate);
 	void tankDrive(float moveValueLeft, float moveValueRight);

@@ -9,7 +9,8 @@ public:
 	void Initialize();
 	void Execute();bool IsFinished();
 	void End();
-	void Interrupted();bool currentMult;
+	void Interrupted();
+	bool done;
 };
 
 #endif  // SetDriveReverse_H

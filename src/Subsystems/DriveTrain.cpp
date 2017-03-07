@@ -34,6 +34,11 @@ DriveTrain::~DriveTrain() {
 	delete gyro;
 }
 
+void DriveTrain::reverseDrive(){
+	left->SetInverted(!left->GetInverted());
+	right->SetInverted(!right->GetInverted());
+}
+
 void DriveTrain::setMult(float m) {
 	mult = m;
 }
