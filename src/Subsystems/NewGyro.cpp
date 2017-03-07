@@ -65,7 +65,7 @@ void NewGyro::periodicProcessing(int startupTime) {
 	isVerified = m_i2c.VerifySensor(ADDRESS, 1, &whoAmI);
 	if (isVerified == false) {
 		mState = UNCONNECTED;
-		std::cout << "gyro state " << mState << std::endl;
+//		std::cout << "gyro state " << mState << std::endl;
 	}
 	//subtract gyro clock from robot clock and if it is more than a set time set mstate=calibration
 
@@ -74,11 +74,11 @@ void NewGyro::periodicProcessing(int startupTime) {
 	std::chrono::duration<double> time_span;
 	switch (mState) {
 	case UNCONNECTED:
-		std::cout << "STATE: " << mState << std::endl;
-		std::cout << "Your gyro is not connected." << std::endl;
+//		std::cout << "STATE: " << mState << std::endl;
+//		std::cout << "Your gyro is not connected." << std::endl;
 		break;
 	case WAIT:
-		std::cout << "STATE: " << mState << std::endl;
+//		std::cout << "STATE: " << mState << std::endl;
 		time_span = std::chrono::duration_cast<std::chrono::duration<double>>(
 				t_end - t_start);
 
@@ -87,8 +87,7 @@ void NewGyro::periodicProcessing(int startupTime) {
 		}
 		break;
 	case INITIALIZATION:
-
-		std::cout << "STATE: " << mState << std::endl;
+//		std::cout << "STATE: " << mState << std::endl;
 		time_span = std::chrono::duration_cast<std::chrono::duration<double>>(
 				t_end - t_start);
 		//std::cout << "It took me " << time_span.count() << " seconds" << std::endl;
@@ -102,7 +101,7 @@ void NewGyro::periodicProcessing(int startupTime) {
 		break;
 
 	case CALIBRATING:
-		std::cout << "STATE: " << mState << std::endl;
+//		std::cout << "STATE: " << mState << std::endl;
 		readGyroData();
 		if (TOTAL_COUNT < count) {
 			//avg = sum.getzAxis()/count;
@@ -113,7 +112,7 @@ void NewGyro::periodicProcessing(int startupTime) {
 		}
 		break;
 	case READY:
-		std::cout << "STATE: " << mState << std::endl;
+//		std::cout << "STATE: " << mState << std::endl;
 		int temp = count;
 		readGyroData();
 		int totalCount = count - temp;

@@ -20,8 +20,8 @@ void Drive::Execute() {
 	double pwm_val = distancePid->Tick(current_distance);
 	double current_angle = drive->getGyroAngle();
 
-	std::cout << "ERROR!!!!: " << distancePid->GetError() << std::endl;
-	std::cout << "pwm: " << pwm_val << std::endl;
+//	std::cout << "ERROR!!!!: " << distancePid->GetError() << std::endl;
+//	std::cout << "pwm: " << pwm_val << std::endl;
 
 	//std::cout << "Gyro PV: " << current_angle << std::endl;
 	// std::cout << "Gyro error: " << anglePid->GetError() << std::endl;

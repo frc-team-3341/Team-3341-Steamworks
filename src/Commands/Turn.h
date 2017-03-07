@@ -8,6 +8,7 @@
 class Turn : public CommandBase {
 public:
 	Turn(double inAngle);
+	Turn(double* inAngle);
 	void Initialize();
 	void Execute();bool IsFinished();
 	void End();
@@ -16,8 +17,10 @@ public:
 
 private:
 	double angle;
+	double* pAngle;
 	bool forceFinish;
-	WVPIDController* anglePid;
+	bool pointerUsed;
+	WVPIDController* anglePID;
 };
 
 #endif

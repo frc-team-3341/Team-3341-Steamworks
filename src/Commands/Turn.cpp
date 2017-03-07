@@ -2,32 +2,46 @@
 
 Turn::Turn(double inAngle) : angle(inAngle) {
 	Requires(drive);
-	anglePid = NULL;
+	anglePID = NULL;
 	forceFinish = false;
+	pointerUsed = false;
+	Initialize();
+}
+
+Turn::Turn(double* inAngle) : pAngle(inAngle) {
+	Requires(drive);
+	anglePID = NULL;
+	forceFinish = false;
+	pointerUsed = true;
+	Initialize();
 }
 
 void Turn::Initialize() {
 	SetTimeout(5);
+	if(pointerUsed)
+		angle = *pAngle;
+	std::cout << "Angle Set point:\t" << angle << std::endl;
 	drive->resetEncoders();
 	drive->resetGyro();
-	anglePid = new WVPIDController(0.15, 0, 0, angle, false); // kp was 0.1 before,works for low bar
+	anglePID = new WVPIDController(0.15, 0, 0, angle, false); // kp was 0.1 before,works for low bar
 }
 
 void Turn::Execute() {
-	double current_angle = drive->getGyroAngle();
-	double rotateVal = anglePid->Tick(current_angle);
+	double current_angle = -drive->getGyroAngle();
+	double rotateVal = anglePID->Tick(current_angle);
 
-	std::cout << "curr_angle: " << current_angle << std::endl;
-	std::cout << "curr_response: " << rotateVal << std::endl;
+	std::cout << "gyro angle: " << current_angle << std::endl;
+	std::cout << "pid response: " << rotateVal << std::endl;
+	std::cout << "current error: " << anglePID->GetError() << std::endl;
 
 	//std::cout << "Gyro PV: " << current_angle << std::endl;
 	// std::cout << "Gyro error: " << anglePid->GetError() << std::endl;
 
-	drive->arcadeDrive(0, -DriveTrain::Limit(rotateVal, 0.4));
+	drive->arcadeDrive(0, -DriveTrain::Limit(rotateVal, 0.5));
 }
 
 bool Turn::IsFinished() {
-	bool finished = (fabs(anglePid->GetError()) < 5);
+	bool finished = (fabs(anglePID->GetError()) < 1);
 
 	if (finished)
 		std::cout << "Autonomous finished" << std::endl;

@@ -25,6 +25,8 @@ void WinchMove::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void WinchMove::Execute() {
 	setPoint = -oi->getOperatorStick()->GetY();
+	if(fabs(setPoint) < DEAD_SPACE_EPSILON)
+		setPoint = 0;
 	_talon->Set(setPoint);
 }
 

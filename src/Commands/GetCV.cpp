@@ -2,7 +2,6 @@
 #include "Utilities/NetworkTablesInterface.h"
 
 GetCV::GetCV(double* distance, double* azimuth) {
-	Requires(drive);
 	mDistance = distance;
 	mAzimuth = azimuth;
 	Initialize();
@@ -22,7 +21,11 @@ void GetCV::Initialize() {
 void GetCV::Execute() {
 	if (NetworkTablesInterface::gearFound()) { // Wait Until Gear is Found
 		*mDistance = NetworkTablesInterface::getGearDistance() * 39.3701; // Convert meters to inches
-		*mAzimuth = NetworkTablesInterface::getGearAzimuth();
+		*mAzimuth = -NetworkTablesInterface::getGearAzimuth();
+
+		std::cout << "CV Distance:\t" << *mDistance << std::endl;
+		std::cout << "CV Azimuth:\t" << *mAzimuth << std::endl;
+
 		finished = true;
 	}
 }

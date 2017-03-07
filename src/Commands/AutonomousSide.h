@@ -4,11 +4,11 @@
 #include <Commands/CommandGroup.h>
 #include "../CommandBase.h"
 
-class AutonomousLeft: public CommandGroup {
+class AutonomousSide: public CommandGroup {
 public:
-	AutonomousLeft();
-	double* distance;
-	double* azimuth;
+	AutonomousSide(bool left);
+	double distance;
+	double azimuth;
 };
 
 #endif  // MasterAutonomous_H

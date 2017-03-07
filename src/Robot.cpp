@@ -1,3 +1,4 @@
+#include <Commands/AutonomousSide.h>
 #include <memory>
 #include "CommandBase.h"
 #include <Commands/Command.h>
@@ -9,8 +10,6 @@
 #include "Utilities/NetworkTablesInterface.h"
 #include "Commands/Forward.h"
 #include "Subsystems/DriveTrain.h"
-#include "Commands/AutonomousLeft.h"
-#include "Commands/AutonomousRight.h"
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/core/core.hpp>
 #include <Commands/WinchPositionControlPID.h>
@@ -23,6 +22,8 @@ class Robot: public frc::IterativeRobot {
 private:
 	//wvrobotics::NewGyro* gyro;
 	//wvrobotics::GyroAxis axis;
+
+	std::unique_ptr<frc::Command> autoCommand;
 	int flag = 0;
 	int startupTime = 5;
 	//std::unique_ptr<Command> autonomousCommand;
@@ -103,12 +104,12 @@ public:
 
 		CommandBase::initialize();
 
-		turningCommand = new AutonomousLeft();
+		chooser.AddDefault("Autonomous Left", new AutonomousSide(true));
+		chooser.AddObject("Autonomous Right", new AutonomousSide(false));
+		frc::SmartDashboard::PutData("Auto Modes", &chooser);
+
 		//shooter = new Shooter();
 		//drivingCommand = new AutonomousRight();
-		chooser.AddDefault("Turning", turningCommand);
-		//chooser.AddObject("Driving", drivingCommand);
-		frc::SmartDashboard::PutData("Auto Modes", &chooser);
 		//gyro = new wvrobotics::NewGyro(I2C::kOnboard, 0x6b); //50 is the calibration sample size; can change it as desired
 		std::thread visionThread3(VisionThread3);
 		visionThread3.detach();
@@ -184,8 +185,10 @@ public:
 		 else {
 		 turningCommand->Start();
 		 }*/
-		if (turningCommand != nullptr) {
-			turningCommand->Start();
+
+		autoCommand.reset(chooser.GetSelected());
+		if (autoCommand.get() != nullptr) {
+			autoCommand->Start();
 		}
 	}
 
@@ -209,8 +212,9 @@ public:
 		 else {
 		 turningCommand->Cancel();
 		 }*/
-		if (turningCommand != nullptr) {
-			turningCommand->Cancel();
+
+		if (autoCommand.get() != nullptr) {
+			autoCommand->Cancel();
 		}
 	}
 
@@ -276,7 +280,7 @@ public:
 	}
 
 private:
-	CommandGroup* turningCommand;
+	CommandGroup* autonomousCommand;
 	//CommandGroup* drivingCommand;
 	frc::SendableChooser<frc::Command*> chooser;
 	//Command* foreward;

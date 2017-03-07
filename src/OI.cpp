@@ -13,6 +13,9 @@ using namespace frc;
 OI::OI() :
 		driveStickLeft(new Joystick(2)), driveStickRight(new Joystick(1)), operatorStick(
 				new Joystick(0)) {
+	shooterButtons();
+	driveButtons();
+	winchButtons();
 	// 	: THis doesn't work :'(
 	// TODO: FInd good place for these buttons
 	//Button* stopWinchPositionPIDButton = new JoystickButton(driveStickRight, 4);
