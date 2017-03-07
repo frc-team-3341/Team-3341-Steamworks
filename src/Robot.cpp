@@ -1,4 +1,5 @@
 #include <Commands/AutonomousSide.h>
+#include <Commands/AutonomousCenter.h>
 #include <memory>
 #include "CommandBase.h"
 #include <Commands/Command.h>
@@ -106,6 +107,8 @@ public:
 
 		chooser.AddDefault("Autonomous Left", new AutonomousSide(true));
 		chooser.AddObject("Autonomous Right", new AutonomousSide(false));
+		chooser.AddObject("Autonomous Center", new AutonomousCenter());
+
 		frc::SmartDashboard::PutData("Auto Modes", &chooser);
 
 		//shooter = new Shooter();
