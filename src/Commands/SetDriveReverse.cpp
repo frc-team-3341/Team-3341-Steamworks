@@ -1,7 +1,6 @@
 #include "SetDriveReverse.h"
 
 SetDriveReverse::SetDriveReverse() {
-	Requires(drive);
 	done = false;
 }
 
